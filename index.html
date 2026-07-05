@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -282,7 +282,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   try {
     const fd = new FormData();
     fd.append('image', file);
-    fd.append('prompt', prompt);
+    fd.append('prompt', prompt);fd.append('comment', comment);
     fd.append('control_strength', '0.7');
     fd.append('output_format', 'jpeg');
 
