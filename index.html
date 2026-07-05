@@ -188,7 +188,16 @@
     <div class="result-wrap" id="resultWrap">
       <span class="result-label">Ваш новый интерьер</span>
       <img id="resultImg" src="" alt="Результат">
-      <a class="download-btn" id="dlBtn" download="roomfactory-design.jpg">Скачать изображение</a>
+     <a class="download-btn" id="dlBtn" download="roomfactory-design.jpg">Скачать изображение</a>
+
+<div style="margin-top:20px">
+  <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#b4a898;text-align:center;margin-bottom:12px">Найти похожую мебель</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+    <a id="hoffBtn" target="_blank" style="display:block;text-align:center;background:#faf7f2;border:1px solid #e8ddd0;border-radius:8px;padding:10px 6px;font-size:12px;color:#8a7a66;text-decoration:none;transition:all 0.15s" onmouseover="this.style.borderColor='#b48c5a';this.style.color='#b48c5a'" onmouseout="this.style.borderColor='#e8ddd0';this.style.color='#8a7a66'">Hoff</a>
+    <a id="roomerBtn" target="_blank" style="display:block;text-align:center;background:#faf7f2;border:1px solid #e8ddd0;border-radius:8px;padding:10px 6px;font-size:12px;color:#8a7a66;text-decoration:none;transition:all 0.15s" onmouseover="this.style.borderColor='#b48c5a';this.style.color='#b48c5a'" onmouseout="this.style.borderColor='#e8ddd0';this.style.color='#8a7a66'">Roomer</a>
+    <a id="baumitBtn" target="_blank" style="display:block;text-align:center;background:#faf7f2;border:1px solid #e8ddd0;border-radius:8px;padding:10px 6px;font-size:12px;color:#8a7a66;text-decoration:none;transition:all 0.15s" onmouseover="this.style.borderColor='#b48c5a';this.style.color='#b48c5a'" onmouseout="this.style.borderColor='#e8ddd0';this.style.color='#8a7a66'">Baumit</a>
+  </div>
+</div>
     </div>
 
   </div>
@@ -296,7 +305,12 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     const url = URL.createObjectURL(blob);
     document.getElementById('resultImg').src = url;
     document.getElementById('dlBtn').href = url;
-    result.classList.add('visible');
+    result.classList.add('visible'); const styleKeyword = sel.style.split(',')[0];
+const roomKeyword = sel.room;
+const searchQuery = encodeURIComponent(styleKeyword + ' ' + roomKeyword);
+document.getElementById('hoffBtn').href = 'https://hoff.ru/catalog/?q=' + searchQuery;
+document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q=' + searchQuery;
+document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q=' + searchQuery;
   } catch(e) {
     err.textContent = 'Не удалось создать дизайн. Попробуйте ещё раз.';
     err.classList.add('visible');
