@@ -287,7 +287,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     fd.append('control_strength', '0.7');
     fd.append('output_format', 'jpeg');
 
-    const res = await fetch('https://api.stability.ai/v2beta/stable-image/control/structure', {
+    const res = await fetch('https://roomfactory.gwirglemly.workers.dev/', {
       method: 'POST',
       headers: { 'authorization': `Bearer ${STABILITY_KEY}`, 'accept': 'image/*' },
       body: fd
