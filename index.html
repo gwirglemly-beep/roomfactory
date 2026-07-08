@@ -12,8 +12,17 @@
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,221,208,0.5); }
   .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: #2a2218; letter-spacing: 1px; }
   .nav-logo span { color: #b48c5a; }
-  .nav-cta { background: #b48c5a; color: white; border: none; border-radius: 8px; padding: 10px 24px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; text-decoration: none; }
-  .nav-cta:hover { background: #a07848; }
+  .burger { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 4px; }
+  .burger span { display: block; width: 24px; height: 2px; background: #2a2218; border-radius: 2px; transition: all 0.3s; }
+
+  .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(42,34,24,0.5); z-index: 80; }
+  .sidebar-overlay.visible { display: block; }
+  .sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: #faf7f2; z-index: 90; padding: 80px 40px 40px; transition: right 0.3s ease; box-shadow: -8px 0 40px rgba(42,34,24,0.1); }
+  .sidebar.open { right: 0; }
+  .sidebar-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 24px; cursor: pointer; color: #8a7a66; }
+  .sidebar a { display: block; font-family: 'Playfair Display', serif; font-size: 22px; color: #2a2218; text-decoration: none; padding: 14px 0; border-bottom: 1px solid #ede5da; transition: color 0.2s; }
+  .sidebar a:hover { color: #b48c5a; }
+  .sidebar-cta { display: block; margin-top: 32px; background: #b48c5a; color: white !important; border-radius: 10px; padding: 14px 24px !important; text-align: center; border-bottom: none !important; font-family: 'Inter', sans-serif !important; font-size: 14px !important; }
 
   .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 20px 80px; background: linear-gradient(160deg, #faf7f2 0%, #f5ede0 50%, #faf7f2 100%); position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 60% 40%, rgba(180,140,90,0.06) 0%, transparent 60%); pointer-events: none; }
@@ -58,7 +67,6 @@
 
   .generator-section { padding: 100px 20px; background: #faf7f2; }
   .generator-inner { max-width: 680px; margin: 0 auto; }
-
   .upload-section { background: white; border: 1px solid #e8ddd0; border-radius: 20px; padding: 40px; box-shadow: 0 4px 40px rgba(180,140,90,0.08); }
   .upload-zone { border: 1.5px dashed #d4c4b0; border-radius: 12px; padding: 48px 24px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 28px; background: #faf7f2; }
   .upload-zone:hover { border-color: #b48c5a; background: #f5ede0; }
@@ -74,7 +82,6 @@
   .options-grid { display: grid; gap: 8px; margin-bottom: 4px; }
   .col-3 { grid-template-columns: repeat(3, 1fr); }
   .col-4 { grid-template-columns: repeat(4, 1fr); }
-
   .opt-btn { background: #faf7f2; border: 1px solid #e8ddd0; border-radius: 8px; padding: 10px 8px; font-size: 12px; color: #8a7a66; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; text-align: center; }
   .opt-btn:hover { border-color: #b48c5a; color: #2a2218; }
   .opt-btn.active { border-color: #b48c5a; background: rgba(180,140,90,0.08); color: #b48c5a; }
@@ -91,7 +98,7 @@
 
   .colors-wrap { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; padding: 4px 0 20px; }
   .color-swatch { width: 40px; height: 40px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; position: relative; flex-shrink: 0; }
-  .color-swatch.active { border-color: #b48c5a; transform: scale(1.15); }
+  .color-swatch.active { border-color: #b48c5a; transform: scale(1.15); box-shadow: 0 0 0 3px rgba(180,140,90,0.2); }
   .color-swatch::after { content: attr(data-name); position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #b4a898; white-space: nowrap; }
 
   .budget-wrap { margin-bottom: 8px; }
@@ -127,11 +134,11 @@
   .about-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 24px; }
   .about-title em { font-style: italic; color: #b48c5a; }
   .about-text { font-size: 15px; color: rgba(240,236,228,0.6); line-height: 1.8; margin-bottom: 16px; }
-  .about-features { display: flex; flex-direction: column; gap: 20px; }
+  .about-features { display: flex; flex-direction: column; gap: 24px; }
   .about-feature { display: flex; gap: 16px; align-items: flex-start; }
-  .feature-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
-  .feature-text h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #f0ece4; }
-  .feature-text p { font-size: 13px; color: rgba(240,236,228,0.5); line-height: 1.5; }
+  .feature-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .feature-text h4 { font-size: 14px; font-weight: 500; margin-bottom: 6px; color: #f0ece4; }
+  .feature-text p { font-size: 13px; color: rgba(240,236,228,0.5); line-height: 1.6; }
 
   footer { background: #0f0d0b; padding: 40px 20px; text-align: center; }
   .footer-logo { font-family: 'Playfair Display', serif; font-size: 20px; color: #f0ece4; margin-bottom: 12px; }
@@ -156,23 +163,34 @@
   </div>
 </div>
 
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+  <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  <a href="#examples" onclick="closeSidebar()">Примеры работ</a>
+  <a href="#how" onclick="closeSidebar()">Как это работает</a>
+  <a href="#generator" onclick="closeSidebar()">Создать дизайн</a>
+  <a href="#about" onclick="closeSidebar()">О проекте</a>
+  <a href="#generator" class="sidebar-cta" onclick="closeSidebar()">Попробовать бесплатно</a>
+</div>
+
 <nav>
   <div class="nav-logo">Room<span>Factory</span></div>
-  <a href="#generator" class="nav-cta">Попробовать бесплатно</a>
+  <button class="burger" onclick="openSidebar()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <section class="hero">
   <span class="hero-tag">AI дизайн интерьера</span>
-  <h1>Ваша комната —<br><em>новый интерьер</em><br>за 30 секунд</h1>
+  <h1>Дизайн вашей комнаты<br><em>за 30 секунд</em></h1>
   <p class="hero-sub">Загрузите фото любой комнаты — искусственный интеллект создаст профессиональный дизайн в выбранном стиле</p>
   <div class="hero-btns">
     <a href="#generator" class="btn-primary">Создать дизайн бесплатно</a>
     <a href="#examples" class="btn-secondary">Смотреть примеры</a>
   </div>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num">30с</div><div class="stat-label">Время генерации</div></div>
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Стилей интерьера</div></div>
-    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Бесплатно</div></div>
+    <div class="stat"><div class="stat-num">30 секунд</div><div class="stat-label">Время генерации</div></div>
+    <div class="stat"><div class="stat-num">Множество</div><div class="stat-label">Стилей интерьера</div></div>
   </div>
 </section>
 
@@ -180,26 +198,26 @@
   <div class="section-inner">
     <span class="section-tag">Примеры работ</span>
     <h2 class="section-title">До и после</h2>
-    <p class="section-sub">Посмотрите как ИИ преображает реальные комнаты — от черновой отделки до готового интерьера</p>
+    <p class="section-sub">Посмотрите как ИИ преображает реальные комнаты — обновляем старый интерьер и создаём новый с нуля</p>
     <div class="before-after-grid">
       <div class="ba-card">
         <div class="ba-images">
-          <div class="ba-img-wrap"><img src="https://i.imgur.com/JEoTd37.jpg" alt="До"><span class="ba-label">До</span></div>
-          <div class="ba-img-wrap"><img src="https://i.imgur.com/TdgdL7I.jpg" alt="После"><span class="ba-label">После</span></div>
+          <div class="ba-img-wrap"><img src="https://i.imgur.com/TdgdL7I.jpg" alt="До"><span class="ba-label">До</span></div>
+          <div class="ba-img-wrap"><img src="https://i.imgur.com/JEoTd37.jpg" alt="После"><span class="ba-label">После</span></div>
         </div>
         <div class="ba-info">
           <div class="ba-style">Скандинавский стиль</div>
-          <div class="ba-desc">Из черновой отделки — в уютный минималистичный интерьер</div>
+          <div class="ba-desc">Обновляем готовый интерьер — свежий взгляд на привычное пространство</div>
         </div>
       </div>
       <div class="ba-card">
         <div class="ba-images">
-          <div class="ba-img-wrap"><img src="https://i.imgur.com/JEoTd37.jpg" alt="До"><span class="ba-label">До</span></div>
-          <div class="ba-img-wrap"><img src="https://i.imgur.com/TdgdL7I.jpg" alt="После"><span class="ba-label">После</span></div>
+          <div class="ba-img-wrap"><img src="https://i.imgur.com/1dc8go5.jpg" alt="До"><span class="ba-label">До</span></div>
+          <div class="ba-img-wrap"><img src="https://i.imgur.com/eLRbV7n.jpg" alt="После"><span class="ba-label">После</span></div>
         </div>
         <div class="ba-info">
-          <div class="ba-style">Japandi стиль</div>
-          <div class="ba-desc">Натуральные материалы, спокойствие и функциональность</div>
+          <div class="ba-style">Лофт</div>
+          <div class="ba-desc">Из старой советской гостиной — в стильный городской лофт с характером</div>
         </div>
       </div>
     </div>
@@ -237,7 +255,7 @@
 <section class="generator-section" id="generator">
   <div class="generator-inner">
     <span class="section-tag" style="text-align:center;display:block">Попробуйте прямо сейчас</span>
-    <h2 class="section-title" style="text-align:center">Создайте дизайн вашей комнаты</h2>
+    <h2 class="section-title" style="text-align:center">Создайте дизайн вашей комнаты мечты</h2>
     <p class="section-sub" style="text-align:center;margin:0 auto 40px">Бесплатно, без регистрации</p>
 
     <div class="upload-section">
@@ -247,6 +265,7 @@
         <p class="upload-hint">JPG или PNG, до 10 МБ</p>
       </div>
       <input type="file" id="fileInput" accept="image/*">
+
       <hr class="divider">
       <span class="section-label">Стиль интерьера</span>
       <div class="options-grid col-3" style="margin-bottom:24px">
@@ -275,6 +294,7 @@
           <button class="info-btn" onclick="showPopup('Бохо','Яркие цвета, растения, текстиль. Свободный стиль без правил.','https://i.imgur.com/zCQCn4n.jpg')">ⓘ</button>
         </div>
       </div>
+
       <hr class="divider">
       <span class="section-label">Тип комнаты</span>
       <div class="options-grid col-4" style="margin-bottom:24px">
@@ -287,30 +307,35 @@
         <button class="opt-btn" data-group="room" data-val="hallway">Прихожая</button>
         <button class="opt-btn" data-group="room" data-val="dining room">Столовая</button>
       </div>
+
       <hr class="divider">
       <span class="section-label">Цветовая гамма</span>
       <div class="colors-wrap">
-        <button class="color-swatch active" data-group="color" data-val="neutral beige and white color palette" data-name="Нейтральный" style="background:linear-gradient(135deg,#f5f0e8,#e8ddd0)"></button>
-        <button class="color-swatch" data-group="color" data-val="dark moody color palette, deep tones" data-name="Тёмный" style="background:linear-gradient(135deg,#2a2520,#1a1510)"></button>
-        <button class="color-swatch" data-group="color" data-val="warm earthy tones, terracotta, brown" data-name="Земляной" style="background:linear-gradient(135deg,#c17a4a,#8b5e3c)"></button>
-        <button class="color-swatch" data-group="color" data-val="cool blue and grey color palette" data-name="Синий" style="background:linear-gradient(135deg,#7090b0,#4a6080)"></button>
-        <button class="color-swatch" data-group="color" data-val="sage green and natural tones" data-name="Зелёный" style="background:linear-gradient(135deg,#8aaa80,#5a7a50)"></button>
-        <button class="color-swatch" data-group="color" data-val="blush pink and soft tones" data-name="Розовый" style="background:linear-gradient(135deg,#e8b0b0,#c88080)"></button>
-        <button class="color-swatch" data-group="color" data-val="black and white monochrome" data-name="Ч/Б" style="background:linear-gradient(135deg,#ffffff,#000000)"></button>
-        <button class="color-swatch" data-group="color" data-val="golden and luxury warm tones" data-name="Золотой" style="background:linear-gradient(135deg,#d4af37,#b8860b)"></button>
+        <button class="color-swatch active" data-group="color" data-val="neutral beige and white color palette" data-name="Нейтральный" style="background:#f0e8dc"></button>
+        <button class="color-swatch" data-group="color" data-val="dark moody color palette, deep tones" data-name="Тёмный" style="background:#2a2520"></button>
+        <button class="color-swatch" data-group="color" data-val="warm brown color palette, chocolate tones" data-name="Коричневый" style="background:#8b5e3c"></button>
+        <button class="color-swatch" data-group="color" data-val="cool blue and grey color palette" data-name="Синий" style="background:#5a7898"></button>
+        <button class="color-swatch" data-group="color" data-val="sage green and natural tones" data-name="Зелёный" style="background:#6a9060"></button>
+        <button class="color-swatch" data-group="color" data-val="blush pink and soft tones" data-name="Розовый" style="background:#d89090"></button>
+        <button class="color-swatch" data-group="color" data-val="black and white monochrome" data-name="Ч/Б" style="background:linear-gradient(135deg,#ffffff 50%,#000000 50%)"></button>
+        <button class="color-swatch" data-group="color" data-val="golden and luxury warm tones" data-name="Золотой" style="background:#c9a030"></button>
       </div>
+
       <hr class="divider">
       <span class="section-label">Бюджет ремонта</span>
       <div class="budget-wrap">
-        <input type="range" id="budgetSlider" min="0" max="3" value="1" step="1">
-        <div class="budget-label" id="budgetLabel">Средний · 300 000 — 1 000 000 ₽</div>
+        <input type="range" id="budgetSlider" min="0" max="4" value="2" step="1">
+        <div class="budget-label" id="budgetLabel">Средний · 500 000 — 1 500 000 ₽</div>
       </div>
+
       <hr class="divider">
       <span class="section-label">Комментарий (необязательно)</span>
       <textarea class="comment-box" id="comment" placeholder="Опишите пожелания: хочу больше света, нужно место для детей, люблю открытые полки..."></textarea>
+
       <button class="generate-btn" id="genBtn" disabled>Загрузите фото для генерации</button>
       <div class="loading" id="loading"><div class="spinner"></div>Создаём ваш дизайн...</div>
       <div class="error-msg" id="errMsg"></div>
+
       <div class="result-wrap" id="resultWrap">
         <span class="result-label">Ваш новый интерьер</span>
         <img id="resultImg" src="" alt="Результат">
@@ -338,20 +363,32 @@
     </div>
     <div class="about-features">
       <div class="about-feature">
-        <span class="feature-icon">⚡</span>
-        <div class="feature-text"><h4>Быстро</h4><p>Результат за 30 секунд — не нужно ждать дней или недель</p></div>
+        <span class="feature-icon">🏠</span>
+        <div class="feature-text">
+          <h4>Для любой комнаты</h4>
+          <p>Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением и планировкой</p>
+        </div>
       </div>
       <div class="about-feature">
-        <span class="feature-icon">🎯</span>
-        <div class="feature-text"><h4>Точно</h4><p>ИИ сохраняет структуру вашей комнаты — окна, двери, пропорции</p></div>
+        <span class="feature-icon">🎨</span>
+        <div class="feature-text">
+          <h4>Множество стилей</h4>
+          <p>Скандинавский, лофт, классика, минимализм, бохо — выбирайте то что вам по душе</p>
+        </div>
       </div>
       <div class="about-feature">
-        <span class="feature-icon">💰</span>
-        <div class="feature-text"><h4>Бесплатно</h4><p>Без регистрации и оплаты — просто загрузите фото и пробуйте</p></div>
+        <span class="feature-icon">📐</span>
+        <div class="feature-text">
+          <h4>Сохраняет вашу планировку</h4>
+          <p>ИИ точно следует структуре вашей комнаты — окна, двери и пропорции остаются на месте</p>
+        </div>
       </div>
       <div class="about-feature">
         <span class="feature-icon">🛋️</span>
-        <div class="feature-text"><h4>С каталогом мебели</h4><p>После генерации находите похожую мебель в Hoff, Roomer и других магазинах</p></div>
+        <div class="feature-text">
+          <h4>Мебель под рукой</h4>
+          <p>После генерации находите похожую мебель в Hoff, Roomer и Baumit — сразу переходите к покупкам</p>
+        </div>
       </div>
     </div>
   </div>
@@ -364,11 +401,33 @@
 
 <script>
 const WORKER_URL = 'https://roomfactory.gwirglemly.workers.dev/';
-const budgetLabels = ['Эконом · до 300 000 ₽','Средний · 300 000 — 1 000 000 ₽','Премиум · 1 — 3 млн ₽','Люкс · от 3 млн ₽'];
-const budgetPrompts = ['budget interior, affordable IKEA-style furniture','mid-range interior, quality furniture','premium interior, high-end furniture','luxury bespoke interior, top quality materials'];
+
+const budgetLabels = [
+  'Эконом · до 200 000 ₽',
+  'Доступный · 200 000 — 500 000 ₽',
+  'Средний · 500 000 — 1 500 000 ₽',
+  'Премиум · 1 500 000 — 4 000 000 ₽',
+  'Люкс · от 4 000 000 ₽'
+];
+const budgetPrompts = [
+  'budget economy interior, very affordable furniture, simple finishes',
+  'affordable interior, budget-friendly furniture, IKEA style',
+  'mid-range interior, quality furniture, good materials',
+  'premium interior, high-end furniture, luxury materials',
+  'ultra luxury bespoke interior, designer furniture, top quality'
+];
 
 let file = null;
-let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', room:'living room', color:'neutral beige and white color palette', budget:1 };
+let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', room:'living room', color:'neutral beige and white color palette', budget:2 };
+
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('visible');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('visible');
+}
 
 function showPopup(title, desc, img) {
   document.getElementById('popupTitle').textContent = title;
@@ -475,7 +534,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
-    document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
 });
 </script>
