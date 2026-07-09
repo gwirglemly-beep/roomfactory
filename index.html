@@ -9,11 +9,11 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', sans-serif; background: #faf7f2; color: #2a2218; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(250,247,242,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(232,221,208,0.5); }
-  .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: #2a2218; letter-spacing: 1px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(15,10,5,0.3); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); transition: background 0.3s; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: #ffffff; letter-spacing: 1px; }
   .nav-logo span { color: #b48c5a; }
   .burger { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 4px; }
-  .burger span { display: block; width: 24px; height: 2px; background: #2a2218; border-radius: 2px; transition: all 0.3s; }
+  .burger span { display: block; width: 24px; height: 2px; background: #ffffff; border-radius: 2px; transition: all 0.3s; }
 
   .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(42,34,24,0.5); z-index: 80; }
   .sidebar-overlay.visible { display: block; }
@@ -24,21 +24,23 @@
   .sidebar a:hover { color: #b48c5a; }
   .sidebar-cta { display: block; margin-top: 32px; background: #b48c5a; color: white !important; border-radius: 10px; padding: 14px 24px !important; text-align: center; border-bottom: none !important; font-family: 'Inter', sans-serif !important; font-size: 14px !important; }
 
-  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 20px 80px; background: linear-gradient(160deg, #faf7f2 0%, #f5ede0 50%, #faf7f2 100%); position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 60% 40%, rgba(180,140,90,0.06) 0%, transparent 60%); pointer-events: none; }
-  .hero-tag { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #b48c5a; margin-bottom: 24px; background: rgba(180,140,90,0.08); padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(180,140,90,0.2); display: inline-block; }
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 7vw, 96px); font-weight: 400; line-height: 1.05; max-width: 900px; margin-bottom: 28px; color: #1a1208; }
-  .hero h1 em { font-style: italic; color: #b48c5a; }
-  .hero-sub { font-size: 18px; font-weight: 300; color: #8a7a66; max-width: 520px; line-height: 1.7; margin-bottom: 48px; }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 20px 80px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://i.imgur.com/wJV3vkH.jpg'); background-size: cover; background-position: center; z-index: 0; }
+  .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(15,10,5,0.55) 0%, rgba(15,10,5,0.45) 60%, rgba(15,10,5,0.7) 100%); z-index: 1; }
+  .hero > * { position: relative; z-index: 2; }
+  .hero-tag { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #d4a96a; margin-bottom: 24px; background: rgba(180,140,90,0.15); padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(180,140,90,0.3); display: inline-block; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 7vw, 96px); font-weight: 400; line-height: 1.05; max-width: 900px; margin-bottom: 28px; color: #ffffff; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .hero h1 em { font-style: italic; color: #d4a96a; }
+  .hero-sub { font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.8); max-width: 520px; line-height: 1.7; margin-bottom: 48px; }
   .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 80px; }
   .btn-primary { background: #b48c5a; color: white; border: none; border-radius: 10px; padding: 16px 36px; font-size: 15px; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
-  .btn-primary:hover { background: #a07848; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(180,140,90,0.3); }
-  .btn-secondary { background: transparent; color: #b48c5a; border: 1px solid #b48c5a; border-radius: 10px; padding: 16px 36px; font-size: 15px; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
-  .btn-secondary:hover { background: rgba(180,140,90,0.06); }
+  .btn-primary:hover { background: #c9a06a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(180,140,90,0.4); }
+  .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 16px 36px; font-size: 15px; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; backdrop-filter: blur(4px); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.2); }
   .hero-stats { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; }
   .stat { text-align: center; }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 32px; color: #b48c5a; }
-  .stat-label { font-size: 12px; color: #b4a898; letter-spacing: 1px; margin-top: 4px; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 32px; color: #d4a96a; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-top: 4px; }
 
   .section { padding: 100px 20px; }
   .section-inner { max-width: 1100px; margin: 0 auto; }
@@ -181,6 +183,8 @@
 </nav>
 
 <section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
   <span class="hero-tag">AI дизайн интерьера</span>
   <h1>Дизайн вашей комнаты<br><em>за 30 секунд</em></h1>
   <p class="hero-sub">Загрузите фото любой комнаты — искусственный интеллект создаст профессиональный дизайн в выбранном стиле</p>
@@ -257,7 +261,6 @@
     <span class="section-tag" style="text-align:center;display:block">Попробуйте прямо сейчас</span>
     <h2 class="section-title" style="text-align:center">Создайте дизайн вашей комнаты мечты</h2>
     <p class="section-sub" style="text-align:center;margin:0 auto 40px">Бесплатно, без регистрации</p>
-
     <div class="upload-section">
       <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
         <span class="upload-icon">📷</span>
@@ -265,7 +268,6 @@
         <p class="upload-hint">JPG или PNG, до 10 МБ</p>
       </div>
       <input type="file" id="fileInput" accept="image/*">
-
       <hr class="divider">
       <span class="section-label">Стиль интерьера</span>
       <div class="options-grid col-3" style="margin-bottom:24px">
@@ -294,7 +296,6 @@
           <button class="info-btn" onclick="showPopup('Бохо','Яркие цвета, растения, текстиль. Свободный стиль без правил.','https://i.imgur.com/zCQCn4n.jpg')">ⓘ</button>
         </div>
       </div>
-
       <hr class="divider">
       <span class="section-label">Тип комнаты</span>
       <div class="options-grid col-4" style="margin-bottom:24px">
@@ -307,7 +308,6 @@
         <button class="opt-btn" data-group="room" data-val="hallway">Прихожая</button>
         <button class="opt-btn" data-group="room" data-val="dining room">Столовая</button>
       </div>
-
       <hr class="divider">
       <span class="section-label">Цветовая гамма</span>
       <div class="colors-wrap">
@@ -320,22 +320,18 @@
         <button class="color-swatch" data-group="color" data-val="black and white monochrome" data-name="Ч/Б" style="background:linear-gradient(135deg,#ffffff 50%,#000000 50%)"></button>
         <button class="color-swatch" data-group="color" data-val="golden and luxury warm tones" data-name="Золотой" style="background:#c9a030"></button>
       </div>
-
       <hr class="divider">
       <span class="section-label">Бюджет ремонта</span>
       <div class="budget-wrap">
         <input type="range" id="budgetSlider" min="0" max="4" value="2" step="1">
         <div class="budget-label" id="budgetLabel">Средний · 500 000 — 1 500 000 ₽</div>
       </div>
-
       <hr class="divider">
       <span class="section-label">Комментарий (необязательно)</span>
       <textarea class="comment-box" id="comment" placeholder="Опишите пожелания: хочу больше света, нужно место для детей, люблю открытые полки..."></textarea>
-
       <button class="generate-btn" id="genBtn" disabled>Загрузите фото для генерации</button>
       <div class="loading" id="loading"><div class="spinner"></div>Создаём ваш дизайн...</div>
       <div class="error-msg" id="errMsg"></div>
-
       <div class="result-wrap" id="resultWrap">
         <span class="result-label">Ваш новый интерьер</span>
         <img id="resultImg" src="" alt="Результат">
@@ -364,31 +360,19 @@
     <div class="about-features">
       <div class="about-feature">
         <span class="feature-icon">🏠</span>
-        <div class="feature-text">
-          <h4>Для любой комнаты</h4>
-          <p>Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением и планировкой</p>
-        </div>
+        <div class="feature-text"><h4>Для любой комнаты</h4><p>Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением и планировкой</p></div>
       </div>
       <div class="about-feature">
         <span class="feature-icon">🎨</span>
-        <div class="feature-text">
-          <h4>Множество стилей</h4>
-          <p>Скандинавский, лофт, классика, минимализм, бохо — выбирайте то что вам по душе</p>
-        </div>
+        <div class="feature-text"><h4>Множество стилей</h4><p>Скандинавский, лофт, классика, минимализм, бохо — выбирайте то что вам по душе</p></div>
       </div>
       <div class="about-feature">
         <span class="feature-icon">📐</span>
-        <div class="feature-text">
-          <h4>Сохраняет вашу планировку</h4>
-          <p>ИИ точно следует структуре вашей комнаты — окна, двери и пропорции остаются на месте</p>
-        </div>
+        <div class="feature-text"><h4>Сохраняет вашу планировку</h4><p>ИИ точно следует структуре вашей комнаты — окна, двери и пропорции остаются на месте</p></div>
       </div>
       <div class="about-feature">
         <span class="feature-icon">🛋️</span>
-        <div class="feature-text">
-          <h4>Мебель под рукой</h4>
-          <p>После генерации находите похожую мебель в Hoff, Roomer и Baumit — сразу переходите к покупкам</p>
-        </div>
+        <div class="feature-text"><h4>Мебель под рукой</h4><p>После генерации находите похожую мебель в Hoff, Roomer и Baumit — сразу переходите к покупкам</p></div>
       </div>
     </div>
   </div>
