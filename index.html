@@ -37,6 +37,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .hero-title { font-family: 'Unbounded', sans-serif; font-size: clamp(48px, 8vw, 110px); font-weight: 900; line-height: 0.95; letter-spacing: -2px; margin-bottom: 32px; color: #1a1208; }
 .hero-title .line2 { color: #b48c5a; display: block; }
 .hero-sub { font-size: 15px; font-weight: 300; color: rgba(42,34,24,0.6); max-width: 440px; line-height: 1.7; margin-bottom: 48px; }
+  .hero-eyebrow { opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; animation-delay: 0.2s; }
+.hero-title { opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s ease forwards; animation-delay: 0.5s; }
+.hero-sub { opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; animation-delay: 0.9s; }
+.hero-btns { opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; animation-delay: 1.2s; }
+.hero-stats { opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; animation-delay: 1.5s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 .btn-gold { background: #b48c5a; color: white; border: none; border-radius: 2px; padding: 16px 36px; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
 .btn-gold:hover { background: #c9a06a; transform: translateY(-1px); }
