@@ -238,24 +238,25 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 </nav>
 
 <section class="hero">
-  <div class="slides" id="slides">
-    <div class="slide active">
-      <div class="slide-img" style="background-image:url('https://i.imgur.com/4jgsqhI.jpg')"></div>
-      <div class="slide-overlay"></div>
+  <div class="hero-grid">
+    <div class="hero-grid-item" style="background-image:url('https://i.imgur.com/4jgsqhI.jpg')">
+      <div class="hero-grid-overlay"></div>
+      <div class="hero-grid-label">Скандинавский</div>
     </div>
-    <div class="slide">
-      <div class="slide-img" style="background-image:url('https://i.imgur.com/n7Y7EV6.jpg')"></div>
-      <div class="slide-overlay"></div>
+    <div class="hero-grid-item" style="background-image:url('https://i.imgur.com/n7Y7EV6.jpg')">
+      <div class="hero-grid-overlay"></div>
+      <div class="hero-grid-label">Минимализм</div>
     </div>
-    <div class="slide">
-      <div class="slide-img" style="background-image:url('https://i.imgur.com/UKtBdfN.jpg')"></div>
-      <div class="slide-overlay"></div>
+    <div class="hero-grid-item" style="background-image:url('https://i.imgur.com/UKtBdfN.jpg')">
+      <div class="hero-grid-overlay"></div>
+      <div class="hero-grid-label">Лофт</div>
     </div>
-    <div class="slide">
-      <div class="slide-img" style="background-image:url('https://i.imgur.com/287MZcF.jpg')"></div>
-      <div class="slide-overlay"></div>
+    <div class="hero-grid-item" style="background-image:url('https://i.imgur.com/287MZcF.jpg')">
+      <div class="hero-grid-overlay"></div>
+      <div class="hero-grid-label">Классика</div>
     </div>
   </div>
+
   <div class="hero-content">
     <div class="hero-eyebrow">AI дизайн интерьера</div>
     <h1 class="hero-title">Дизайн<br>вашей<span class="line2">комнаты</span></h1>
@@ -265,19 +266,6 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
       <a href="#examples" class="btn-outline">Смотреть примеры</a>
     </div>
   </div>
-  <div class="slide-style-label">
-    <div class="style-pill active" onclick="goToSlide(0)">Скандинавский</div>
-    <div class="style-pill" onclick="goToSlide(1)">Минимализм</div>
-    <div class="style-pill" onclick="goToSlide(2)">Лофт</div>
-    <div class="style-pill" onclick="goToSlide(3)">Классика</div>
-  </div>
-  <div class="slide-indicators">
-    <div class="indicator active" onclick="goToSlide(0)"></div>
-    <div class="indicator" onclick="goToSlide(1)"></div>
-    <div class="indicator" onclick="goToSlide(2)"></div>
-    <div class="indicator" onclick="goToSlide(3)"></div>
-  </div>
-  <div class="slide-counter"><span id="currentSlide">01</span> / 04</div>
 </section>
 
 <div class="marquee-wrap">
