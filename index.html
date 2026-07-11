@@ -118,7 +118,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .info-btn { background: none; border: none; color: #c4b4a4; font-size: 11px; cursor: pointer; flex-shrink: 0; transition: color 0.2s; }
 .info-btn:hover { color: #b48c5a; }
 
-.colors-row { display: flex; gap: 10px; flex-wrap: wrap; padding-bottom: 16px; }
+.colors-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 20px; flex-wrap: nowrap; scrollbar-width: none; }
+.colors-row::-webkit-scrollbar { display: none; }
 .color-dot { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; position: relative; flex-shrink: 0; }
 .color-dot.active { border-color: #b48c5a; transform: scale(1.2); }
 .color-dot::after { content: attr(data-name); position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 8px; color: #8a7a66; white-space: nowrap; font-family: 'Inter', sans-serif; }
