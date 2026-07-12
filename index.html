@@ -17,6 +17,25 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .burger { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
 .burger span { display: block; width: 28px; height: 1.5px; background: #1a1208; transition: all 0.3s; }
 
+.nav-right { display: flex; align-items: center; gap: 28px; }
+.auth-btn { background: transparent; border: 1px solid rgba(42,34,24,0.3); color: #1a1208; padding: 10px 22px; font-size: 10px; font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.auth-btn:hover { border-color: #b48c5a; color: #b48c5a; }
+.auth-user { display: flex; align-items: center; gap: 16px; font-size: 11px; }
+.auth-user .email { color: #1a1208; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0.3px; }
+.auth-logout { background: none; border: none; color: #b48c5a; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; }
+.auth-tabs { display: flex; gap: 8px; margin-bottom: 28px; }
+.auth-tab { flex: 1; background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 12px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a66; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
+.auth-tab.active { border-color: #b48c5a; color: #b48c5a; background: rgba(180,140,90,0.08); }
+.auth-input { width: 100%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 14px; color: #1a1208; font-family: 'Inter', sans-serif; font-size: 13px; margin-bottom: 14px; }
+.auth-input:focus { outline: none; border-color: #b48c5a; }
+.auth-submit { width: 100%; background: #b48c5a; color: white; border: none; padding: 16px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+.auth-submit:hover:not(:disabled) { background: #c9a06a; }
+.auth-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.auth-msg { font-size: 11px; margin-top: 16px; text-align: center; line-height: 1.6; }
+.auth-msg.error { color: #c05050; }
+.auth-msg.success { color: #5a8060; }
+@media (max-width: 480px) { .auth-user .email { max-width: 80px; } }
+
 .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
 .sidebar-overlay.visible { display: block; }
 .sidebar { position: fixed; top: 0; right: -380px; width: 360px; height: 100vh; background: #faf7f2; z-index: 300; padding: 100px 48px 48px; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); border-left: 1px solid rgba(42,34,24,0.1); }
@@ -213,6 +232,22 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
+<div class="popup-overlay" id="authModal">
+  <div class="popup-box" style="max-width:380px">
+    <button class="popup-close" onclick="closeAuthModal()">✕</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')">Вход</button>
+      <button class="auth-tab" id="tabSignup" type="button" onclick="switchAuthTab('signup')">Регистрация</button>
+    </div>
+    <form id="authForm">
+      <input type="email" id="authEmail" placeholder="Email" required class="auth-input" autocomplete="email">
+      <input type="password" id="authPassword" placeholder="Пароль" required class="auth-input" minlength="6" autocomplete="current-password">
+      <button type="submit" class="auth-submit" id="authSubmitBtn">Войти</button>
+    </form>
+    <p class="auth-msg" id="authMsg"></p>
+  </div>
+</div>
+
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
@@ -225,9 +260,12 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 
 <nav>
   <div class="nav-logo">Room<span>.</span>Factory</div>
-  <button class="burger" onclick="openSidebar()">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <div id="authArea"></div>
+    <button class="burger" onclick="openSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -505,7 +543,91 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   <div class="footer-text">© 2026 · AI дизайн интерьера</div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL = 'https://puqwlxrdihxmrhgfnnpa.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_OxUbcWIt07x_jXVa8fRW5w_h7L8Nqst';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let authMode = 'login';
+
+function openAuthModal() {
+  document.getElementById('authModal').classList.add('visible');
+}
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('visible');
+  document.getElementById('authMsg').textContent = '';
+  document.getElementById('authMsg').className = 'auth-msg';
+  document.getElementById('authForm').reset();
+}
+document.getElementById('authModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('authModal')) closeAuthModal();
+});
+
+function switchAuthTab(mode) {
+  authMode = mode;
+  document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
+  document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
+  document.getElementById('authSubmitBtn').textContent = mode === 'login' ? 'Войти' : 'Зарегистрироваться';
+  document.getElementById('authMsg').textContent = '';
+  document.getElementById('authMsg').className = 'auth-msg';
+}
+
+function renderAuthArea(session) {
+  const area = document.getElementById('authArea');
+  if (session && session.user) {
+    area.innerHTML = '';
+    const wrap = document.createElement('div');
+    wrap.className = 'auth-user';
+    const email = document.createElement('span');
+    email.className = 'email';
+    email.textContent = session.user.email;
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'auth-logout';
+    logoutBtn.textContent = 'Выйти';
+    logoutBtn.onclick = async () => { await sb.auth.signOut(); };
+    wrap.appendChild(email);
+    wrap.appendChild(logoutBtn);
+    area.appendChild(wrap);
+  } else {
+    area.innerHTML = '<button class="auth-btn" onclick="openAuthModal()">Войти</button>';
+  }
+}
+
+document.getElementById('authForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const msg = document.getElementById('authMsg');
+  const btn = document.getElementById('authSubmitBtn');
+  msg.textContent = '';
+  msg.className = 'auth-msg';
+  btn.disabled = true;
+
+  try {
+    if (authMode === 'login') {
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      closeAuthModal();
+    } else {
+      const { error } = await sb.auth.signUp({ email, password });
+      if (error) throw error;
+      msg.textContent = 'Проверьте почту, чтобы подтвердить регистрацию.';
+      msg.className = 'auth-msg success';
+    }
+  } catch (err) {
+    msg.textContent = err.message || 'Что-то пошло не так. Попробуйте ещё раз.';
+    msg.className = 'auth-msg error';
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+sb.auth.onAuthStateChange((_event, session) => {
+  renderAuthArea(session);
+});
+sb.auth.getSession().then(({ data }) => renderAuthArea(data.session));
+
 const WORKER_URL = 'https://roomfactory.gwirglemly.workers.dev/';
 const budgetLabels = ['Эконом · до 200 000 ₽','Доступный · 200—500 тыс ₽','Средний · 500 000—1 500 000 ₽','Премиум · 1.5—4 млн ₽','Люкс · от 4 млн ₽'];
 const budgetPrompts = ['budget economy interior, affordable furniture','affordable interior, IKEA style','mid-range interior, quality furniture','premium interior, high-end furniture','ultra luxury bespoke interior'];
