@@ -610,7 +610,7 @@ document.getElementById('authForm').addEventListener('submit', async e => {
       if (error) throw error;
       closeAuthModal();
     } else {
-      const { error } = await sb.auth.signUp({ email, password });
+      const { error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' } });
       if (error) throw error;
       msg.textContent = 'Проверьте почту, чтобы подтвердить регистрацию.';
       msg.className = 'auth-msg success';
