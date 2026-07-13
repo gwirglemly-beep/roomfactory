@@ -183,6 +183,15 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .shop-btn { display: block; text-align: center; background: transparent; border: 1px solid rgba(42,34,24,0.15); color: #8a7a66; padding: 10px 6px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.15s; font-family: 'Inter', sans-serif; }
 .shop-btn:hover { border-color: #b48c5a; color: #b48c5a; }
 
+.hoff-products-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
+.hoff-product-card { display: block; text-decoration: none; background: #faf7f2; border: 1px solid rgba(42,34,24,0.1); overflow: hidden; transition: border-color 0.15s; }
+.hoff-product-card:hover { border-color: #b48c5a; }
+.hoff-product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: #eee8df; }
+.hoff-product-info { padding: 8px 8px 10px; }
+.hoff-product-name { font-size: 10px; color: #1a1208; line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.hoff-product-price { font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700; color: #b48c5a; }
+.hoff-products-empty { font-size: 12px; color: #8a7a66; grid-column: 1 / -1; }
+
 .popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 500; justify-content: center; align-items: center; }
 .popup-overlay.visible { display: flex; }
 .popup-box { background: white; border: 1px solid rgba(42,34,24,0.1); padding: 40px; max-width: 420px; width: 90%; position: relative; }
@@ -440,12 +449,12 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <div class="form-section">
           <span class="form-label">Стиль интерьера</span>
           <div class="opts-grid opts-3">
-            <div class="style-row"><button class="opt-btn active" style="flex:1" data-group="style" data-val="scandinavian interior design, light wood, white walls, minimalist, cozy">Скандинавский</button><button class="info-btn" onclick="showPopup('Скандинавский','Светлые тона, натуральное дерево, простые формы.','https://i.imgur.com/QpdFRQ1.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-val="modern minimalist interior, concrete, glass, steel, clean lines">Минимализм</button><button class="info-btn" onclick="showPopup('Минимализм','Чистые линии, нейтральные цвета, открытое пространство.','https://i.imgur.com/CrzZ6of.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-val="loft industrial interior, exposed brick, metal, dark tones">Лофт</button><button class="info-btn" onclick="showPopup('Лофт','Промышленная эстетика: кирпич, металл, высокие потолки.','https://i.imgur.com/m44HmWk.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-val="classic luxury interior, rich wood, elegant furniture, warm lighting">Классика</button><button class="info-btn" onclick="showPopup('Классика','Богатые материалы, симметрия, изящные детали.','https://i.imgur.com/CjswDfr.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-val="japandi interior design, natural materials, zen, neutral tones">Japandi</button><button class="info-btn" onclick="showPopup('Japandi','Японская философия встречает скандинавский уют.','https://i.imgur.com/f5dOSSq.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-val="bohemian eclectic interior, colorful, plants, vintage furniture">Бохо</button><button class="info-btn" onclick="showPopup('Бохо','Яркие цвета, растения, текстиль. Свободный стиль.','https://i.imgur.com/zCQCn4n.jpg')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn active" style="flex:1" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, light wood, white walls, minimalist, cozy">Скандинавский</button><button class="info-btn" onclick="showPopup('Скандинавский','Светлые тона, натуральное дерево, простые формы.','https://i.imgur.com/QpdFRQ1.jpg')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="minimalism" data-val="modern minimalist interior, concrete, glass, steel, clean lines">Минимализм</button><button class="info-btn" onclick="showPopup('Минимализм','Чистые линии, нейтральные цвета, открытое пространство.','https://i.imgur.com/CrzZ6of.jpg')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="loft" data-val="loft industrial interior, exposed brick, metal, dark tones">Лофт</button><button class="info-btn" onclick="showPopup('Лофт','Промышленная эстетика: кирпич, металл, высокие потолки.','https://i.imgur.com/m44HmWk.jpg')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="classic" data-val="classic luxury interior, rich wood, elegant furniture, warm lighting">Классика</button><button class="info-btn" onclick="showPopup('Классика','Богатые материалы, симметрия, изящные детали.','https://i.imgur.com/CjswDfr.jpg')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="japandi" data-val="japandi interior design, natural materials, zen, neutral tones">Japandi</button><button class="info-btn" onclick="showPopup('Japandi','Японская философия встречает скандинавский уют.','https://i.imgur.com/f5dOSSq.jpg')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="boho" data-val="bohemian eclectic interior, colorful, plants, vintage furniture">Бохо</button><button class="info-btn" onclick="showPopup('Бохо','Яркие цвета, растения, текстиль. Свободный стиль.','https://i.imgur.com/zCQCn4n.jpg')">ⓘ</button></div>
           </div>
         </div>
 
@@ -515,10 +524,13 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
           <span class="result-label">Ваш новый интерьер</span>
           <img id="resultImg" src="" alt="Результат">
           <a class="download-btn" id="dlBtn" download="roomfactory.jpg">Скачать изображение</a>
+          <div style="margin-top:20px">
+            <div class="form-label" style="margin-bottom:8px">Похожая мебель в Hoff</div>
+            <div class="hoff-products-grid" id="hoffProductsGrid"></div>
+          </div>
           <div style="margin-top:16px">
-            <div class="form-label" style="margin-bottom:8px">Найти похожую мебель</div>
-            <div class="shops-row">
-              <a id="hoffBtn" target="_blank" class="shop-btn">Hoff</a>
+            <div class="form-label" style="margin-bottom:8px">Ещё поискать</div>
+            <div class="shops-row" style="grid-template-columns:repeat(2,1fr)">
               <a id="roomerBtn" target="_blank" class="shop-btn">Roomer</a>
               <a id="baumitBtn" target="_blank" class="shop-btn">Baumit</a>
             </div>
@@ -641,7 +653,60 @@ const budgetLabels = ['Эконом · до 200 000 ₽','Доступный · 
 const budgetPrompts = ['budget economy interior, affordable furniture','affordable interior, IKEA style','mid-range interior, quality furniture','premium interior, high-end furniture','ultra luxury bespoke interior'];
 
 let file = null;
-let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', room:'living room', color:'neutral beige and white', budget:2 };
+let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', styleKey:'scandinavian', room:'living room', color:'neutral beige and white', budget:2 };
+
+const hoffCatalog = {
+  scandinavian: [
+    { name: 'Диван-кровать SCANDICA Амели', price: '52 499 ₽', img: 'https://hoff.ru/upload/iblock/29c/29c6ed3352a6c14c4a354e5536a3f4fd.jpg', url: 'https://hoff.ru/catalog/gostinaya/divany/pryamye/divan_krovat_scandica_ameli_id8494541/?articul=80511504' },
+    { name: 'Кресло SCANDICA Скотт', price: '16 999 ₽', img: 'https://hoff.ru/upload/iblock/7bb/jdrcpo9kmd9dd6zr5pnttro70jdr5tm2.jpg', url: 'https://hoff.ru/catalog/gostinaya/kresla/kreslo_skott_id10918414/?articul=80777055' },
+    { name: 'Торшер HOFF Hygge Wood', price: '8 098 ₽', img: 'https://hoff.ru/upload/iblock/37a/vbd2zun2lkpvl2drosx4qjz7z2v4yj7c.jpg', url: 'https://hoff.ru/catalog/tovary_dlya_doma/osveschenie/torshery/torsher_hygge_id9550347/?articul=80593891' }
+  ],
+  loft: [
+    { name: 'Угловой диван-кровать Слим', price: '31 499 ₽', img: 'https://hoff.ru/upload/iblock/1be/v7y2kac4stvjwywm6dygmuej2ocrl84x.jpg', url: 'https://hoff.ru/catalog/gostinaya/divany/uglovye/uglovoy_divan_krovat_slim_id9558157/?articul=80593873' },
+    { name: 'Светильник напольный LOT8030', price: '4 499 ₽', img: 'https://hoff.ru/upload/iblock/649/68jpfqxcb0zkcnj85fzpxhyjk6dbtn33.jpg', url: 'https://hoff.ru/catalog/tovary_dlya_doma/osveschenie/torshery/svetilnik_napolnyy_lot8030_id11019338/?articul=80792950' }
+  ],
+  classic: [
+    { name: 'Диван-кровать DREAMART Дрезден', price: '50 399 ₽', img: 'https://hoff.ru/upload/iblock/587/5873cb4dde5d49149fbe4b0e1d8fe7ad.jpg', url: 'https://hoff.ru/catalog/gostinaya/divany/pryamye/divan_krovat_dreamart_drezden_id8854329/?articul=80541899' },
+    { name: 'Зеркало напольное в раме HOFF Айрис', price: '1 999 ₽', img: 'https://hoff.ru/upload/iblock/6e8/7a0viscvt7rbok6883w3llbzofb0i5hb.jpg', url: 'https://hoff.ru/catalog/tovary_dlya_doma/dekor/zerkala/zerkala_napolnyie/zerkalo_napolnoe_v_rame_ayris_id10641131/?articul=80636504' }
+  ],
+  minimalism: [
+    { name: 'Угловой диван-кровать SOLANA Мэдисон', price: '68 299 ₽', img: 'https://hoff.ru/upload/iblock/7ff/zli7jzlnvbafhdwe7k8xqktjlg49uppz.jpg', url: 'https://hoff.ru/catalog/gostinaya/divany/uglovye/uglovoy_divan_krovat_medison_id9316745/?articul=80572084' }
+  ],
+  japandi: [
+    { name: 'Кресло-качалка SCANDICA Leset Скаген', price: '16 999 ₽', img: 'https://hoff.ru/upload/iblock/404/404747810b931a7acd76b4f52f0a3c7c.jpg', url: 'https://hoff.ru/catalog/gostinaya/kresla/kreslo_kachalka_scandica_skagen_id8599803/?articul=80520874' }
+  ],
+  boho: [
+    { name: 'Бескаркасный диван Лимасол', price: '29 999 ₽', img: 'https://hoff.ru/upload/iblock/10f/p5s8urdwb24px0np76rfl1d6y6tmbugf.jpg', url: 'https://hoff.ru/catalog/gostinaya/divany/pryamye/divan_limasol_id11156686/?articul=80802239' },
+    { name: 'Кресло Gap', price: '5 999 ₽', img: 'https://hoff.ru/upload/iblock/031/ju98tov7pyr0dn5223cf58cfaujli7ul.jpg', url: 'https://hoff.ru/catalog/gostinaya/pufy_i_banketki/kresla-grushi/kreslo_gap_id8515879/?articul=80517328' }
+  ]
+};
+
+const hoffStyleHints = {
+  scandinavian: 'mustard yellow velvet sofa on wooden legs, light oak velvet accent chair, warm wood floor lamp',
+  loft: 'dark grey quilted corner sofa, black metal industrial floor lamp',
+  classic: 'beige tufted sofa with rolled arms, elegant wood-framed floor mirror',
+  minimalism: 'clean grey corduroy corner sofa, minimal silhouette, no ornamentation',
+  japandi: 'natural wood rocking chair with beige cushion, warm wood tones, low furniture',
+  boho: 'sage green bouclé sofa without legs, round brown velvet swivel chair, rattan accents'
+};
+
+function renderHoffProducts(styleKey) {
+  const grid = document.getElementById('hoffProductsGrid');
+  const items = hoffCatalog[styleKey] || [];
+  if (!items.length) {
+    grid.innerHTML = '<div class="hoff-products-empty">Пока нет подборки для этого стиля — загляните в общий каталог Hoff.</div>';
+    return;
+  }
+  grid.innerHTML = items.map(p =>
+    '<a class="hoff-product-card" href="' + p.url + '" target="_blank" rel="noopener">' +
+      '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+      '<div class="hoff-product-info">' +
+        '<div class="hoff-product-name">' + p.name + '</div>' +
+        '<div class="hoff-product-price">' + p.price + '</div>' +
+      '</div>' +
+    '</a>'
+  ).join('');
+}
 
 let current = 0;
 let sliderTimer = setInterval(nextSlide, 4000);
@@ -685,6 +750,7 @@ document.querySelectorAll('.opt-btn').forEach(btn => {
     document.querySelectorAll('.opt-btn[data-group="'+g+'"]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     sel[g] = btn.dataset.val;
+    if (g === 'style' && btn.dataset.key) sel.styleKey = btn.dataset.key;
   });
 });
 
@@ -740,7 +806,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = 'Создаём...';
 
-  const prompt = [sel.style, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
+  const furnitureHint = hoffStyleHints[sel.styleKey] || '';
+  const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
 
   try {
     const fd = new FormData();
@@ -758,9 +825,9 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     result.classList.add('visible');
 
     const q = encodeURIComponent(sel.style.split(',')[0]+' '+sel.room);
-    document.getElementById('hoffBtn').href = 'https://hoff.ru/catalog/?q='+q;
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
+    renderHoffProducts(sel.styleKey);
   } catch(e) {
     err.textContent = 'Не удалось создать дизайн. Попробуйте ещё раз.';
     err.classList.add('visible');
