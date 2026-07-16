@@ -18,6 +18,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .burger span { display: block; width: 28px; height: 1.5px; background: #1a1208; transition: all 0.3s; }
 
 .nav-right { display: flex; align-items: center; gap: 28px; }
+.nav-info-links { display: flex; align-items: center; gap: 24px; }
+.nav-info-link { background: none; border: none; color: #1a1208; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap; padding: 0; }
+.nav-info-link:hover { color: #b48c5a; }
+@media (max-width: 700px) { .nav-info-links { display: none; } }
 .auth-btn { background: transparent; border: 1px solid rgba(42,34,24,0.3); color: #1a1208; padding: 10px 22px; font-size: 10px; font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
 .auth-btn:hover { border-color: #b48c5a; color: #b48c5a; }
 .auth-user { display: flex; align-items: center; gap: 16px; font-size: 11px; }
@@ -140,6 +144,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .form-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #b48c5a; margin-bottom: 16px; display: block; font-family: 'Inter', sans-serif; }
 .form-divider { border: none; border-top: 1px solid rgba(42,34,24,0.1); margin: 32px 0; }
 .opts-grid { display: grid; gap: 6px; }
+.opts-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
 .opts-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
 .opts-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
 .opt-btn { background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 10px 8px; font-size: 11px; color: #8a7a66; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; text-align: center; letter-spacing: 0.5px; overflow-wrap: break-word; word-break: break-word; }
@@ -211,6 +216,13 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .popup-box h3 { font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 12px; color: #b48c5a; }
 .popup-box p { font-size: 13px; color: #8a7a66; line-height: 1.7; }
 .popup-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: #8a7a66; font-size: 20px; cursor: pointer; }
+.popup-box.wide { max-width: 700px; max-height: 82vh; overflow-y: auto; }
+.popup-box.dark { background: #2d2318; }
+.popup-box.dark .popup-close { color: rgba(245,242,237,0.6); }
+.popup-box.dark .popup-close:hover { color: #b48c5a; }
+.modal-eyebrow { font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: #b48c5a; margin-bottom: 16px; font-family: 'Inter', sans-serif; }
+.modal-title { font-family: 'Unbounded', sans-serif; font-size: clamp(24px, 4vw, 36px); font-weight: 900; letter-spacing: -1px; line-height: 1; color: #1a1208; margin-bottom: 32px; }
+.popup-box.dark .modal-title { color: #f5f2ed; }
 
 .about { padding: 120px 48px; border-top: 1px solid rgba(42,34,24,0.1); background: #2d2318; }
 .about-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 80px; align-items: center; }
@@ -227,6 +239,25 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: 2px; color: #1a1208; }
 .footer-logo span { color: #b48c5a; }
 .footer-text { font-size: 11px; color: #8a7a66; letter-spacing: 1px; }
+
+.account-page { padding: 140px 48px 100px; max-width: 900px; margin: 0 auto; }
+.account-back { background: none; border: none; color: #8a7a66; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; margin-bottom: 40px; padding: 0; }
+.account-back:hover { color: #b48c5a; }
+.account-title { font-family: 'Unbounded', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 900; letter-spacing: -1px; margin-bottom: 48px; color: #1a1208; }
+.account-section { margin-bottom: 56px; }
+.account-section-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #b48c5a; margin-bottom: 20px; display: block; font-family: 'Inter', sans-serif; }
+.profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; max-width: 520px; }
+.profile-grid .full { grid-column: 1 / -1; }
+.profile-input { width: 100%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 14px; color: #1a1208; font-family: 'Inter', sans-serif; font-size: 13px; }
+.profile-input:focus { outline: none; border-color: #b48c5a; }
+.profile-label { font-size: 10px; letter-spacing: 1px; color: #8a7a66; margin-bottom: 6px; display: block; }
+.profile-save { background: #b48c5a; color: white; border: none; padding: 14px 32px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 20px; transition: all 0.2s; }
+.profile-save:hover:not(:disabled) { background: #c9a06a; }
+.profile-save:disabled { opacity: 0.5; cursor: not-allowed; }
+.profile-msg { font-size: 12px; margin-top: 14px; }
+.profile-msg.success { color: #5a8060; }
+.profile-msg.error { color: #c05050; }
+@media (max-width: 600px) { .account-page { padding: 120px 24px 80px; } .profile-grid { grid-template-columns: minmax(0,1fr); } }
 
 @media (max-width: 768px) {
   nav { padding: 20px 24px; }
@@ -278,27 +309,71 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
-<div class="popup-overlay" id="libraryModal">
-  <div class="popup-box" style="max-width:640px">
-    <button class="popup-close" onclick="closeLibrary()">✕</button>
-    <h3 style="font-family:'Unbounded',sans-serif;font-size:18px;margin-bottom:20px;color:#1a1208">Мои дизайны</h3>
-    <div class="library-grid" id="libraryGrid"></div>
+<div class="popup-overlay" id="howModal">
+  <div class="popup-box wide">
+    <button class="popup-close" onclick="closeModal('howModal')">✕</button>
+    <span class="modal-eyebrow">Процесс</span>
+    <h2 class="modal-title">Как это работает</h2>
+    <div class="steps-grid" style="margin-top:0">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <span class="step-icon">📷</span>
+        <div class="step-title">Загрузите фото</div>
+        <div class="step-desc">Сфотографируйте комнату или загрузите готовое фото. Подходит любое состояние.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <span class="step-icon">🎨</span>
+        <div class="step-title">Выберите стиль</div>
+        <div class="step-desc">Укажите магазин мебели, стиль интерьера, тип комнаты, цветовую гамму и бюджет.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <span class="step-icon">✨</span>
+        <div class="step-title">Получите дизайн</div>
+        <div class="step-desc">За 30 секунд ИИ создаст дизайн вашей комнаты и подберёт мебель из каталога.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="aboutModal">
+  <div class="popup-box wide dark">
+    <button class="popup-close" onclick="closeModal('aboutModal')">✕</button>
+    <div class="about-inner" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+      <div>
+        <span class="modal-eyebrow">О проекте</span>
+        <h2 class="about-title">Дизайн<br>стал <em>доступным</em><br>для всех</h2>
+        <p class="about-text">Room Factory — AI-сервис который делает профессиональный дизайн интерьера доступным без дизайнеров и долгого ожидания.</p>
+        <p class="about-text">Загрузите фото — получите результат за 30 секунд.</p>
+      </div>
+      <div class="about-features">
+        <div class="about-feat"><span class="feat-icon">🏠</span><div><div class="feat-title">Для любой комнаты</div><div class="feat-desc">Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением</div></div></div>
+        <div class="about-feat"><span class="feat-icon">🎨</span><div><div class="feat-title">Множество стилей</div><div class="feat-desc">Скандинавский, лофт, классика, минимализм, бохо — выбирайте</div></div></div>
+        <div class="about-feat"><span class="feat-icon">📐</span><div><div class="feat-title">Сохраняет планировку</div><div class="feat-desc">ИИ следует структуре вашей комнаты — окна, двери и пропорции</div></div></div>
+        <div class="about-feat"><span class="feat-icon">🛋️</span><div><div class="feat-title">Мебель под рукой</div><div class="feat-desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit</div></div></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
-  <a href="#examples" onclick="closeSidebar()">Примеры</a>
-  <a href="#how" onclick="closeSidebar()">Как это работает</a>
-  <a href="#generator" onclick="closeSidebar()">Room Factory</a>
-  <a href="#about" onclick="closeSidebar()">О проекте</a>
-  <a href="#generator" class="sidebar-btn" onclick="closeSidebar()">Попробовать</a>
+  <a href="#examples" onclick="showHome();closeSidebar()">Примеры</a>
+  <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()">Как это работает</a>
+  <a href="#generator" onclick="showHome();closeSidebar()">Room Factory</a>
+  <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()">О проекте</a>
+  <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()">Попробовать</a>
 </div>
 
 <nav>
-  <div class="nav-logo">Room<span>.</span>Factory</div>
+  <div class="nav-logo" style="cursor:pointer" onclick="showHome();window.scrollTo({top:0,behavior:'smooth'})">Room<span>.</span>Factory</div>
   <div class="nav-right">
+    <div class="nav-info-links">
+      <button class="nav-info-link" type="button" onclick="openModal('howModal')">Как это работает</button>
+      <button class="nav-info-link" type="button" onclick="openModal('aboutModal')">О проекте</button>
+    </div>
     <div id="authArea"></div>
     <button class="burger" onclick="openSidebar()">
       <span></span><span></span><span></span>
@@ -306,6 +381,7 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </nav>
 
+<div id="homeView">
 <section class="hero">
   <div class="slides" id="slides">
     <div class="slide active">
@@ -421,31 +497,6 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </section>
 
-<section class="how" id="how">
-  <div class="section-eyebrow">Процесс</div>
-  <h2 class="section-title">Как это<br>работает</h2>
-  <div class="steps-grid">
-    <div class="step-card">
-      <div class="step-number">01</div>
-      <span class="step-icon">📷</span>
-      <div class="step-title">Загрузите фото</div>
-      <div class="step-desc">Сфотографируйте комнату или загрузите готовое фото. Подходит любое состояние.</div>
-    </div>
-    <div class="step-card">
-      <div class="step-number">02</div>
-      <span class="step-icon">🎨</span>
-      <div class="step-title">Выберите стиль</div>
-      <div class="step-desc">Укажите стиль интерьера, тип комнаты, цветовую гамму и бюджет.</div>
-    </div>
-    <div class="step-card">
-      <div class="step-number">03</div>
-      <span class="step-icon">✨</span>
-      <div class="step-title">Получите дизайн</div>
-      <div class="step-desc">За 30 секунд ИИ создаст дизайн вашей комнаты и подберёт мебель из каталогов.</div>
-    </div>
-  </div>
-</section>
-
 <section class="generator" id="generator">
   <div class="gen-layout">
     <div class="gen-left">
@@ -466,6 +517,16 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
           <p class="upload-hint">JPG или PNG, до 10 МБ</p>
         </div>
         <input type="file" id="fileInput" accept="image/*">
+
+        <div class="form-section">
+          <span class="form-label">Магазин мебели</span>
+          <div class="opts-grid opts-2">
+            <button class="opt-btn active" data-group="store" data-key="hoff" data-val="hoff">Hoff</button>
+            <button class="opt-btn" data-group="store" data-key="askona" data-val="askona">Askona</button>
+          </div>
+        </div>
+
+        <hr class="form-divider">
 
         <div class="form-section">
           <span class="form-label">Стиль интерьера</span>
@@ -546,7 +607,7 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
           <img id="resultImg" src="" alt="Результат">
           <a class="download-btn" id="dlBtn" download="roomfactory.jpg">Скачать изображение</a>
           <div style="margin-top:20px">
-            <div class="form-label" style="margin-bottom:8px">Похожая мебель в Hoff</div>
+            <div class="form-label" style="margin-bottom:8px">Похожая мебель в <span id="storeProductsLabel">Hoff</span></div>
             <div class="hoff-products-grid" id="hoffProductsGrid"></div>
           </div>
           <div style="margin-top:16px">
@@ -562,27 +623,45 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </section>
 
-<section class="about" id="about">
-  <div class="about-inner">
-    <div>
-      <div class="section-eyebrow">О проекте</div>
-      <h2 class="about-title">Дизайн<br>стал <em>доступным</em><br>для всех</h2>
-      <p class="about-text">Room Factory — AI-сервис который делает профессиональный дизайн интерьера доступным без дизайнеров и долгого ожидания.</p>
-      <p class="about-text">Загрузите фото — получите результат за 30 секунд.</p>
-    </div>
-    <div class="about-features">
-      <div class="about-feat"><span class="feat-icon">🏠</span><div><div class="feat-title">Для любой комнаты</div><div class="feat-desc">Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением</div></div></div>
-      <div class="about-feat"><span class="feat-icon">🎨</span><div><div class="feat-title">Множество стилей</div><div class="feat-desc">Скандинавский, лофт, классика, минимализм, бохо — выбирайте</div></div></div>
-      <div class="about-feat"><span class="feat-icon">📐</span><div><div class="feat-title">Сохраняет планировку</div><div class="feat-desc">ИИ следует структуре вашей комнаты — окна, двери и пропорции</div></div></div>
-      <div class="about-feat"><span class="feat-icon">🛋️</span><div><div class="feat-title">Мебель под рукой</div><div class="feat-desc">После генерации ищите похожую мебель в Hoff, Roomer и Baumit</div></div></div>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="footer-logo">Room<span>.</span>Factory</div>
   <div class="footer-text">© 2026 · AI дизайн интерьера</div>
 </footer>
+</div>
+
+<div id="accountView" style="display:none">
+  <div class="account-page">
+    <button class="account-back" onclick="showHome()">← На главную</button>
+    <h1 class="account-title">Личный кабинет</h1>
+
+    <div class="account-section">
+      <span class="account-section-label">Профиль</span>
+      <form id="profileForm">
+        <div class="profile-grid">
+          <div>
+            <span class="profile-label">Имя</span>
+            <input type="text" id="profileFirstName" class="profile-input" placeholder="Имя">
+          </div>
+          <div>
+            <span class="profile-label">Фамилия</span>
+            <input type="text" id="profileLastName" class="profile-input" placeholder="Фамилия">
+          </div>
+          <div class="full">
+            <span class="profile-label">Телефон (необязательно)</span>
+            <input type="tel" id="profilePhone" class="profile-input" placeholder="+7 900 000-00-00">
+          </div>
+        </div>
+        <button type="submit" class="profile-save" id="profileSaveBtn">Сохранить</button>
+        <div class="profile-msg" id="profileMsg"></div>
+      </form>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label">Мои дизайны</span>
+      <div class="library-grid" id="libraryGrid"></div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -623,8 +702,8 @@ function renderAuthArea(session) {
     wrap.className = 'auth-user';
     const libBtn = document.createElement('button');
     libBtn.className = 'auth-logout';
-    libBtn.textContent = 'Дизайны';
-    libBtn.onclick = openLibrary;
+    libBtn.textContent = 'Кабинет';
+    libBtn.onclick = showAccount;
     const email = document.createElement('span');
     email.className = 'email';
     email.textContent = session.user.email;
@@ -679,15 +758,63 @@ sb.auth.getSession().then(({ data }) => {
   renderAuthArea(data.session);
 });
 
-function openLibrary() {
-  document.getElementById('libraryModal').classList.add('visible');
+function openModal(id) {
+  document.getElementById(id).classList.add('visible');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('visible');
+}
+['howModal', 'aboutModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    if (e.target === document.getElementById(id)) closeModal(id);
+  });
+});
+
+function showHome() {
+  document.getElementById('accountView').style.display = 'none';
+  document.getElementById('homeView').style.display = '';
+}
+function showAccount() {
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('accountView').style.display = 'block';
+  window.scrollTo(0, 0);
+  loadProfile();
   loadLibrary();
 }
-function closeLibrary() {
-  document.getElementById('libraryModal').classList.remove('visible');
+
+function loadProfile() {
+  if (!currentSession) return;
+  const meta = currentSession.user.user_metadata || {};
+  document.getElementById('profileFirstName').value = meta.first_name || '';
+  document.getElementById('profileLastName').value = meta.last_name || '';
+  document.getElementById('profilePhone').value = meta.phone || '';
 }
-document.getElementById('libraryModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('libraryModal')) closeLibrary();
+
+document.getElementById('profileForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('profileSaveBtn');
+  const msg = document.getElementById('profileMsg');
+  btn.disabled = true;
+  msg.textContent = '';
+  msg.className = 'profile-msg';
+  try {
+    const { data, error } = await sb.auth.updateUser({
+      data: {
+        first_name: document.getElementById('profileFirstName').value.trim(),
+        last_name: document.getElementById('profileLastName').value.trim(),
+        phone: document.getElementById('profilePhone').value.trim()
+      }
+    });
+    if (error) throw error;
+    if (data && data.user) currentSession.user = data.user;
+    msg.textContent = 'Сохранено';
+    msg.className = 'profile-msg success';
+  } catch (err) {
+    msg.textContent = err.message || 'Не удалось сохранить.';
+    msg.className = 'profile-msg error';
+  } finally {
+    btn.disabled = false;
+  }
 });
 
 async function loadLibrary() {
@@ -695,12 +822,12 @@ async function loadLibrary() {
   grid.innerHTML = '<div class="library-empty">Загрузка...</div>';
   const { data, error } = await sb.from('generations').select('*').order('created_at', { ascending: false });
   if (error || !data || !data.length) {
-    grid.innerHTML = '<div class="library-empty">Пока нет сохранённых дизайнов. Создайте дизайн, будучи в аккаунте — он появится здесь.</div>';
+    grid.innerHTML = '<div class="library-empty">Пока нет сохранённых дизайнов. Создайте дизайн — он появится здесь.</div>';
     return;
   }
   grid.innerHTML = data.map(g => {
     const date = new Date(g.created_at).toLocaleDateString('ru-RU');
-    const label = [g.style_label, g.room_label].filter(Boolean).join(' · ');
+    const label = [g.store_label, g.style_label, g.room_label].filter(Boolean).join(' · ');
     return '<div class="library-card" data-id="' + g.id + '" data-url="' + g.image_url + '">' +
       '<button class="library-delete" type="button" title="Удалить">✕</button>' +
       '<img src="' + g.image_url + '" alt="">' +
@@ -735,7 +862,7 @@ document.getElementById('libraryGrid').addEventListener('click', async e => {
   }
 });
 
-async function saveGeneration(blob, styleKey, styleLabel, roomLabel) {
+async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel) {
   if (!currentSession) return;
   try {
     const userId = currentSession.user.id;
@@ -748,7 +875,8 @@ async function saveGeneration(blob, styleKey, styleLabel, roomLabel) {
       image_url: pub.publicUrl,
       style_key: styleKey,
       style_label: styleLabel,
-      room_label: roomLabel
+      room_label: roomLabel,
+      store_label: storeLabel
     });
   } catch (e) {
     console.error('Не удалось сохранить в историю:', e);
@@ -760,9 +888,10 @@ const budgetLabels = ['Эконом · до 200 000 ₽','Доступный · 
 const budgetPrompts = ['budget economy interior, affordable furniture','affordable interior, IKEA style','mid-range interior, quality furniture','premium interior, high-end furniture','ultra luxury bespoke interior'];
 
 let file = null;
-let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2 };
+let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
 
-const hoffCatalog = {
+const storeCatalogs = {
+hoff: {
   scandinavian: [
     { name: 'Диван-кровать SCANDICA Амели', price: '52 499 ₽', img: 'https://hoff.ru/upload/iblock/29c/29c6ed3352a6c14c4a354e5536a3f4fd.jpg', url: 'https://hoff.ru/catalog/gostinaya/divany/pryamye/divan_krovat_scandica_ameli_id8494541/?articul=80511504' },
     { name: 'Кресло SCANDICA Скотт', price: '16 999 ₽', img: 'https://hoff.ru/upload/iblock/7bb/jdrcpo9kmd9dd6zr5pnttro70jdr5tm2.jpg', url: 'https://hoff.ru/catalog/gostinaya/kresla/kreslo_skott_id10918414/?articul=80777055' },
@@ -786,22 +915,49 @@ const hoffCatalog = {
     { name: 'Бескаркасный диван Лимасол', price: '29 999 ₽', img: 'https://hoff.ru/upload/iblock/10f/p5s8urdwb24px0np76rfl1d6y6tmbugf.jpg', url: 'https://hoff.ru/catalog/gostinaya/divany/pryamye/divan_limasol_id11156686/?articul=80802239' },
     { name: 'Кресло Gap', price: '5 999 ₽', img: 'https://hoff.ru/upload/iblock/031/ju98tov7pyr0dn5223cf58cfaujli7ul.jpg', url: 'https://hoff.ru/catalog/gostinaya/pufy_i_banketki/kresla-grushi/kreslo_gap_id8515879/?articul=80517328' }
   ]
+},
+askona: {
+  scandinavian: [
+    { name: 'Бескаркасная кровать Comby', price: '28 999 ₽', img: 'https://ir.askona.ru/i/352x352_min/catalog/5199437.jpg', url: 'https://www.askona.ru/krovati/comby-kombi.htm?productId=2330548&skuId=2330549' },
+    { name: 'Журнальный стол Бронкс', price: '20 599 ₽', img: 'https://ir.askona.ru/i/352x352_min/catalog/4367942.jpg', url: 'https://www.askona.ru/mebel/zhurnalnye-stoliki/zhurnalnyj-stol-bronks.htm?productId=2332506&skuId=2332510' }
+  ],
+  loft: [
+    { name: 'Прямой диван 2 Тиволи, мех полоса серый', price: '51 998 ₽', img: 'https://ir.askona.ru/i/352x352_min/catalog/4478201.jpg', url: 'https://www.askona.ru/divany/pryamoj-divan/pryamoy-divan-2-tivoli.htm?productId=2339546&skuId=2339549' }
+  ],
+  minimalism: [
+    { name: 'Прямой диван 3 Ливси, велюр светло-бежевый', price: '78 997 ₽', img: 'https://ir.askona.ru/i/352x352_min/catalog/4890655.jpg', url: 'https://www.askona.ru/divany/pryamoj-divan/pryamoy-divan-3-livsi.htm?productId=2339500&skuId=2339501' }
+  ],
+  japandi: [
+    { name: 'Бескаркасная кровать Soft', price: '34 499 ₽', img: 'https://ir.askona.ru/i/352x352_min/catalog/5199457.jpg', url: 'https://www.askona.ru/krovati/soft.htm?productId=2330698&skuId=2330700' },
+    { name: 'Журнальный стол Бронкс', price: '20 599 ₽', img: 'https://ir.askona.ru/i/352x352_min/catalog/4367942.jpg', url: 'https://www.askona.ru/mebel/zhurnalnye-stoliki/zhurnalnyj-stol-bronks.htm?productId=2332506&skuId=2332510' }
+  ],
+  classic: [],
+  boho: []
+}
 };
 
-const hoffStyleHints = {
-  scandinavian: 'mustard yellow velvet sofa on wooden legs, light oak velvet accent chair, warm wood floor lamp',
-  loft: 'dark grey quilted corner sofa, black metal industrial floor lamp',
-  classic: 'beige tufted sofa with rolled arms, elegant wood-framed floor mirror',
-  minimalism: 'clean grey corduroy corner sofa, minimal silhouette, no ornamentation',
-  japandi: 'natural wood rocking chair with beige cushion, warm wood tones, low furniture',
-  boho: 'sage green bouclé sofa without legs, round brown velvet swivel chair, rattan accents'
+const storeStyleHints = {
+  hoff: {
+    scandinavian: 'mustard yellow velvet sofa on wooden legs, light oak velvet accent chair, warm wood floor lamp',
+    loft: 'dark grey quilted corner sofa, black metal industrial floor lamp',
+    classic: 'beige tufted sofa with rolled arms, elegant wood-framed floor mirror',
+    minimalism: 'clean grey corduroy corner sofa, minimal silhouette, no ornamentation',
+    japandi: 'natural wood rocking chair with beige cushion, warm wood tones, low furniture',
+    boho: 'sage green bouclé sofa without legs, round brown velvet swivel chair, rattan accents'
+  },
+  askona: {
+    scandinavian: 'light beige upholstered low bed, simple wooden coffee table',
+    loft: 'grey striped faux fur sofa, dark moody upholstery',
+    minimalism: 'light beige velour modular sofa, clean simple silhouette',
+    japandi: 'low upholstered bed in soft neutral fabric, simple wooden coffee table'
+  }
 };
 
-function renderHoffProducts(styleKey) {
+function renderStoreProducts(storeKey, styleKey) {
   const grid = document.getElementById('hoffProductsGrid');
-  const items = hoffCatalog[styleKey] || [];
+  const items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
   if (!items.length) {
-    grid.innerHTML = '<div class="hoff-products-empty">Пока нет подборки для этого стиля — загляните в общий каталог Hoff.</div>';
+    grid.innerHTML = '<div class="hoff-products-empty">Пока нет подборки под этот стиль в выбранном магазине — загляните в общий каталог.</div>';
     return;
   }
   grid.innerHTML = items.map(p =>
@@ -862,6 +1018,11 @@ document.querySelectorAll('.opt-btn').forEach(btn => {
       sel.styleLabel = btn.textContent.trim();
     }
     if (g === 'room') sel.roomLabel = btn.textContent.trim();
+    if (g === 'store') {
+      if (btn.dataset.key) sel.storeKey = btn.dataset.key;
+      sel.storeLabel = btn.textContent.trim();
+      document.getElementById('storeProductsLabel').textContent = sel.storeLabel;
+    }
   });
 });
 
@@ -917,7 +1078,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = 'Создаём...';
 
-  const furnitureHint = hoffStyleHints[sel.styleKey] || '';
+  const furnitureHint = (storeStyleHints[sel.storeKey] && storeStyleHints[sel.storeKey][sel.styleKey]) || '';
   const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
 
   try {
@@ -938,8 +1099,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     const q = encodeURIComponent(sel.style.split(',')[0]+' '+sel.room);
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
-    renderHoffProducts(sel.styleKey);
-    if (currentSession) saveGeneration(blob, sel.styleKey, sel.styleLabel, sel.roomLabel);
+    renderStoreProducts(sel.storeKey, sel.styleKey);
+    if (currentSession) saveGeneration(blob, sel.styleKey, sel.styleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
     err.textContent = 'Не удалось создать дизайн. Попробуйте ещё раз.';
     err.classList.add('visible');
