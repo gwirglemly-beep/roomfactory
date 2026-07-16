@@ -224,6 +224,17 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .modal-title { font-family: 'Unbounded', sans-serif; font-size: clamp(24px, 4vw, 36px); font-weight: 900; letter-spacing: -1px; line-height: 1; color: #1a1208; margin-bottom: 32px; }
 .popup-box.dark .modal-title { color: #f5f2ed; }
 
+.country-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 8px; }
+.country-card { background: #f5f2ed; border: 1px solid rgba(42,34,24,0.1); padding: 28px; }
+.country-flag { font-size: 28px; margin-bottom: 12px; }
+.country-name { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1208; }
+.country-desc { font-size: 12px; color: #8a7a66; line-height: 1.6; margin-bottom: 14px; }
+.country-firms { list-style: none; }
+.country-firms li { font-size: 12px; color: #1a1208; line-height: 1.6; padding: 6px 0; border-top: 1px solid rgba(42,34,24,0.08); }
+.country-firms li:first-child { border-top: none; }
+.country-firms strong { color: #b48c5a; }
+@media (max-width: 600px) { .country-grid { grid-template-columns: minmax(0,1fr); } }
+
 .about { padding: 120px 48px; border-top: 1px solid rgba(42,34,24,0.1); background: #2d2318; }
 .about-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 80px; align-items: center; }
 .about-title { font-family: 'Unbounded', sans-serif; font-size: clamp(28px, 4vw, 52px); font-weight: 900; line-height: 0.95; letter-spacing: -1px; margin-bottom: 32px; color: #f5f2ed; }
@@ -357,12 +368,78 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
+<div class="popup-overlay" id="countriesModal">
+  <div class="popup-box wide">
+    <button class="popup-close" onclick="closeModal('countriesModal')">✕</button>
+    <span class="modal-eyebrow">Мировой рынок</span>
+    <h2 class="modal-title">Мебель по странам</h2>
+    <div class="country-grid">
+      <div class="country-card">
+        <div class="country-flag">🇨🇳</div>
+        <h3 class="country-name">Китай</h3>
+        <p class="country-desc">Крупнейший в мире производитель и экспортёр мебели. Огромная промышленная база — провинция Гуандун и город Фошань считаются неофициальной «мебельной столицей» мира. Диапазон — от бюджетного OEM-производства для мировых брендов до собственных марок международного уровня.</p>
+        <ul class="country-firms">
+          <li><strong>Kuka Home</strong> — один из крупнейших в мире производителей мягкой мебели и диванов</li>
+          <li><strong>Man Wah Holdings</strong> — крупный производитель кресел-реклайнеров и диванов, международный бренд Cheers</li>
+          <li><strong>Markor Furnishings</strong> — крупная мебельная группа с международным присутствием</li>
+          <li><strong>Suofeiya</strong> — один из лидеров рынка встроенной мебели и шкафов-купе</li>
+        </ul>
+      </div>
+      <div class="country-card">
+        <div class="country-flag">🇹🇷</div>
+        <h3 class="country-name">Турция</h3>
+        <p class="country-desc">Один из крупнейших экспортёров мебели в Европу, на Ближний Восток и в Россию. Сильные производственные кластеры — Инегёль и Кайсери. Сочетает массовое производство и современный дизайнерский сегмент.</p>
+        <ul class="country-firms">
+          <li><strong>İstikbal</strong> — один из крупнейших производителей мебели и матрасов в Турции</li>
+          <li><strong>Bellona</strong> — известный бренд мебели для дома с широкой розничной сетью</li>
+          <li><strong>Yataş</strong> — специализируется на матрасах и мягкой мебели</li>
+          <li><strong>Doğtaş</strong> — производитель мебели, известен спальными и гостиными гарнитурами</li>
+        </ul>
+      </div>
+      <div class="country-card">
+        <div class="country-flag">🇮🇹</div>
+        <h3 class="country-name">Италия</h3>
+        <p class="country-desc">Законодатель мод в мировом мебельном дизайне и статусе «Made in Italy». Центр производства — регион Брианца под Миланом. Ежегодная выставка Salone del Mobile в Милане — главное событие мировой мебельной индустрии.</p>
+        <ul class="country-firms">
+          <li><strong>Natuzzi</strong> — всемирно известный производитель кожаных диванов</li>
+          <li><strong>B&B Italia</strong> — культовый дизайнерский бренд мебели</li>
+          <li><strong>Poliform</strong> — современная мебель и кухни премиум-класса</li>
+          <li><strong>Cassina</strong> — исторический бренд, авторская мебель признанных дизайнеров</li>
+        </ul>
+      </div>
+      <div class="country-card">
+        <div class="country-flag">🇩🇪</div>
+        <h3 class="country-name">Германия</h3>
+        <p class="country-desc">Известна инженерным качеством и функциональным дизайном мебели, особенно сильна в системных решениях для спален и гостиных. Ключевая отраслевая выставка — imm cologne.</p>
+        <ul class="country-firms">
+          <li><strong>Hülsta</strong> — крупный производитель мебели для дома</li>
+          <li><strong>Rolf Benz</strong> — премиальные дизайнерские диваны</li>
+          <li><strong>Interlübke</strong> — модульная дизайнерская мебель</li>
+          <li><strong>Nolte Möbel</strong> — один из крупнейших производителей мебели в Германии</li>
+        </ul>
+      </div>
+      <div class="country-card">
+        <div class="country-flag">🇧🇾</div>
+        <h3 class="country-name">Беларусь</h3>
+        <p class="country-desc">Один из крупнейших поставщиков мебели на рынки России и СНГ, с развитой деревообрабатывающей промышленностью и известными комбинатами полного цикла производства.</p>
+        <ul class="country-firms">
+          <li><strong>Пинскдрев</strong> — один из крупнейших мебельных концернов Беларуси</li>
+          <li><strong>Гомельдрев</strong> — известен мебелью из массива дерева</li>
+          <li><strong>Ивацевичдрев</strong> — крупный деревообрабатывающий и мебельный комбинат</li>
+          <li><strong>Молодечномебель</strong> — производитель корпусной и мягкой мебели</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
   <a href="#examples" onclick="showHome();closeSidebar()">Примеры</a>
   <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()">Как это работает</a>
   <a href="#generator" onclick="showHome();closeSidebar()">Room Factory</a>
+  <a href="javascript:void(0)" onclick="openModal('countriesModal');closeSidebar()">Мебель по странам</a>
   <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()">О проекте</a>
   <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()">Попробовать</a>
 </div>
@@ -764,7 +841,7 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.remove('visible');
 }
-['howModal', 'aboutModal'].forEach(id => {
+['howModal', 'aboutModal', 'countriesModal'].forEach(id => {
   document.getElementById(id).addEventListener('click', e => {
     if (e.target === document.getElementById(id)) closeModal(id);
   });
