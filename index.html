@@ -17,16 +17,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .burger { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
 .burger span { display: block; width: 28px; height: 1.5px; background: #1a1208; transition: all 0.3s; }
 
-.nav-right { display: flex; align-items: center; gap: 28px; }
-.nav-info-links { display: flex; align-items: center; gap: 24px; }
-.nav-info-link { background: none; border: none; color: #1a1208; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap; padding: 0; }
-.nav-info-link:hover { color: #b48c5a; }
-@media (max-width: 700px) { .nav-info-links { display: none; } }
-.auth-btn { background: transparent; border: 1px solid rgba(42,34,24,0.3); color: #1a1208; padding: 10px 22px; font-size: 10px; font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
-.auth-btn:hover { border-color: #b48c5a; color: #b48c5a; }
-.auth-user { display: flex; align-items: center; gap: 16px; font-size: 11px; }
-.auth-user .email { color: #1a1208; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0.3px; }
-.auth-logout { background: none; border: none; color: #b48c5a; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-person-btn { background: none; border: none; cursor: pointer; color: #1a1208; display: flex; align-items: center; justify-content: center; padding: 4px; transition: color 0.2s; }
+.nav-person-btn:hover { color: #b48c5a; }
+.nav-person-btn svg { width: 22px; height: 22px; display: block; }
+
 .auth-tabs { display: flex; gap: 8px; margin-bottom: 28px; }
 .auth-tab { flex: 1; background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 12px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a66; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
 .auth-tab.active { border-color: #b48c5a; color: #b48c5a; background: rgba(180,140,90,0.08); }
@@ -39,24 +34,24 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .auth-msg.error { color: #c05050; }
 .auth-msg.success { color: #5a8060; }
 @media (max-width: 480px) {
-  .auth-user .email { display: none; }
   nav { padding: 16px 12px; }
   .nav-logo { font-size: 10px; letter-spacing: 1px; }
-  .nav-right { gap: 8px; }
-  .auth-btn { padding: 7px 10px; letter-spacing: 0.5px; font-size: 9px; }
-  .auth-user { gap: 8px; }
-  .auth-logout { font-size: 9px; letter-spacing: 0.5px; white-space: nowrap; }
+  .nav-right { gap: 10px; }
   .burger span { width: 22px; }
 }
 
 .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
 .sidebar-overlay.visible { display: block; }
-.sidebar { position: fixed; top: 0; right: -380px; width: 360px; height: 100vh; background: #faf7f2; z-index: 300; padding: 100px 48px 48px; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); border-left: 1px solid rgba(42,34,24,0.1); }
+.sidebar { position: fixed; top: 0; right: -380px; width: 360px; height: 100vh; background: #faf7f2; z-index: 300; padding: 100px 48px 48px; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); border-left: 1px solid rgba(42,34,24,0.1); overflow-y: auto; }
 .sidebar.open { right: 0; }
 .sidebar-close { position: absolute; top: 28px; right: 28px; background: none; border: none; color: #8a7a66; font-size: 24px; cursor: pointer; }
 .sidebar a { display: block; font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 300; color: #1a1208; text-decoration: none; padding: 18px 0; border-bottom: 1px solid rgba(42,34,24,0.1); transition: color 0.2s; letter-spacing: 1px; }
 .sidebar a:hover { color: #b48c5a; }
 .sidebar-btn { display: block; margin-top: 40px; background: #b48c5a; color: white !important; border-radius: 2px; padding: 16px 32px !important; text-align: center; font-size: 12px !important; letter-spacing: 3px; text-transform: uppercase; font-weight: 700 !important; border-bottom: none !important; }
+.sidebar-lang { display: flex; gap: 8px; margin-top: 24px; }
+.lang-btn { flex: 1; background: transparent; border: 1px solid rgba(42,34,24,0.2); color: #8a7a66; padding: 10px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
+.lang-btn:hover { border-color: #b48c5a; color: #b48c5a; }
+.lang-btn.active { border-color: #b48c5a; color: #b48c5a; background: rgba(180,140,90,0.08); }
 
 .hero { position: relative; height: 100vh; overflow: hidden; }
 .slides { position: absolute; inset: 0; }
@@ -237,7 +232,7 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 
 .about { padding: 120px 48px; border-top: 1px solid rgba(42,34,24,0.1); background: #2d2318; }
 .about-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 80px; align-items: center; }
-.about-title { font-family: 'Unbounded', sans-serif; font-size: clamp(28px, 4vw, 52px); font-weight: 900; line-height: 0.95; letter-spacing: -1px; margin-bottom: 32px; color: #f5f2ed; }
+.about-title { font-family: 'Unbounded', sans-serif; font-size: clamp(22px, 3vw, 36px); font-weight: 900; line-height: 1.05; letter-spacing: -0.5px; margin-bottom: 32px; color: #f5f2ed; overflow-wrap: break-word; word-break: break-word; }
 .about-title em { font-style: normal; color: #b48c5a; }
 .about-text { font-size: 14px; color: rgba(245,242,237,0.55); line-height: 1.8; margin-bottom: 16px; }
 .about-features { display: flex; flex-direction: column; }
@@ -261,6 +256,7 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 .profile-grid .full { grid-column: 1 / -1; }
 .profile-input { width: 100%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 14px; color: #1a1208; font-family: 'Inter', sans-serif; font-size: 13px; }
 .profile-input:focus { outline: none; border-color: #b48c5a; }
+.profile-input[readonly] { color: #8a7a66; cursor: default; }
 .profile-label { font-size: 10px; letter-spacing: 1px; color: #8a7a66; margin-bottom: 6px; display: block; }
 .profile-save { background: #b48c5a; color: white; border: none; padding: 14px 32px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 20px; transition: all 0.2s; }
 .profile-save:hover:not(:disabled) { background: #c9a06a; }
@@ -268,6 +264,8 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 .profile-msg { font-size: 12px; margin-top: 14px; }
 .profile-msg.success { color: #5a8060; }
 .profile-msg.error { color: #c05050; }
+.account-logout-btn { background: transparent; border: 1px solid rgba(42,34,24,0.2); color: #8a7a66; padding: 14px 32px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; margin-top: 8px; }
+.account-logout-btn:hover { border-color: #c05050; color: #c05050; }
 @media (max-width: 600px) { .account-page { padding: 120px 24px 80px; } .profile-grid { grid-template-columns: minmax(0,1fr); } }
 
 @media (max-width: 768px) {
@@ -308,13 +306,13 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   <div class="popup-box" style="max-width:380px">
     <button class="popup-close" onclick="closeAuthModal()">✕</button>
     <div class="auth-tabs">
-      <button class="auth-tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')">Вход</button>
-      <button class="auth-tab" id="tabSignup" type="button" onclick="switchAuthTab('signup')">Регистрация</button>
+      <button class="auth-tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')" data-i18n="auth.tabLogin">Вход</button>
+      <button class="auth-tab" id="tabSignup" type="button" onclick="switchAuthTab('signup')" data-i18n="auth.tabSignup">Регистрация</button>
     </div>
     <form id="authForm">
       <input type="email" id="authEmail" placeholder="Email" required class="auth-input" autocomplete="email">
-      <input type="password" id="authPassword" placeholder="Пароль" required class="auth-input" minlength="6" autocomplete="current-password">
-      <button type="submit" class="auth-submit" id="authSubmitBtn">Войти</button>
+      <input type="password" id="authPassword" placeholder="Пароль" required class="auth-input" minlength="6" autocomplete="current-password" data-i18n-placeholder="authPasswordPlaceholder">
+      <button type="submit" class="auth-submit" id="authSubmitBtn" data-i18n="authSubmitLogin">Войти</button>
     </form>
     <p class="auth-msg" id="authMsg"></p>
   </div>
@@ -323,26 +321,26 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 <div class="popup-overlay" id="howModal">
   <div class="popup-box wide">
     <button class="popup-close" onclick="closeModal('howModal')">✕</button>
-    <span class="modal-eyebrow">Процесс</span>
-    <h2 class="modal-title">Как это работает</h2>
+    <span class="modal-eyebrow" data-i18n="how.eyebrow">Процесс</span>
+    <h2 class="modal-title" data-i18n="how.title">Как это работает</h2>
     <div class="steps-grid" style="margin-top:0">
       <div class="step-card">
         <div class="step-number">01</div>
         <span class="step-icon">📷</span>
-        <div class="step-title">Загрузите фото</div>
-        <div class="step-desc">Сфотографируйте комнату или загрузите готовое фото. Подходит любое состояние.</div>
+        <div class="step-title" data-i18n="how.step1Title">Загрузите фото</div>
+        <div class="step-desc" data-i18n="how.step1Desc">Сфотографируйте комнату или загрузите готовое фото. Подходит любое состояние.</div>
       </div>
       <div class="step-card">
         <div class="step-number">02</div>
         <span class="step-icon">🎨</span>
-        <div class="step-title">Выберите стиль</div>
-        <div class="step-desc">Укажите магазин мебели, стиль интерьера, тип комнаты, цветовую гамму и бюджет.</div>
+        <div class="step-title" data-i18n="how.step2Title">Выберите стиль</div>
+        <div class="step-desc" data-i18n="how.step2Desc">Укажите магазин мебели, стиль интерьера, тип комнаты, цветовую гамму и бюджет.</div>
       </div>
       <div class="step-card">
         <div class="step-number">03</div>
         <span class="step-icon">✨</span>
-        <div class="step-title">Получите дизайн</div>
-        <div class="step-desc">За 30 секунд ИИ создаст дизайн вашей комнаты и подберёт мебель из каталога.</div>
+        <div class="step-title" data-i18n="how.step3Title">Получите дизайн</div>
+        <div class="step-desc" data-i18n="how.step3Desc">За 30 секунд ИИ создаст дизайн вашей комнаты и подберёт мебель из каталога.</div>
       </div>
     </div>
   </div>
@@ -353,16 +351,16 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
     <button class="popup-close" onclick="closeModal('aboutModal')">✕</button>
     <div class="about-inner" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
       <div>
-        <span class="modal-eyebrow">О проекте</span>
-        <h2 class="about-title">Дизайн<br>стал <em>доступным</em><br>для всех</h2>
-        <p class="about-text">Room Factory — AI-сервис который делает профессиональный дизайн интерьера доступным без дизайнеров и долгого ожидания.</p>
-        <p class="about-text">Загрузите фото — получите результат за 30 секунд.</p>
+        <span class="modal-eyebrow" data-i18n="about.eyebrow">О проекте</span>
+        <h2 class="about-title" data-i18n-html="about.title">Дизайн<br>стал <em>доступным</em><br>для всех</h2>
+        <p class="about-text" data-i18n="about.text1">Room Factory — AI-сервис который делает профессиональный дизайн интерьера доступным без дизайнеров и долгого ожидания.</p>
+        <p class="about-text" data-i18n="about.text2">Загрузите фото — получите результат за 30 секунд.</p>
       </div>
       <div class="about-features">
-        <div class="about-feat"><span class="feat-icon">🏠</span><div><div class="feat-title">Для любой комнаты</div><div class="feat-desc">Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением</div></div></div>
-        <div class="about-feat"><span class="feat-icon">🎨</span><div><div class="feat-title">Множество стилей</div><div class="feat-desc">Скандинавский, лофт, классика, минимализм, бохо — выбирайте</div></div></div>
-        <div class="about-feat"><span class="feat-icon">📐</span><div><div class="feat-title">Сохраняет планировку</div><div class="feat-desc">ИИ следует структуре вашей комнаты — окна, двери и пропорции</div></div></div>
-        <div class="about-feat"><span class="feat-icon">🛋️</span><div><div class="feat-title">Мебель под рукой</div><div class="feat-desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit</div></div></div>
+        <div class="about-feat"><span class="feat-icon">🏠</span><div><div class="feat-title" data-i18n="about.feat1Title">Для любой комнаты</div><div class="feat-desc" data-i18n="about.feat1Desc">Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением</div></div></div>
+        <div class="about-feat"><span class="feat-icon">🎨</span><div><div class="feat-title" data-i18n="about.feat2Title">Множество стилей</div><div class="feat-desc" data-i18n="about.feat2Desc">Скандинавский, лофт, классика, минимализм, бохо — выбирайте</div></div></div>
+        <div class="about-feat"><span class="feat-icon">📐</span><div><div class="feat-title" data-i18n="about.feat3Title">Сохраняет планировку</div><div class="feat-desc" data-i18n="about.feat3Desc">ИИ следует структуре вашей комнаты — окна, двери и пропорции</div></div></div>
+        <div class="about-feat"><span class="feat-icon">🛋️</span><div><div class="feat-title" data-i18n="about.feat4Title">Мебель под рукой</div><div class="feat-desc" data-i18n="about.feat4Desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit</div></div></div>
       </div>
     </div>
   </div>
@@ -371,62 +369,62 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 <div class="popup-overlay" id="countriesModal">
   <div class="popup-box wide">
     <button class="popup-close" onclick="closeModal('countriesModal')">✕</button>
-    <span class="modal-eyebrow">Мировой рынок</span>
-    <h2 class="modal-title">Мебель по странам</h2>
+    <span class="modal-eyebrow" data-i18n="countries.eyebrow">Мировой рынок</span>
+    <h2 class="modal-title" data-i18n="countries.title">Мебель по странам</h2>
     <div class="country-grid">
       <div class="country-card">
         <div class="country-flag">🇨🇳</div>
-        <h3 class="country-name">Китай</h3>
-        <p class="country-desc">Крупнейший в мире производитель и экспортёр мебели. Огромная промышленная база — провинция Гуандун и город Фошань считаются неофициальной «мебельной столицей» мира. Диапазон — от бюджетного OEM-производства для мировых брендов до собственных марок международного уровня.</p>
+        <h3 class="country-name" data-i18n="country.china">Китай</h3>
+        <p class="country-desc" data-i18n="country.chinaDesc">Крупнейший в мире производитель и экспортёр мебели. Огромная промышленная база — провинция Гуандун и город Фошань считаются неофициальной «мебельной столицей» мира. Диапазон — от бюджетного OEM-производства для мировых брендов до собственных марок международного уровня.</p>
         <ul class="country-firms">
-          <li><strong>Kuka Home</strong> — один из крупнейших в мире производителей мягкой мебели и диванов</li>
-          <li><strong>Man Wah Holdings</strong> — крупный производитель кресел-реклайнеров и диванов, международный бренд Cheers</li>
-          <li><strong>Markor Furnishings</strong> — крупная мебельная группа с международным присутствием</li>
-          <li><strong>Suofeiya</strong> — один из лидеров рынка встроенной мебели и шкафов-купе</li>
+          <li><strong>Kuka Home</strong><span data-i18n="cn.firm1"> — один из крупнейших в мире производителей мягкой мебели и диванов</span></li>
+          <li><strong>Man Wah Holdings</strong><span data-i18n="cn.firm2"> — крупный производитель кресел-реклайнеров и диванов, международный бренд Cheers</span></li>
+          <li><strong>Markor Furnishings</strong><span data-i18n="cn.firm3"> — крупная мебельная группа с международным присутствием</span></li>
+          <li><strong>Suofeiya</strong><span data-i18n="cn.firm4"> — один из лидеров рынка встроенной мебели и шкафов-купе</span></li>
         </ul>
       </div>
       <div class="country-card">
         <div class="country-flag">🇹🇷</div>
-        <h3 class="country-name">Турция</h3>
-        <p class="country-desc">Один из крупнейших экспортёров мебели в Европу, на Ближний Восток и в Россию. Сильные производственные кластеры — Инегёль и Кайсери. Сочетает массовое производство и современный дизайнерский сегмент.</p>
+        <h3 class="country-name" data-i18n="country.turkey">Турция</h3>
+        <p class="country-desc" data-i18n="country.turkeyDesc">Один из крупнейших экспортёров мебели в Европу, на Ближний Восток и в Россию. Сильные производственные кластеры — Инегёль и Кайсери. Сочетает массовое производство и современный дизайнерский сегмент.</p>
         <ul class="country-firms">
-          <li><strong>İstikbal</strong> — один из крупнейших производителей мебели и матрасов в Турции</li>
-          <li><strong>Bellona</strong> — известный бренд мебели для дома с широкой розничной сетью</li>
-          <li><strong>Yataş</strong> — специализируется на матрасах и мягкой мебели</li>
-          <li><strong>Doğtaş</strong> — производитель мебели, известен спальными и гостиными гарнитурами</li>
+          <li><strong>İstikbal</strong><span data-i18n="tr.firm1"> — один из крупнейших производителей мебели и матрасов в Турции</span></li>
+          <li><strong>Bellona</strong><span data-i18n="tr.firm2"> — известный бренд мебели для дома с широкой розничной сетью</span></li>
+          <li><strong>Yataş</strong><span data-i18n="tr.firm3"> — специализируется на матрасах и мягкой мебели</span></li>
+          <li><strong>Doğtaş</strong><span data-i18n="tr.firm4"> — производитель мебели, известен спальными и гостиными гарнитурами</span></li>
         </ul>
       </div>
       <div class="country-card">
         <div class="country-flag">🇮🇹</div>
-        <h3 class="country-name">Италия</h3>
-        <p class="country-desc">Законодатель мод в мировом мебельном дизайне и статусе «Made in Italy». Центр производства — регион Брианца под Миланом. Ежегодная выставка Salone del Mobile в Милане — главное событие мировой мебельной индустрии.</p>
+        <h3 class="country-name" data-i18n="country.italy">Италия</h3>
+        <p class="country-desc" data-i18n="country.italyDesc">Законодатель мод в мировом мебельном дизайне и статусе «Made in Italy». Центр производства — регион Брианца под Миланом. Ежегодная выставка Salone del Mobile в Милане — главное событие мировой мебельной индустрии.</p>
         <ul class="country-firms">
-          <li><strong>Natuzzi</strong> — всемирно известный производитель кожаных диванов</li>
-          <li><strong>B&B Italia</strong> — культовый дизайнерский бренд мебели</li>
-          <li><strong>Poliform</strong> — современная мебель и кухни премиум-класса</li>
-          <li><strong>Cassina</strong> — исторический бренд, авторская мебель признанных дизайнеров</li>
+          <li><strong>Natuzzi</strong><span data-i18n="it.firm1"> — всемирно известный производитель кожаных диванов</span></li>
+          <li><strong>B&amp;B Italia</strong><span data-i18n="it.firm2"> — культовый дизайнерский бренд мебели</span></li>
+          <li><strong>Poliform</strong><span data-i18n="it.firm3"> — современная мебель и кухни премиум-класса</span></li>
+          <li><strong>Cassina</strong><span data-i18n="it.firm4"> — исторический бренд, авторская мебель признанных дизайнеров</span></li>
         </ul>
       </div>
       <div class="country-card">
         <div class="country-flag">🇩🇪</div>
-        <h3 class="country-name">Германия</h3>
-        <p class="country-desc">Известна инженерным качеством и функциональным дизайном мебели, особенно сильна в системных решениях для спален и гостиных. Ключевая отраслевая выставка — imm cologne.</p>
+        <h3 class="country-name" data-i18n="country.germany">Германия</h3>
+        <p class="country-desc" data-i18n="country.germanyDesc">Известна инженерным качеством и функциональным дизайном мебели, особенно сильна в системных решениях для спален и гостиных. Ключевая отраслевая выставка — imm cologne.</p>
         <ul class="country-firms">
-          <li><strong>Hülsta</strong> — крупный производитель мебели для дома</li>
-          <li><strong>Rolf Benz</strong> — премиальные дизайнерские диваны</li>
-          <li><strong>Interlübke</strong> — модульная дизайнерская мебель</li>
-          <li><strong>Nolte Möbel</strong> — один из крупнейших производителей мебели в Германии</li>
+          <li><strong>Hülsta</strong><span data-i18n="de.firm1"> — крупный производитель мебели для дома</span></li>
+          <li><strong>Rolf Benz</strong><span data-i18n="de.firm2"> — премиальные дизайнерские диваны</span></li>
+          <li><strong>Interlübke</strong><span data-i18n="de.firm3"> — модульная дизайнерская мебель</span></li>
+          <li><strong>Nolte Möbel</strong><span data-i18n="de.firm4"> — один из крупнейших производителей мебели в Германии</span></li>
         </ul>
       </div>
       <div class="country-card">
         <div class="country-flag">🇧🇾</div>
-        <h3 class="country-name">Беларусь</h3>
-        <p class="country-desc">Один из крупнейших поставщиков мебели на рынки России и СНГ, с развитой деревообрабатывающей промышленностью и известными комбинатами полного цикла производства.</p>
+        <h3 class="country-name" data-i18n="country.belarus">Беларусь</h3>
+        <p class="country-desc" data-i18n="country.belarusDesc">Один из крупнейших поставщиков мебели на рынки России и СНГ, с развитой деревообрабатывающей промышленностью и известными комбинатами полного цикла производства.</p>
         <ul class="country-firms">
-          <li><strong>Пинскдрев</strong> — один из крупнейших мебельных концернов Беларуси</li>
-          <li><strong>Гомельдрев</strong> — известен мебелью из массива дерева</li>
-          <li><strong>Ивацевичдрев</strong> — крупный деревообрабатывающий и мебельный комбинат</li>
-          <li><strong>Молодечномебель</strong> — производитель корпусной и мягкой мебели</li>
+          <li><strong>Пинскдрев</strong><span data-i18n="by.firm1"> — один из крупнейших мебельных концернов Беларуси</span></li>
+          <li><strong>Гомельдрев</strong><span data-i18n="by.firm2"> — известен мебелью из массива дерева</span></li>
+          <li><strong>Ивацевичдрев</strong><span data-i18n="by.firm3"> — крупный деревообрабатывающий и мебельный комбинат</span></li>
+          <li><strong>Молодечномебель</strong><span data-i18n="by.firm4"> — производитель корпусной и мягкой мебели</span></li>
         </ul>
       </div>
     </div>
@@ -436,21 +434,21 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
-  <a href="#examples" onclick="showHome();closeSidebar()">Примеры</a>
-  <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()">Как это работает</a>
+  <a href="#examples" onclick="showHome();closeSidebar()" data-i18n="sidebar.examples">Примеры</a>
+  <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()" data-i18n="sidebar.how">Как это работает</a>
   <a href="#generator" onclick="showHome();closeSidebar()">Room Factory</a>
-  <a href="javascript:void(0)" onclick="openModal('countriesModal');closeSidebar()">Мебель по странам</a>
-  <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()">О проекте</a>
-  <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()">Попробовать</a>
+  <a href="javascript:void(0)" onclick="openModal('countriesModal');closeSidebar()" data-i18n="sidebar.countries">Мебель по странам</a>
+  <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()" data-i18n="sidebar.about">О проекте</a>
+  <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()" data-i18n="sidebar.try">Попробовать</a>
+  <div class="sidebar-lang">
+    <button type="button" class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+    <button type="button" class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
 </div>
 
 <nav>
   <div class="nav-logo" style="cursor:pointer" onclick="showHome();window.scrollTo({top:0,behavior:'smooth'})">Room<span>.</span>Factory</div>
   <div class="nav-right">
-    <div class="nav-info-links">
-      <button class="nav-info-link" type="button" onclick="openModal('howModal')">Как это работает</button>
-      <button class="nav-info-link" type="button" onclick="openModal('aboutModal')">О проекте</button>
-    </div>
     <div id="authArea"></div>
     <button class="burger" onclick="openSidebar()">
       <span></span><span></span><span></span>
@@ -480,20 +478,20 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">AI дизайн интерьера</div>
-    <h1 class="hero-title">Дизайн<br>вашей<span class="line2">комнаты</span></h1>
-    <p class="hero-sub">Загрузите фото — ИИ создаст профессиональный дизайн в любом стиле за 30 секунд</p>
+    <div class="hero-eyebrow" data-i18n="hero.eyebrow">AI дизайн интерьера</div>
+    <h1 class="hero-title" data-i18n-html="hero.title">Дизайн<br>вашей<span class="line2">комнаты</span></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Загрузите фото — ИИ создаст профессиональный дизайн в любом стиле за 30 секунд</p>
     <div class="hero-btns">
-      <a href="#generator" class="btn-gold">Создать дизайн</a>
-      <a href="#examples" class="btn-outline">Смотреть примеры</a>
+      <a href="#generator" class="btn-gold" data-i18n="hero.btnCreate">Создать дизайн</a>
+      <a href="#examples" class="btn-outline" data-i18n="hero.btnExamples">Смотреть примеры</a>
     </div>
   </div>
 
   <div class="slide-style-label">
-    <div class="style-pill active" onclick="goToSlide(0)">Скандинавский</div>
-    <div class="style-pill" onclick="goToSlide(1)">Минимализм</div>
-    <div class="style-pill" onclick="goToSlide(2)">Лофт</div>
-    <div class="style-pill" onclick="goToSlide(3)">Классика</div>
+    <div class="style-pill active" onclick="goToSlide(0)" data-i18n="style.scandinavian">Скандинавский</div>
+    <div class="style-pill" onclick="goToSlide(1)" data-i18n="style.minimalism">Минимализм</div>
+    <div class="style-pill" onclick="goToSlide(2)" data-i18n="style.loft">Лофт</div>
+    <div class="style-pill" onclick="goToSlide(3)" data-i18n="style.classic">Классика</div>
   </div>
 
   <div class="slide-indicators">
@@ -507,28 +505,28 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">Скандинавский <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Минимализм <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Лофт <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Классика <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Japandi <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Бохо <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Скандинавский <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Минимализм <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Лофт <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Классика <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Japandi <span class="marquee-dot">●</span></span>
-    <span class="marquee-item">Бохо <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.scandinavian">Скандинавский</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.minimalism">Минимализм</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.loft">Лофт</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.classic">Классика</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.japandi">Japandi</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.boho">Бохо</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.scandinavian">Скандинавский</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.minimalism">Минимализм</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.loft">Лофт</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.classic">Классика</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.japandi">Japandi</span> <span class="marquee-dot">●</span></span>
+    <span class="marquee-item"><span data-i18n="style.boho">Бохо</span> <span class="marquee-dot">●</span></span>
   </div>
 </div>
 
 <section class="examples" id="examples">
   <div class="section-header">
     <div>
-      <div class="section-eyebrow">Примеры работ</div>
-      <h2 class="section-title">До<br>и после</h2>
+      <div class="section-eyebrow" data-i18n="examples.eyebrow">Примеры работ</div>
+      <h2 class="section-title" data-i18n-html="examples.title">До<br>и после</h2>
     </div>
-    <p class="section-sub">ИИ преображает реальные комнаты — обновляем старый интерьер и создаём новый</p>
+    <p class="section-sub" data-i18n="examples.sub">ИИ преображает реальные комнаты — обновляем старый интерьер и создаём новый</p>
   </div>
   <div class="examples-grid">
     <div class="example-card">
@@ -536,8 +534,8 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <img class="example-img" src="https://i.imgur.com/TdgdL7I.jpg" alt="До">
         <div class="example-overlay"></div>
         <div class="example-info">
-          <div class="example-badge">До</div>
-          <div class="example-label">Исходная комната</div>
+          <div class="example-badge" data-i18n="examples.before">До</div>
+          <div class="example-label" data-i18n="examples.cap1">Исходная комната</div>
         </div>
       </div>
     </div>
@@ -546,8 +544,8 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <img class="example-img" src="https://i.imgur.com/JEoTd37.jpg" alt="После">
         <div class="example-overlay"></div>
         <div class="example-info">
-          <div class="example-badge" style="color:#fff;border-color:#fff">После</div>
-          <div class="example-label">Скандинавский стиль</div>
+          <div class="example-badge" style="color:#fff;border-color:#fff" data-i18n="examples.after">После</div>
+          <div class="example-label" data-i18n="examples.cap2">Скандинавский стиль</div>
         </div>
       </div>
     </div>
@@ -556,8 +554,8 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <img class="example-img" src="https://i.imgur.com/1dc8go5.jpg" alt="До">
         <div class="example-overlay"></div>
         <div class="example-info">
-          <div class="example-badge">До</div>
-          <div class="example-label">Старая гостиная</div>
+          <div class="example-badge" data-i18n="examples.before">До</div>
+          <div class="example-label" data-i18n="examples.cap3">Старая гостиная</div>
         </div>
       </div>
     </div>
@@ -566,8 +564,8 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <img class="example-img" src="https://i.imgur.com/eLRbV7n.jpg" alt="После">
         <div class="example-overlay"></div>
         <div class="example-info">
-          <div class="example-badge" style="color:#fff;border-color:#fff">После</div>
-          <div class="example-label">Лофт</div>
+          <div class="example-badge" style="color:#fff;border-color:#fff" data-i18n="examples.after">После</div>
+          <div class="example-label" data-i18n="examples.cap4">Лофт</div>
         </div>
       </div>
     </div>
@@ -577,26 +575,26 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 <section class="generator" id="generator">
   <div class="gen-layout">
     <div class="gen-left">
-      <div class="section-eyebrow">Генератор</div>
-      <h2 class="gen-title">Создайте<br>дизайн<br><span style="color:#b48c5a">мечты</span></h2>
-      <p class="gen-sub">Бесплатно, без регистрации. Загрузите фото и получите готовый дизайн вашей комнаты.</p>
+      <div class="section-eyebrow" data-i18n="generator.eyebrow">Генератор</div>
+      <h2 class="gen-title" data-i18n-html="generator.title">Создайте<br>дизайн<br><span style="color:#b48c5a">мечты</span></h2>
+      <p class="gen-sub" data-i18n="generator.sub">Бесплатно, без регистрации. Загрузите фото и получите готовый дизайн вашей комнаты.</p>
       <div class="gen-stats">
-        <div class="gen-stat"><span class="gen-stat-label">Время</span><span class="gen-stat-val">~30 сек</span></div>
-        <div class="gen-stat"><span class="gen-stat-label">Стилей</span><span class="gen-stat-val">6</span></div>
-        <div class="gen-stat"><span class="gen-stat-label">Стоимость</span><span class="gen-stat-val">Бесплатно</span></div>
+        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.time">Время</span><span class="gen-stat-val" data-i18n="stat.timeVal">~30 сек</span></div>
+        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.styles">Стилей</span><span class="gen-stat-val">6</span></div>
+        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.cost">Стоимость</span><span class="gen-stat-val" data-i18n="stat.costVal">Бесплатно</span></div>
       </div>
     </div>
     <div class="gen-right">
       <div class="gen-form">
         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
           <span class="upload-icon">↑</span>
-          <p class="upload-text">Загрузите фото комнаты</p>
-          <p class="upload-hint">JPG или PNG, до 10 МБ</p>
+          <p class="upload-text" data-i18n="upload.text">Загрузите фото комнаты</p>
+          <p class="upload-hint" data-i18n="upload.hint">JPG или PNG, до 10 МБ</p>
         </div>
         <input type="file" id="fileInput" accept="image/*">
 
         <div class="form-section">
-          <span class="form-label">Магазин мебели</span>
+          <span class="form-label" data-i18n="form.store">Магазин мебели</span>
           <div class="opts-grid opts-2">
             <button class="opt-btn active" data-group="store" data-key="hoff" data-val="hoff">Hoff</button>
             <button class="opt-btn" data-group="store" data-key="askona" data-val="askona">Askona</button>
@@ -606,37 +604,37 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <hr class="form-divider">
 
         <div class="form-section">
-          <span class="form-label">Стиль интерьера</span>
+          <span class="form-label" data-i18n="form.style">Стиль интерьера</span>
           <div class="opts-grid opts-3">
-            <div class="style-row"><button class="opt-btn active" style="flex:1" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, light wood, white walls, minimalist, cozy">Скандинавский</button><button class="info-btn" onclick="showPopup('Скандинавский','Светлые тона, натуральное дерево, простые формы.','https://i.imgur.com/QpdFRQ1.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="minimalism" data-val="modern minimalist interior, concrete, glass, steel, clean lines">Минимализм</button><button class="info-btn" onclick="showPopup('Минимализм','Чистые линии, нейтральные цвета, открытое пространство.','https://i.imgur.com/CrzZ6of.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="loft" data-val="loft industrial interior, exposed brick, metal, dark tones">Лофт</button><button class="info-btn" onclick="showPopup('Лофт','Промышленная эстетика: кирпич, металл, высокие потолки.','https://i.imgur.com/m44HmWk.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="classic" data-val="classic luxury interior, rich wood, elegant furniture, warm lighting">Классика</button><button class="info-btn" onclick="showPopup('Классика','Богатые материалы, симметрия, изящные детали.','https://i.imgur.com/CjswDfr.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="japandi" data-val="japandi interior design, natural materials, zen, neutral tones">Japandi</button><button class="info-btn" onclick="showPopup('Japandi','Японская философия встречает скандинавский уют.','https://i.imgur.com/f5dOSSq.jpg')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="boho" data-val="bohemian eclectic interior, colorful, plants, vintage furniture">Бохо</button><button class="info-btn" onclick="showPopup('Бохо','Яркие цвета, растения, текстиль. Свободный стиль.','https://i.imgur.com/zCQCn4n.jpg')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn active" style="flex:1" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, light wood, white walls, minimalist, cozy" data-i18n="style.scandinavian">Скандинавский</button><button class="info-btn" onclick="showStyleInfo('scandinavian')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="minimalism" data-val="modern minimalist interior, concrete, glass, steel, clean lines" data-i18n="style.minimalism">Минимализм</button><button class="info-btn" onclick="showStyleInfo('minimalism')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="loft" data-val="loft industrial interior, exposed brick, metal, dark tones" data-i18n="style.loft">Лофт</button><button class="info-btn" onclick="showStyleInfo('loft')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="classic" data-val="classic luxury interior, rich wood, elegant furniture, warm lighting" data-i18n="style.classic">Классика</button><button class="info-btn" onclick="showStyleInfo('classic')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="japandi" data-val="japandi interior design, natural materials, zen, neutral tones" data-i18n="style.japandi">Japandi</button><button class="info-btn" onclick="showStyleInfo('japandi')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="boho" data-val="bohemian eclectic interior, colorful, plants, vintage furniture" data-i18n="style.boho">Бохо</button><button class="info-btn" onclick="showStyleInfo('boho')">ⓘ</button></div>
           </div>
         </div>
 
         <hr class="form-divider">
 
         <div class="form-section">
-          <span class="form-label">Тип комнаты</span>
+          <span class="form-label" data-i18n="form.room">Тип комнаты</span>
           <div class="opts-grid opts-4">
-            <button class="opt-btn active" data-group="room" data-val="living room">Гостиная</button>
-            <button class="opt-btn" data-group="room" data-val="bedroom">Спальня</button>
-            <button class="opt-btn" data-group="room" data-val="kitchen">Кухня</button>
-            <button class="opt-btn" data-group="room" data-val="bathroom">Ванная</button>
-            <button class="opt-btn" data-group="room" data-val="children room">Детская</button>
-            <button class="opt-btn" data-group="room" data-val="home office">Кабинет</button>
-            <button class="opt-btn" data-group="room" data-val="hallway">Прихожая</button>
-            <button class="opt-btn" data-group="room" data-val="dining room">Столовая</button>
+            <button class="opt-btn active" data-group="room" data-val="living room" data-i18n="room.living">Гостиная</button>
+            <button class="opt-btn" data-group="room" data-val="bedroom" data-i18n="room.bedroom">Спальня</button>
+            <button class="opt-btn" data-group="room" data-val="kitchen" data-i18n="room.kitchen">Кухня</button>
+            <button class="opt-btn" data-group="room" data-val="bathroom" data-i18n="room.bathroom">Ванная</button>
+            <button class="opt-btn" data-group="room" data-val="children room" data-i18n="room.children">Детская</button>
+            <button class="opt-btn" data-group="room" data-val="home office" data-i18n="room.office">Кабинет</button>
+            <button class="opt-btn" data-group="room" data-val="hallway" data-i18n="room.hallway">Прихожая</button>
+            <button class="opt-btn" data-group="room" data-val="dining room" data-i18n="room.dining">Столовая</button>
           </div>
         </div>
 
         <hr class="form-divider">
 
         <div class="form-section">
-          <span class="form-label">Цветовая гамма</span>
+          <span class="form-label" data-i18n="form.color">Цветовая гамма</span>
           <div class="colors-row">
             <button class="color-dot active" data-val="neutral beige and white" data-name="Нейтральный" style="background:#e8ddd0"></button>
             <button class="color-dot" data-val="dark moody deep tones" data-name="Тёмный" style="background:#1a1510"></button>
@@ -661,7 +659,7 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <hr class="form-divider">
 
         <div class="form-section">
-          <span class="form-label">Бюджет ремонта</span>
+          <span class="form-label" data-i18n="form.budget">Бюджет ремонта</span>
           <div class="budget-wrap">
             <input type="range" id="budgetSlider" min="0" max="4" value="2" step="1">
             <div class="budget-val" id="budgetVal">Средний · 500 000 — 1 500 000 ₽</div>
@@ -671,24 +669,24 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <hr class="form-divider">
 
         <div class="form-section">
-          <span class="form-label">Комментарий</span>
-          <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..."></textarea>
+          <span class="form-label" data-i18n="form.comment">Комментарий</span>
+          <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
         </div>
 
-        <button class="gen-btn" id="genBtn" disabled>Загрузите фото для начала</button>
-        <div class="loading" id="loading"><div class="spinner"></div>Создаём ваш дизайн...</div>
+        <button class="gen-btn" id="genBtn" disabled data-i18n="genBtnUpload">Загрузите фото для начала</button>
+        <div class="loading" id="loading"><div class="spinner"></div><span data-i18n="loadingText">Создаём ваш дизайн...</span></div>
         <div class="error-msg" id="errMsg"></div>
 
         <div class="result-wrap" id="resultWrap">
-          <span class="result-label">Ваш новый интерьер</span>
+          <span class="result-label" data-i18n="resultLabel">Ваш новый интерьер</span>
           <img id="resultImg" src="" alt="Результат">
-          <a class="download-btn" id="dlBtn" download="roomfactory.jpg">Скачать изображение</a>
+          <a class="download-btn" id="dlBtn" download="roomfactory.jpg" data-i18n="downloadBtn">Скачать изображение</a>
           <div style="margin-top:20px">
-            <div class="form-label" style="margin-bottom:8px">Похожая мебель в <span id="storeProductsLabel">Hoff</span></div>
+            <div class="form-label" style="margin-bottom:8px"><span data-i18n="similarFurniturePrefix">Похожая мебель в</span> <span id="storeProductsLabel">Hoff</span></div>
             <div class="hoff-products-grid" id="hoffProductsGrid"></div>
           </div>
           <div style="margin-top:16px">
-            <div class="form-label" style="margin-bottom:8px">Ещё поискать</div>
+            <div class="form-label" style="margin-bottom:8px" data-i18n="searchMorePrefix">Ещё поискать</div>
             <div class="shops-row" style="grid-template-columns:repeat(2,1fr)">
               <a id="roomerBtn" target="_blank" class="shop-btn">Roomer</a>
               <a id="baumitBtn" target="_blank" class="shop-btn">Baumit</a>
@@ -702,41 +700,52 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 
 <footer>
   <div class="footer-logo">Room<span>.</span>Factory</div>
-  <div class="footer-text">© 2026 · AI дизайн интерьера</div>
+  <div class="footer-text" data-i18n="footer.text">© 2026 · AI дизайн интерьера</div>
 </footer>
 </div>
 
 <div id="accountView" style="display:none">
   <div class="account-page">
-    <button class="account-back" onclick="showHome()">← На главную</button>
-    <h1 class="account-title">Личный кабинет</h1>
+    <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
+    <h1 class="account-title" data-i18n="account.title">Личный кабинет</h1>
 
     <div class="account-section">
-      <span class="account-section-label">Профиль</span>
+      <span class="account-section-label" data-i18n="account.emailLabel">Почта</span>
+      <div class="profile-grid" style="max-width:320px">
+        <div class="full">
+          <input type="text" id="accountEmailField" class="profile-input" readonly>
+        </div>
+      </div>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="account.profileLabel">Профиль</span>
       <form id="profileForm">
         <div class="profile-grid">
           <div>
-            <span class="profile-label">Имя</span>
-            <input type="text" id="profileFirstName" class="profile-input" placeholder="Имя">
+            <span class="profile-label" data-i18n="profile.firstName">Имя</span>
+            <input type="text" id="profileFirstName" class="profile-input">
           </div>
           <div>
-            <span class="profile-label">Фамилия</span>
-            <input type="text" id="profileLastName" class="profile-input" placeholder="Фамилия">
+            <span class="profile-label" data-i18n="profile.lastName">Фамилия</span>
+            <input type="text" id="profileLastName" class="profile-input">
           </div>
           <div class="full">
-            <span class="profile-label">Телефон (необязательно)</span>
+            <span class="profile-label" data-i18n="profile.phone">Телефон (необязательно)</span>
             <input type="tel" id="profilePhone" class="profile-input" placeholder="+7 900 000-00-00">
           </div>
         </div>
-        <button type="submit" class="profile-save" id="profileSaveBtn">Сохранить</button>
+        <button type="submit" class="profile-save" id="profileSaveBtn" data-i18n="profile.save">Сохранить</button>
         <div class="profile-msg" id="profileMsg"></div>
       </form>
     </div>
 
     <div class="account-section">
-      <span class="account-section-label">Мои дизайны</span>
+      <span class="account-section-label" data-i18n="account.libraryLabel">Мои дизайны</span>
       <div class="library-grid" id="libraryGrid"></div>
     </div>
+
+    <button type="button" class="account-logout-btn" id="accountLogoutBtn" data-i18n="account.logout">Выйти</button>
   </div>
 </div>
 
@@ -745,6 +754,384 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 const SUPABASE_URL = 'https://puqwlxrdihxmrhgfnnpa.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_OxUbcWIt07x_jXVa8fRW5w_h7L8Nqst';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const translations = {
+  ru: {
+    'sidebar.examples': `Примеры`,
+    'sidebar.how': `Как это работает`,
+    'sidebar.countries': `Мебель по странам`,
+    'sidebar.about': `О проекте`,
+    'sidebar.try': `Попробовать`,
+    'hero.eyebrow': `AI дизайн интерьера`,
+    'hero.title': `Дизайн<br>вашей<span class="line2">комнаты</span>`,
+    'hero.sub': `Загрузите фото — ИИ создаст профессиональный дизайн в любом стиле за 30 секунд`,
+    'hero.btnCreate': `Создать дизайн`,
+    'hero.btnExamples': `Смотреть примеры`,
+    'style.scandinavian': `Скандинавский`,
+    'style.minimalism': `Минимализм`,
+    'style.loft': `Лофт`,
+    'style.classic': `Классика`,
+    'style.japandi': `Japandi`,
+    'style.boho': `Бохо`,
+    'styleDesc.scandinavian': `Светлые тона, натуральное дерево, простые формы.`,
+    'styleDesc.minimalism': `Чистые линии, нейтральные цвета, открытое пространство.`,
+    'styleDesc.loft': `Промышленная эстетика: кирпич, металл, высокие потолки.`,
+    'styleDesc.classic': `Богатые материалы, симметрия, изящные детали.`,
+    'styleDesc.japandi': `Японская философия встречает скандинавский уют.`,
+    'styleDesc.boho': `Яркие цвета, растения, текстиль. Свободный стиль.`,
+    'examples.eyebrow': `Примеры работ`,
+    'examples.title': `До<br>и после`,
+    'examples.sub': `ИИ преображает реальные комнаты — обновляем старый интерьер и создаём новый`,
+    'examples.before': `До`,
+    'examples.after': `После`,
+    'examples.cap1': `Исходная комната`,
+    'examples.cap2': `Скандинавский стиль`,
+    'examples.cap3': `Старая гостиная`,
+    'examples.cap4': `Лофт`,
+    'how.eyebrow': `Процесс`,
+    'how.title': `Как это работает`,
+    'how.step1Title': `Загрузите фото`,
+    'how.step1Desc': `Сфотографируйте комнату или загрузите готовое фото. Подходит любое состояние.`,
+    'how.step2Title': `Выберите стиль`,
+    'how.step2Desc': `Укажите магазин мебели, стиль интерьера, тип комнаты, цветовую гамму и бюджет.`,
+    'how.step3Title': `Получите дизайн`,
+    'how.step3Desc': `За 30 секунд ИИ создаст дизайн вашей комнаты и подберёт мебель из каталога.`,
+    'about.eyebrow': `О проекте`,
+    'about.title': `Дизайн<br>стал <em>доступным</em><br>для всех`,
+    'about.text1': `Room Factory — AI-сервис который делает профессиональный дизайн интерьера доступным без дизайнеров и долгого ожидания.`,
+    'about.text2': `Загрузите фото — получите результат за 30 секунд.`,
+    'about.feat1Title': `Для любой комнаты`,
+    'about.feat1Desc': `Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением`,
+    'about.feat2Title': `Множество стилей`,
+    'about.feat2Desc': `Скандинавский, лофт, классика, минимализм, бохо — выбирайте`,
+    'about.feat3Title': `Сохраняет планировку`,
+    'about.feat3Desc': `ИИ следует структуре вашей комнаты — окна, двери и пропорции`,
+    'about.feat4Title': `Мебель под рукой`,
+    'about.feat4Desc': `После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit`,
+    'countries.eyebrow': `Мировой рынок`,
+    'countries.title': `Мебель по странам`,
+    'country.china': `Китай`,
+    'country.chinaDesc': `Крупнейший в мире производитель и экспортёр мебели. Огромная промышленная база — провинция Гуандун и город Фошань считаются неофициальной «мебельной столицей» мира. Диапазон — от бюджетного OEM-производства для мировых брендов до собственных марок международного уровня.`,
+    'cn.firm1': ` — один из крупнейших в мире производителей мягкой мебели и диванов`,
+    'cn.firm2': ` — крупный производитель кресел-реклайнеров и диванов, международный бренд Cheers`,
+    'cn.firm3': ` — крупная мебельная группа с международным присутствием`,
+    'cn.firm4': ` — один из лидеров рынка встроенной мебели и шкафов-купе`,
+    'country.turkey': `Турция`,
+    'country.turkeyDesc': `Один из крупнейших экспортёров мебели в Европу, на Ближний Восток и в Россию. Сильные производственные кластеры — Инегёль и Кайсери. Сочетает массовое производство и современный дизайнерский сегмент.`,
+    'tr.firm1': ` — один из крупнейших производителей мебели и матрасов в Турции`,
+    'tr.firm2': ` — известный бренд мебели для дома с широкой розничной сетью`,
+    'tr.firm3': ` — специализируется на матрасах и мягкой мебели`,
+    'tr.firm4': ` — производитель мебели, известен спальными и гостиными гарнитурами`,
+    'country.italy': `Италия`,
+    'country.italyDesc': `Законодатель мод в мировом мебельном дизайне и статусе «Made in Italy». Центр производства — регион Брианца под Миланом. Ежегодная выставка Salone del Mobile в Милане — главное событие мировой мебельной индустрии.`,
+    'it.firm1': ` — всемирно известный производитель кожаных диванов`,
+    'it.firm2': ` — культовый дизайнерский бренд мебели`,
+    'it.firm3': ` — современная мебель и кухни премиум-класса`,
+    'it.firm4': ` — исторический бренд, авторская мебель признанных дизайнеров`,
+    'country.germany': `Германия`,
+    'country.germanyDesc': `Известна инженерным качеством и функциональным дизайном мебели, особенно сильна в системных решениях для спален и гостиных. Ключевая отраслевая выставка — imm cologne.`,
+    'de.firm1': ` — крупный производитель мебели для дома`,
+    'de.firm2': ` — премиальные дизайнерские диваны`,
+    'de.firm3': ` — модульная дизайнерская мебель`,
+    'de.firm4': ` — один из крупнейших производителей мебели в Германии`,
+    'country.belarus': `Беларусь`,
+    'country.belarusDesc': `Один из крупнейших поставщиков мебели на рынки России и СНГ, с развитой деревообрабатывающей промышленностью и известными комбинатами полного цикла производства.`,
+    'by.firm1': ` — один из крупнейших мебельных концернов Беларуси`,
+    'by.firm2': ` — известен мебелью из массива дерева`,
+    'by.firm3': ` — крупный деревообрабатывающий и мебельный комбинат`,
+    'by.firm4': ` — производитель корпусной и мягкой мебели`,
+    'generator.eyebrow': `Генератор`,
+    'generator.title': `Создайте<br>дизайн<br><span style="color:#b48c5a">мечты</span>`,
+    'generator.sub': `Бесплатно, без регистрации. Загрузите фото и получите готовый дизайн вашей комнаты.`,
+    'stat.time': `Время`,
+    'stat.timeVal': `~30 сек`,
+    'stat.styles': `Стилей`,
+    'stat.cost': `Стоимость`,
+    'stat.costVal': `Бесплатно`,
+    'upload.text': `Загрузите фото комнаты`,
+    'upload.hint': `JPG или PNG, до 10 МБ`,
+    'form.store': `Магазин мебели`,
+    'form.style': `Стиль интерьера`,
+    'form.room': `Тип комнаты`,
+    'form.color': `Цветовая гамма`,
+    'form.budget': `Бюджет ремонта`,
+    'form.comment': `Комментарий`,
+    'commentPlaceholder': `Пожелания: больше света, место для детей, открытые полки...`,
+    'room.living': `Гостиная`,
+    'room.bedroom': `Спальня`,
+    'room.kitchen': `Кухня`,
+    'room.bathroom': `Ванная`,
+    'room.children': `Детская`,
+    'room.office': `Кабинет`,
+    'room.hallway': `Прихожая`,
+    'room.dining': `Столовая`,
+    'budget.0': `Эконом · до 200 000 ₽`,
+    'budget.1': `Доступный · 200—500 тыс ₽`,
+    'budget.2': `Средний · 500 000 — 1 500 000 ₽`,
+    'budget.3': `Премиум · 1.5—4 млн ₽`,
+    'budget.4': `Люкс · от 4 млн ₽`,
+    'genBtnUpload': `Загрузите фото для начала`,
+    'genBtnReady': `Создать дизайн`,
+    'genBtnLoading': `Создаём...`,
+    'loadingText': `Создаём ваш дизайн...`,
+    'genError': `Не удалось создать дизайн. Попробуйте ещё раз.`,
+    'resultLabel': `Ваш новый интерьер`,
+    'downloadBtn': `Скачать изображение`,
+    'similarFurniturePrefix': `Похожая мебель в`,
+    'searchMorePrefix': `Ещё поискать`,
+    'storeEmpty': `Пока нет подборки под этот стиль в выбранном магазине — загляните в общий каталог.`,
+    'footer.text': `© 2026 · AI дизайн интерьера`,
+    'auth.tabLogin': `Вход`,
+    'auth.tabSignup': `Регистрация`,
+    'authPasswordPlaceholder': `Пароль`,
+    'authSubmitLogin': `Войти`,
+    'authSubmitSignup': `Зарегистрироваться`,
+    'authSuccess': `Проверьте почту, чтобы подтвердить регистрацию.`,
+    'authErrorFallback': `Что-то пошло не так. Попробуйте ещё раз.`,
+    'account.back': `← На главную`,
+    'account.title': `Личный кабинет`,
+    'account.emailLabel': `Почта`,
+    'account.profileLabel': `Профиль`,
+    'account.libraryLabel': `Мои дизайны`,
+    'account.logout': `Выйти`,
+    'profile.firstName': `Имя`,
+    'profile.lastName': `Фамилия`,
+    'profile.phone': `Телефон (необязательно)`,
+    'profile.save': `Сохранить`,
+    'profile.saved': `Сохранено`,
+    'profile.saveError': `Не удалось сохранить.`,
+    'library.loading': `Загрузка...`,
+    'library.emptyHint': `Пока нет сохранённых дизайнов. Создайте дизайн — он появится здесь.`,
+    'library.emptyShort': `Пока нет сохранённых дизайнов.`
+  },
+  en: {
+    'sidebar.examples': `Examples`,
+    'sidebar.how': `How it works`,
+    'sidebar.countries': `Furniture by Country`,
+    'sidebar.about': `About`,
+    'sidebar.try': `Try it`,
+    'hero.eyebrow': `AI Interior Design`,
+    'hero.title': `Design<br>your<span class="line2">room</span>`,
+    'hero.sub': `Upload a photo — AI creates a professional design in any style in 30 seconds`,
+    'hero.btnCreate': `Create design`,
+    'hero.btnExamples': `View examples`,
+    'style.scandinavian': `Scandinavian`,
+    'style.minimalism': `Minimalism`,
+    'style.loft': `Loft`,
+    'style.classic': `Classic`,
+    'style.japandi': `Japandi`,
+    'style.boho': `Boho`,
+    'styleDesc.scandinavian': `Light tones, natural wood, simple shapes.`,
+    'styleDesc.minimalism': `Clean lines, neutral colors, open space.`,
+    'styleDesc.loft': `Industrial aesthetic: brick, metal, high ceilings.`,
+    'styleDesc.classic': `Rich materials, symmetry, elegant details.`,
+    'styleDesc.japandi': `Japanese philosophy meets Scandinavian coziness.`,
+    'styleDesc.boho': `Bright colors, plants, textiles. A free-spirited style.`,
+    'examples.eyebrow': `Featured Work`,
+    'examples.title': `Before<br>and After`,
+    'examples.sub': `AI transforms real rooms — refreshing old interiors and creating new ones`,
+    'examples.before': `Before`,
+    'examples.after': `After`,
+    'examples.cap1': `Original room`,
+    'examples.cap2': `Scandinavian style`,
+    'examples.cap3': `Old living room`,
+    'examples.cap4': `Loft`,
+    'how.eyebrow': `Process`,
+    'how.title': `How it works`,
+    'how.step1Title': `Upload a photo`,
+    'how.step1Desc': `Photograph your room or upload an existing photo. Any condition works.`,
+    'how.step2Title': `Choose a style`,
+    'how.step2Desc': `Pick a furniture store, interior style, room type, color palette and budget.`,
+    'how.step3Title': `Get your design`,
+    'how.step3Desc': `In 30 seconds AI creates your room design and matches furniture from the catalog.`,
+    'about.eyebrow': `About`,
+    'about.title': `Design<br>made <em>accessible</em><br>to everyone`,
+    'about.text1': `Room Factory is an AI service that makes professional interior design accessible without designers or long waits.`,
+    'about.text2': `Upload a photo — get a result in 30 seconds.`,
+    'about.feat1Title': `For any room`,
+    'about.feat1Desc': `Living room, bedroom, kitchen, bathroom — AI handles any space`,
+    'about.feat2Title': `Many styles`,
+    'about.feat2Desc': `Scandinavian, loft, classic, minimalism, boho — take your pick`,
+    'about.feat3Title': `Preserves the layout`,
+    'about.feat3Desc': `AI follows your room's structure — windows, doors and proportions`,
+    'about.feat4Title': `Furniture at hand`,
+    'about.feat4Desc': `After generation, find similar furniture at Hoff, Askona, Roomer and Baumit`,
+    'countries.eyebrow': `Global Market`,
+    'countries.title': `Furniture by Country`,
+    'country.china': `China`,
+    'country.chinaDesc': `The world's largest furniture producer and exporter. A massive industrial base — Guangdong province and the city of Foshan are considered the unofficial "furniture capital" of the world. Ranges from budget OEM manufacturing for global brands to internationally recognized labels of its own.`,
+    'cn.firm1': ` — one of the world's largest manufacturers of upholstered furniture and sofas`,
+    'cn.firm2': ` — major maker of recliners and sofas, owner of the international Cheers brand`,
+    'cn.firm3': ` — large furniture group with an international presence`,
+    'cn.firm4': ` — one of the market leaders in built-in furniture and wardrobes`,
+    'country.turkey': `Turkey`,
+    'country.turkeyDesc': `One of the largest furniture exporters to Europe, the Middle East and Russia. Strong manufacturing clusters in İnegöl and Kayseri. Combines mass production with a modern design segment.`,
+    'tr.firm1': ` — one of Turkey's largest furniture and mattress manufacturers`,
+    'tr.firm2': ` — well-known home furniture brand with a wide retail network`,
+    'tr.firm3': ` — specializes in mattresses and upholstered furniture`,
+    'tr.firm4': ` — furniture manufacturer known for bedroom and living room sets`,
+    'country.italy': `Italy`,
+    'country.italyDesc': `A trendsetter in global furniture design and the "Made in Italy" status. The production hub is the Brianza region near Milan. The annual Salone del Mobile in Milan is the leading event in the global furniture industry.`,
+    'it.firm1': ` — world-renowned manufacturer of leather sofas`,
+    'it.firm2': ` — iconic designer furniture brand`,
+    'it.firm3': ` — modern premium furniture and kitchens`,
+    'it.firm4': ` — historic brand producing furniture by celebrated designers`,
+    'country.germany': `Germany`,
+    'country.germanyDesc': `Known for engineering quality and functional furniture design, especially strong in modular systems for bedrooms and living rooms. The key trade fair is imm cologne.`,
+    'de.firm1': ` — major manufacturer of home furniture`,
+    'de.firm2': ` — premium designer sofas`,
+    'de.firm3': ` — modular designer furniture`,
+    'de.firm4': ` — one of Germany's largest furniture manufacturers`,
+    'country.belarus': `Belarus`,
+    'country.belarusDesc': `One of the largest furniture suppliers to Russia and the CIS, with a developed woodworking industry and well-known full-cycle furniture plants.`,
+    'by.firm1': ` — one of the largest furniture concerns in Belarus`,
+    'by.firm2': ` — known for solid wood furniture`,
+    'by.firm3': ` — major woodworking and furniture plant`,
+    'by.firm4': ` — manufacturer of cabinet and upholstered furniture`,
+    'generator.eyebrow': `Generator`,
+    'generator.title': `Create<br>your dream<br><span style="color:#b48c5a">design</span>`,
+    'generator.sub': `Free, no registration required. Upload a photo and get a finished design for your room.`,
+    'stat.time': `Time`,
+    'stat.timeVal': `~30 sec`,
+    'stat.styles': `Styles`,
+    'stat.cost': `Cost`,
+    'stat.costVal': `Free`,
+    'upload.text': `Upload a photo of your room`,
+    'upload.hint': `JPG or PNG, up to 10MB`,
+    'form.store': `Furniture store`,
+    'form.style': `Interior style`,
+    'form.room': `Room type`,
+    'form.color': `Color palette`,
+    'form.budget': `Renovation budget`,
+    'form.comment': `Comment`,
+    'commentPlaceholder': `Wishes: more light, space for kids, open shelving...`,
+    'room.living': `Living room`,
+    'room.bedroom': `Bedroom`,
+    'room.kitchen': `Kitchen`,
+    'room.bathroom': `Bathroom`,
+    'room.children': `Kid's room`,
+    'room.office': `Home office`,
+    'room.hallway': `Hallway`,
+    'room.dining': `Dining room`,
+    'budget.0': `Economy · up to 200,000 ₽`,
+    'budget.1': `Affordable · 200,000—500,000 ₽`,
+    'budget.2': `Mid-range · 500,000—1,500,000 ₽`,
+    'budget.3': `Premium · 1.5—4M ₽`,
+    'budget.4': `Luxury · from 4M ₽`,
+    'genBtnUpload': `Upload a photo to start`,
+    'genBtnReady': `Create design`,
+    'genBtnLoading': `Creating...`,
+    'loadingText': `Creating your design...`,
+    'genError': `Failed to create the design. Please try again.`,
+    'resultLabel': `Your new interior`,
+    'downloadBtn': `Download image`,
+    'similarFurniturePrefix': `Similar furniture at`,
+    'searchMorePrefix': `Also try`,
+    'storeEmpty': `No curated picks for this style in the selected store yet — check the full catalog.`,
+    'footer.text': `© 2026 · AI Interior Design`,
+    'auth.tabLogin': `Log in`,
+    'auth.tabSignup': `Sign up`,
+    'authPasswordPlaceholder': `Password`,
+    'authSubmitLogin': `Log in`,
+    'authSubmitSignup': `Sign up`,
+    'authSuccess': `Check your email to confirm your registration.`,
+    'authErrorFallback': `Something went wrong. Please try again.`,
+    'account.back': `← Back home`,
+    'account.title': `My Account`,
+    'account.emailLabel': `Email`,
+    'account.profileLabel': `Profile`,
+    'account.libraryLabel': `My Designs`,
+    'account.logout': `Log out`,
+    'profile.firstName': `First name`,
+    'profile.lastName': `Last name`,
+    'profile.phone': `Phone (optional)`,
+    'profile.save': `Save`,
+    'profile.saved': `Saved`,
+    'profile.saveError': `Failed to save.`,
+    'library.loading': `Loading...`,
+    'library.emptyHint': `No saved designs yet. Create a design and it will appear here.`,
+    'library.emptyShort': `No saved designs yet.`
+  }
+};
+
+let LANG = localStorage.getItem('rf_lang') || 'ru';
+
+function t(key) {
+  return (translations[LANG] && translations[LANG][key]) || key;
+}
+
+const colorNames = {
+  'neutral beige and white': { ru: 'Нейтральный', en: 'Neutral' },
+  'dark moody deep tones': { ru: 'Тёмный', en: 'Dark' },
+  'warm brown chocolate': { ru: 'Коричневый', en: 'Brown' },
+  'cool blue grey': { ru: 'Синий', en: 'Blue' },
+  'sage green natural': { ru: 'Зелёный', en: 'Green' },
+  'blush pink soft': { ru: 'Розовый', en: 'Pink' },
+  'pure white bright interior': { ru: 'Белый', en: 'White' },
+  'pure black dark interior': { ru: 'Чёрный', en: 'Black' },
+  'golden luxury warm': { ru: 'Золотой', en: 'Gold' },
+  'lavender purple violet tones': { ru: 'Сиреневый', en: 'Lavender' },
+  'deep burgundy wine red tones': { ru: 'Бордовый', en: 'Burgundy' },
+  'warm terracotta orange tones': { ru: 'Терракота', en: 'Terracotta' },
+  'navy dark blue indigo tones': { ru: 'Тёмно-синий', en: 'Navy' },
+  'warm olive khaki tones': { ru: 'Оливковый', en: 'Olive' },
+  'soft grey silver tones': { ru: 'Серый', en: 'Grey' },
+  'dusty rose mauve tones': { ru: 'Пыльная роза', en: 'Dusty Rose' },
+  'mint aqua fresh tones': { ru: 'Мятный', en: 'Mint' }
+};
+function refreshColorNames() {
+  document.querySelectorAll('.color-dot').forEach(el => {
+    const names = colorNames[el.dataset.val];
+    if (names) el.dataset.name = names[LANG];
+  });
+}
+
+const styleInfoImgs = {
+  scandinavian: 'https://i.imgur.com/QpdFRQ1.jpg',
+  minimalism: 'https://i.imgur.com/CrzZ6of.jpg',
+  loft: 'https://i.imgur.com/m44HmWk.jpg',
+  classic: 'https://i.imgur.com/CjswDfr.jpg',
+  japandi: 'https://i.imgur.com/f5dOSSq.jpg',
+  boho: 'https://i.imgur.com/zCQCn4n.jpg'
+};
+function showStyleInfo(key) {
+  showPopup(t('style.' + key), t('styleDesc.' + key), styleInfoImgs[key]);
+}
+
+function applyTranslations() {
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.getAttribute('data-i18n-html'));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === LANG));
+
+  refreshColorNames();
+
+  const budgetValEl = document.getElementById('budgetVal');
+  if (budgetValEl) budgetValEl.textContent = t('budget.' + sel.budget);
+
+  const authSubmitBtn = document.getElementById('authSubmitBtn');
+  if (authSubmitBtn) authSubmitBtn.textContent = authMode === 'login' ? t('authSubmitLogin') : t('authSubmitSignup');
+
+  const genBtnEl = document.getElementById('genBtn');
+  if (genBtnEl) genBtnEl.textContent = generating ? t('genBtnLoading') : (file ? t('genBtnReady') : t('genBtnUpload'));
+
+  if (document.getElementById('accountView').style.display !== 'none') {
+    loadLibrary();
+  }
+}
+
+function setLang(lang) {
+  LANG = lang;
+  localStorage.setItem('rf_lang', lang);
+  applyTranslations();
+}
 
 let authMode = 'login';
 let currentSession = null;
@@ -766,35 +1153,16 @@ function switchAuthTab(mode) {
   authMode = mode;
   document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
   document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
-  document.getElementById('authSubmitBtn').textContent = mode === 'login' ? 'Войти' : 'Зарегистрироваться';
+  document.getElementById('authSubmitBtn').textContent = mode === 'login' ? t('authSubmitLogin') : t('authSubmitSignup');
   document.getElementById('authMsg').textContent = '';
   document.getElementById('authMsg').className = 'auth-msg';
 }
 
 function renderAuthArea(session) {
   const area = document.getElementById('authArea');
-  if (session && session.user) {
-    area.innerHTML = '';
-    const wrap = document.createElement('div');
-    wrap.className = 'auth-user';
-    const libBtn = document.createElement('button');
-    libBtn.className = 'auth-logout';
-    libBtn.textContent = 'Кабинет';
-    libBtn.onclick = showAccount;
-    const email = document.createElement('span');
-    email.className = 'email';
-    email.textContent = session.user.email;
-    const logoutBtn = document.createElement('button');
-    logoutBtn.className = 'auth-logout';
-    logoutBtn.textContent = 'Выйти';
-    logoutBtn.onclick = async () => { await sb.auth.signOut(); };
-    wrap.appendChild(libBtn);
-    wrap.appendChild(email);
-    wrap.appendChild(logoutBtn);
-    area.appendChild(wrap);
-  } else {
-    area.innerHTML = '<button class="auth-btn" onclick="openAuthModal()">Войти</button>';
-  }
+  area.innerHTML = '<button class="nav-person-btn" type="button" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path></svg></button>';
+  const btn = area.querySelector('.nav-person-btn');
+  btn.onclick = (session && session.user) ? showAccount : openAuthModal;
 }
 
 document.getElementById('authForm').addEventListener('submit', async e => {
@@ -815,11 +1183,11 @@ document.getElementById('authForm').addEventListener('submit', async e => {
     } else {
       const { error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' } });
       if (error) throw error;
-      msg.textContent = 'Проверьте почту, чтобы подтвердить регистрацию.';
+      msg.textContent = t('authSuccess');
       msg.className = 'auth-msg success';
     }
   } catch (err) {
-    msg.textContent = err.message || 'Что-то пошло не так. Попробуйте ещё раз.';
+    msg.textContent = err.message || t('authErrorFallback');
     msg.className = 'auth-msg error';
   } finally {
     btn.disabled = false;
@@ -862,6 +1230,7 @@ function showAccount() {
 function loadProfile() {
   if (!currentSession) return;
   const meta = currentSession.user.user_metadata || {};
+  document.getElementById('accountEmailField').value = currentSession.user.email || '';
   document.getElementById('profileFirstName').value = meta.first_name || '';
   document.getElementById('profileLastName').value = meta.last_name || '';
   document.getElementById('profilePhone').value = meta.phone || '';
@@ -884,26 +1253,31 @@ document.getElementById('profileForm').addEventListener('submit', async e => {
     });
     if (error) throw error;
     if (data && data.user) currentSession.user = data.user;
-    msg.textContent = 'Сохранено';
+    msg.textContent = t('profile.saved');
     msg.className = 'profile-msg success';
   } catch (err) {
-    msg.textContent = err.message || 'Не удалось сохранить.';
+    msg.textContent = err.message || t('profile.saveError');
     msg.className = 'profile-msg error';
   } finally {
     btn.disabled = false;
   }
 });
 
+document.getElementById('accountLogoutBtn').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  showHome();
+});
+
 async function loadLibrary() {
   const grid = document.getElementById('libraryGrid');
-  grid.innerHTML = '<div class="library-empty">Загрузка...</div>';
+  grid.innerHTML = '<div class="library-empty">' + t('library.loading') + '</div>';
   const { data, error } = await sb.from('generations').select('*').order('created_at', { ascending: false });
   if (error || !data || !data.length) {
-    grid.innerHTML = '<div class="library-empty">Пока нет сохранённых дизайнов. Создайте дизайн — он появится здесь.</div>';
+    grid.innerHTML = '<div class="library-empty">' + t('library.emptyHint') + '</div>';
     return;
   }
   grid.innerHTML = data.map(g => {
-    const date = new Date(g.created_at).toLocaleDateString('ru-RU');
+    const date = new Date(g.created_at).toLocaleDateString(LANG === 'ru' ? 'ru-RU' : 'en-US');
     const label = [g.store_label, g.style_label, g.room_label].filter(Boolean).join(' · ');
     return '<div class="library-card" data-id="' + g.id + '" data-url="' + g.image_url + '">' +
       '<button class="library-delete" type="button" title="Удалить">✕</button>' +
@@ -935,7 +1309,7 @@ document.getElementById('libraryGrid').addEventListener('click', async e => {
   } catch (e2) {}
   card.remove();
   if (!document.getElementById('libraryGrid').children.length) {
-    document.getElementById('libraryGrid').innerHTML = '<div class="library-empty">Пока нет сохранённых дизайнов.</div>';
+    document.getElementById('libraryGrid').innerHTML = '<div class="library-empty">' + t('library.emptyShort') + '</div>';
   }
 });
 
@@ -961,10 +1335,10 @@ async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel)
 }
 
 const WORKER_URL = 'https://roomfactory.gwirglemly.workers.dev/';
-const budgetLabels = ['Эконом · до 200 000 ₽','Доступный · 200—500 тыс ₽','Средний · 500 000—1 500 000 ₽','Премиум · 1.5—4 млн ₽','Люкс · от 4 млн ₽'];
 const budgetPrompts = ['budget economy interior, affordable furniture','affordable interior, IKEA style','mid-range interior, quality furniture','premium interior, high-end furniture','ultra luxury bespoke interior'];
 
 let file = null;
+let generating = false;
 let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
 
 const storeCatalogs = {
@@ -1034,7 +1408,7 @@ function renderStoreProducts(storeKey, styleKey) {
   const grid = document.getElementById('hoffProductsGrid');
   const items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
   if (!items.length) {
-    grid.innerHTML = '<div class="hoff-products-empty">Пока нет подборки под этот стиль в выбранном магазине — загляните в общий каталог.</div>';
+    grid.innerHTML = '<div class="hoff-products-empty">' + t('storeEmpty') + '</div>';
     return;
   }
   grid.innerHTML = items.map(p =>
@@ -1113,7 +1487,7 @@ document.querySelectorAll('.color-dot').forEach(btn => {
 
 document.getElementById('budgetSlider').addEventListener('input', e => {
   sel.budget = parseInt(e.target.value);
-  document.getElementById('budgetVal').textContent = budgetLabels[sel.budget];
+  document.getElementById('budgetVal').textContent = t('budget.' + sel.budget);
 });
 
 document.getElementById('fileInput').addEventListener('change', e => {
@@ -1123,12 +1497,12 @@ document.getElementById('fileInput').addEventListener('change', e => {
   reader.onload = ev => {
     const z = document.getElementById('uploadZone');
     z.classList.add('has-image');
-    z.innerHTML = '<img src="'+ev.target.result+'" alt="Ваша комната">';
+    z.innerHTML = '<img src="'+ev.target.result+'" alt="Room photo">';
   };
   reader.readAsDataURL(file);
   const btn = document.getElementById('genBtn');
   btn.disabled = false;
-  btn.textContent = 'Создать дизайн';
+  btn.textContent = t('genBtnReady');
 });
 
 const zone = document.getElementById('uploadZone');
@@ -1149,11 +1523,12 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const btn = document.getElementById('genBtn');
   const comment = document.getElementById('comment').value.trim();
 
+  generating = true;
   loading.classList.add('visible');
   result.classList.remove('visible');
   err.classList.remove('visible');
   btn.disabled = true;
-  btn.textContent = 'Создаём...';
+  btn.textContent = t('genBtnLoading');
 
   const furnitureHint = (storeStyleHints[sel.storeKey] && storeStyleHints[sel.storeKey][sel.styleKey]) || '';
   const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
@@ -1179,22 +1554,25 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     renderStoreProducts(sel.storeKey, sel.styleKey);
     if (currentSession) saveGeneration(blob, sel.styleKey, sel.styleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
-    err.textContent = 'Не удалось создать дизайн. Попробуйте ещё раз.';
+    err.textContent = t('genError');
     err.classList.add('visible');
   } finally {
+    generating = false;
     loading.classList.remove('visible');
     btn.disabled = false;
-    btn.textContent = 'Создать дизайн';
+    btn.textContent = t('genBtnReady');
   }
 });
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) t.scrollIntoView({ behavior: 'smooth' });
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
 });
+
+applyTranslations();
 </script>
 </body>
 </html>
