@@ -268,6 +268,32 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 .account-logout-btn:hover { border-color: #c05050; color: #c05050; }
 @media (max-width: 600px) { .account-page { padding: 120px 24px 80px; } .profile-grid { grid-template-columns: minmax(0,1fr); } }
 
+.tour-page { padding: 140px 48px 100px; max-width: 1100px; margin: 0 auto; }
+.tour-sub { font-size: 14px; color: #8a7a66; line-height: 1.7; margin-bottom: 40px; max-width: 600px; }
+.tour-rooms { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.tour-room-card { background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 20px; display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,0.7fr) minmax(0,0.7fr) minmax(0,0.7fr) minmax(0,1.1fr) auto; gap: 14px; align-items: end; }
+.tour-refimg-wrap { margin-bottom: 32px; }
+.tour-refimg-zone { border: 1px dashed rgba(42,34,24,0.25); padding: 24px; text-align: center; cursor: pointer; background: #faf7f2; transition: all 0.2s; }
+.tour-refimg-zone:hover { border-color: #b48c5a; }
+.tour-refimg-zone img { max-width: 100%; max-height: 320px; display: block; margin: 0 auto; }
+.tour-refimg-hint { font-size: 12px; color: #8a7a66; }
+.tour-room-card label { font-size: 10px; letter-spacing: 1px; color: #8a7a66; margin-bottom: 6px; display: block; }
+.tour-room-card select, .tour-room-card input[type=number] { width: 100%; background: white; border: 1px solid rgba(42,34,24,0.15); padding: 10px; font-family: 'Inter', sans-serif; font-size: 13px; color: #1a1208; }
+.tour-room-remove { background: none; border: none; color: #c05050; font-size: 18px; cursor: pointer; padding: 8px; }
+.tour-room-door label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8a7a66; margin-bottom: 0; }
+.tour-add-btn { background: transparent; border: 1px dashed rgba(42,34,24,0.3); color: #8a7a66; padding: 14px; width: 100%; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; margin-bottom: 32px; }
+.tour-add-btn:hover { border-color: #b48c5a; color: #b48c5a; }
+.tour-build-btn { background: #b48c5a; color: white; border: none; padding: 16px 40px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+.tour-build-btn:hover { background: #c9a06a; }
+.tour-hint { font-size: 12px; color: #8a7a66; margin-top: 16px; }
+.tour-canvas-wrap { position: relative; width: 100%; height: 60vh; min-height: 400px; margin-top: 40px; background: #1a1208; border: 1px solid rgba(42,34,24,0.15); display: none; overflow: hidden; touch-action: none; }
+.tour-canvas-wrap.visible { display: block; }
+.tour-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+.tour-move-btns { position: absolute; bottom: 20px; left: 20px; display: grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(2, 44px); gap: 4px; z-index: 2; }
+.tour-move-btn { background: rgba(245,242,237,0.15); border: 1px solid rgba(245,242,237,0.3); color: #f5f2ed; font-size: 16px; cursor: pointer; user-select: none; backdrop-filter: blur(4px); }
+.tour-move-btn:active { background: rgba(180,140,90,0.5); }
+@media (max-width: 700px) { .tour-room-card { grid-template-columns: minmax(0,1fr); } .tour-page { padding: 120px 24px 80px; } }
+
 @media (max-width: 768px) {
   nav { padding: 20px 24px; }
   .hero-content { padding: 0 24px; }
@@ -437,6 +463,7 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   <a href="#examples" onclick="showHome();closeSidebar()" data-i18n="sidebar.examples">Примеры</a>
   <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()" data-i18n="sidebar.how">Как это работает</a>
   <a href="#generator" onclick="showHome();closeSidebar()">Room Factory</a>
+  <a href="javascript:void(0)" onclick="showTour();closeSidebar()" data-i18n="sidebar.tour">3D-тур</a>
   <a href="javascript:void(0)" onclick="openModal('countriesModal');closeSidebar()" data-i18n="sidebar.countries">Мебель по странам</a>
   <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()" data-i18n="sidebar.about">О проекте</a>
   <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()" data-i18n="sidebar.try">Попробовать</a>
@@ -749,6 +776,39 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
+<div id="tourView" style="display:none">
+  <div class="tour-page">
+    <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
+    <h1 class="account-title" data-i18n="tour.title">3D-тур</h1>
+    <p class="tour-sub" data-i18n="tour.sub">Укажи размеры комнат квартиры — построим 3D-модель, по которой можно пройтись.</p>
+
+    <div class="tour-refimg-wrap">
+      <div class="tour-refimg-zone" id="tourRefImgZone" onclick="document.getElementById('tourRefImgInput').click()">
+        <p class="tour-refimg-hint" id="tourRefImgHint" data-i18n="tour.refImgHint">Загрузи фото планировки для справки (необязательно) — картинка останется только у тебя на экране, никуда не отправляется</p>
+      </div>
+      <input type="file" id="tourRefImgInput" accept="image/*" style="display:none">
+    </div>
+
+    <div class="tour-rooms" id="tourRoomsList"></div>
+    <button type="button" class="tour-add-btn" onclick="addTourRoom()" data-i18n="tour.addRoom">+ Добавить комнату</button>
+
+    <button type="button" class="tour-build-btn" id="tourBuildBtn" onclick="buildTour()" data-i18n="tour.build">Построить 3D-тур</button>
+    <p class="tour-hint" data-i18n="tour.hint">Управление: тяни мышкой/пальцем по картинке — осмотреться, WASD или стрелки — идти. На телефоне — кнопки внизу справа.</p>
+
+    <div class="tour-canvas-wrap" id="tourCanvasWrap">
+      <div class="tour-move-btns">
+        <span></span>
+        <button type="button" class="tour-move-btn" id="tourBtnF">▲</button>
+        <span></span>
+        <button type="button" class="tour-move-btn" id="tourBtnL">◄</button>
+        <button type="button" class="tour-move-btn" id="tourBtnB">▼</button>
+        <button type="button" class="tour-move-btn" id="tourBtnR">►</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://puqwlxrdihxmrhgfnnpa.supabase.co';
@@ -759,9 +819,21 @@ const translations = {
   ru: {
     'sidebar.examples': `Примеры`,
     'sidebar.how': `Как это работает`,
+    'sidebar.tour': `3D-тур`,
     'sidebar.countries': `Мебель по странам`,
     'sidebar.about': `О проекте`,
     'sidebar.try': `Попробовать`,
+    'tour.title': `3D-тур`,
+    'tour.sub': `Укажи размеры комнат квартиры — построим 3D-модель, по которой можно пройтись.`,
+    'tour.addRoom': `+ Добавить комнату`,
+    'tour.build': `Построить 3D-тур`,
+    'tour.hint': `Управление: тяни мышкой/пальцем по картинке — осмотреться, WASD или стрелки — идти. На телефоне — кнопки внизу справа.`,
+    'tour.roomType': `Тип комнаты`,
+    'tour.area': `Площадь, м²`,
+    'tour.width': `Ширина, м`,
+    'tour.length': `Длина, м`,
+    'tour.doorway': `Дверной проём`,
+    'tour.refImgHint': `Загрузи фото планировки для справки (необязательно) — картинка останется только у тебя на экране, никуда не отправляется`,
     'hero.eyebrow': `AI дизайн интерьера`,
     'hero.title': `Дизайн<br>вашей<span class="line2">комнаты</span>`,
     'hero.sub': `Загрузите фото — ИИ создаст профессиональный дизайн в любом стиле за 30 секунд`,
@@ -907,9 +979,21 @@ const translations = {
   en: {
     'sidebar.examples': `Examples`,
     'sidebar.how': `How it works`,
+    'sidebar.tour': `3D Tour`,
     'sidebar.countries': `Furniture by Country`,
     'sidebar.about': `About`,
     'sidebar.try': `Try it`,
+    'tour.title': `3D Tour`,
+    'tour.sub': `Enter the room dimensions of your apartment — we'll build a 3D model you can walk through.`,
+    'tour.addRoom': `+ Add room`,
+    'tour.build': `Build 3D tour`,
+    'tour.hint': `Controls: drag with mouse/finger to look around, WASD or arrow keys to move. On mobile — buttons in the bottom right.`,
+    'tour.roomType': `Room type`,
+    'tour.area': `Area, m²`,
+    'tour.width': `Width, m`,
+    'tour.length': `Length, m`,
+    'tour.doorway': `Doorway`,
+    'tour.refImgHint': `Upload a floor plan photo for reference (optional) — it stays on your screen only, nothing is sent anywhere`,
     'hero.eyebrow': `AI Interior Design`,
     'hero.title': `Design<br>your<span class="line2">room</span>`,
     'hero.sub': `Upload a photo — AI creates a professional design in any style in 30 seconds`,
@@ -1217,14 +1301,264 @@ function closeModal(id) {
 
 function showHome() {
   document.getElementById('accountView').style.display = 'none';
+  document.getElementById('tourView').style.display = 'none';
   document.getElementById('homeView').style.display = '';
 }
 function showAccount() {
   document.getElementById('homeView').style.display = 'none';
+  document.getElementById('tourView').style.display = 'none';
   document.getElementById('accountView').style.display = 'block';
   window.scrollTo(0, 0);
   loadProfile();
   loadLibrary();
+}
+function showTour() {
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('accountView').style.display = 'none';
+  document.getElementById('tourView').style.display = 'block';
+  window.scrollTo(0, 0);
+  if (!document.querySelector('#tourRoomsList .tour-room-card')) {
+    addTourRoom();
+  }
+}
+
+document.getElementById('tourRefImgInput').addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const zone = document.getElementById('tourRefImgZone');
+    zone.innerHTML = '<img src="' + ev.target.result + '" alt="">';
+  };
+  reader.readAsDataURL(f);
+});
+
+let tourRoomSeq = 0;
+function addTourRoom() {
+  const id = 'room' + (tourRoomSeq++);
+  const list = document.getElementById('tourRoomsList');
+  const isFirst = list.children.length === 0;
+  const roomKeys = ['living','bedroom','kitchen','bathroom','children','office','hallway','dining'];
+  const div = document.createElement('div');
+  div.className = 'tour-room-card';
+  div.dataset.id = id;
+  div.innerHTML =
+    '<div><label>' + t('tour.roomType') + '</label><select class="tour-type">' +
+      roomKeys.map(k => '<option value="' + k + '">' + t('room.' + k) + '</option>').join('') +
+    '</select></div>' +
+    '<div><label>' + t('tour.area') + '</label><input type="number" class="tour-area" min="0" step="0.01" placeholder="—"></div>' +
+    '<div><label>' + t('tour.width') + '</label><input type="number" class="tour-width" min="0.5" step="0.1" placeholder="3"></div>' +
+    '<div><label>' + t('tour.length') + '</label><input type="number" class="tour-length" min="0.5" step="0.1" placeholder="3"></div>' +
+    '<div class="tour-room-door" style="' + (isFirst ? 'visibility:hidden' : '') + '"><label><input type="checkbox" class="tour-door" checked> ' + t('tour.doorway') + '</label></div>' +
+    '<button type="button" class="tour-room-remove" onclick="removeTourRoom(this)">✕</button>';
+  list.appendChild(div);
+}
+function removeTourRoom(btn) {
+  btn.closest('.tour-room-card').remove();
+  const cards = document.querySelectorAll('#tourRoomsList .tour-room-card');
+  cards.forEach((c, i) => {
+    c.querySelector('.tour-room-door').style.visibility = i === 0 ? 'hidden' : 'visible';
+  });
+}
+
+function resolveRoomDims(c) {
+  const area = parseFloat(c.querySelector('.tour-area').value);
+  const w = parseFloat(c.querySelector('.tour-width').value);
+  const l = parseFloat(c.querySelector('.tour-length').value);
+  let width, length;
+  if (w > 0 && l > 0) {
+    width = w; length = l;
+  } else if (area > 0 && w > 0) {
+    width = w; length = area / w;
+  } else if (area > 0 && l > 0) {
+    length = l; width = area / l;
+  } else if (area > 0) {
+    width = Math.sqrt(area * 1.3);
+    length = area / width;
+  } else {
+    width = w > 0 ? w : 3;
+    length = l > 0 ? l : 3;
+  }
+  return { width: Math.max(0.5, width), length: Math.max(0.5, length) };
+}
+
+function buildTour() {
+  const cards = document.querySelectorAll('#tourRoomsList .tour-room-card');
+  if (!cards.length) return;
+  const rooms = Array.from(cards).map((c, i) => {
+    const dims = resolveRoomDims(c);
+    return {
+      width: dims.width,
+      length: dims.length,
+      door: i === 0 ? false : c.querySelector('.tour-door').checked
+    };
+  });
+  document.getElementById('tourCanvasWrap').classList.add('visible');
+  initTourScene(rooms);
+}
+
+let tourRenderer, tourScene, tourCamera, tourAnimId, tourControlsBound = false;
+let tourYaw = Math.PI, tourPitch = 0;
+let tourKeys = {};
+let tourDragging = false, tourLastX = 0, tourLastY = 0;
+
+function initTourScene(rooms) {
+  const wrap = document.getElementById('tourCanvasWrap');
+  if (tourAnimId) cancelAnimationFrame(tourAnimId);
+  const oldCanvas = wrap.querySelector('canvas');
+  if (oldCanvas) oldCanvas.remove();
+  if (tourRenderer) tourRenderer.dispose();
+
+  const WALL_H = 2.7, WALL_T = 0.1;
+  tourScene = new THREE.Scene();
+  tourScene.background = new THREE.Color(0x1a1208);
+
+  tourScene.add(new THREE.AmbientLight(0xffffff, 0.7));
+  const dirLight = new THREE.DirectionalLight(0xfff2e0, 0.6);
+  dirLight.position.set(5, 10, 5);
+  tourScene.add(dirLight);
+
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0xd8c8a8 });
+  const wallMat = new THREE.MeshStandardMaterial({ color: 0xf0ece2 });
+  const ceilMat = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+
+  let x = 0;
+  const bounds = [];
+  rooms.forEach(r => {
+    bounds.push({ x0: x, x1: x + r.width, z0: 0, z1: r.length, door: r.door });
+    x += r.width;
+  });
+  const totalW = x;
+  const maxL = Math.max.apply(null, bounds.map(b => b.z1));
+
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(totalW, maxL), floorMat);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.set(totalW / 2, 0, maxL / 2);
+  tourScene.add(floor);
+
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(totalW, maxL), ceilMat);
+  ceil.rotation.x = Math.PI / 2;
+  ceil.position.set(totalW / 2, WALL_H, maxL / 2);
+  tourScene.add(ceil);
+
+  function addWallSeg(x0, x1, z0, z1) {
+    const w = Math.max(0.01, x1 - x0);
+    const d = Math.max(0.01, z1 - z0);
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, WALL_H, d), wallMat);
+    mesh.position.set((x0 + x1) / 2, WALL_H / 2, (z0 + z1) / 2);
+    tourScene.add(mesh);
+  }
+
+  bounds.forEach((b, i) => {
+    addWallSeg(b.x0, b.x1, b.z0 - WALL_T / 2, b.z0 + WALL_T / 2);
+    addWallSeg(b.x0, b.x1, b.z1 - WALL_T / 2, b.z1 + WALL_T / 2);
+    if (i === 0) addWallSeg(b.x0 - WALL_T / 2, b.x0 + WALL_T / 2, b.z0, b.z1);
+    if (i === bounds.length - 1) addWallSeg(b.x1 - WALL_T / 2, b.x1 + WALL_T / 2, b.z0, b.z1);
+    if (i > 0) {
+      const prev = bounds[i - 1];
+      const shared = b.x0;
+      const zTop = Math.min(prev.z1, b.z1);
+      if (b.door) {
+        const gap = Math.min(1.2, zTop * 0.6);
+        const mid = zTop / 2;
+        if (mid - gap / 2 > 0.05) addWallSeg(shared - WALL_T / 2, shared + WALL_T / 2, 0, mid - gap / 2);
+        if (zTop - (mid + gap / 2) > 0.05) addWallSeg(shared - WALL_T / 2, shared + WALL_T / 2, mid + gap / 2, zTop);
+      } else {
+        addWallSeg(shared - WALL_T / 2, shared + WALL_T / 2, 0, zTop);
+      }
+    }
+  });
+
+  const rect = wrap.getBoundingClientRect();
+  tourCamera = new THREE.PerspectiveCamera(70, rect.width / rect.height, 0.1, 200);
+  const startRoom = bounds[0];
+  tourCamera.position.set(startRoom.x0 + Math.min(0.8, startRoom.x1 - startRoom.x0 - 0.3), 1.6, startRoom.z1 / 2);
+  tourYaw = -Math.PI / 2;
+  tourPitch = 0;
+
+  tourRenderer = new THREE.WebGLRenderer({ antialias: true });
+  tourRenderer.setSize(rect.width, rect.height);
+  tourRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  wrap.appendChild(tourRenderer.domElement);
+
+  setupTourControls(wrap, totalW, maxL);
+
+  let last = performance.now();
+  function animate(now) {
+    tourAnimId = requestAnimationFrame(animate);
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    tourCamera.rotation.order = 'YXZ';
+    tourCamera.rotation.y = tourYaw;
+    tourCamera.rotation.x = tourPitch;
+
+    const speed = 2.2 * dt;
+    const forward = new THREE.Vector3(-Math.sin(tourYaw), 0, -Math.cos(tourYaw));
+    const right = new THREE.Vector3(-forward.z, 0, forward.x);
+    if (tourKeys['w'] || tourKeys['arrowup']) tourCamera.position.addScaledVector(forward, speed);
+    if (tourKeys['s'] || tourKeys['arrowdown']) tourCamera.position.addScaledVector(forward, -speed);
+    if (tourKeys['a'] || tourKeys['arrowleft']) tourCamera.position.addScaledVector(right, -speed);
+    if (tourKeys['d'] || tourKeys['arrowright']) tourCamera.position.addScaledVector(right, speed);
+    tourCamera.position.x = Math.max(0.3, Math.min(totalW - 0.3, tourCamera.position.x));
+    tourCamera.position.z = Math.max(0.3, Math.min(maxL - 0.3, tourCamera.position.z));
+
+    tourRenderer.render(tourScene, tourCamera);
+  }
+  requestAnimationFrame(animate);
+
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function setupTourControls(wrap) {
+  tourKeys = {};
+
+  const onDown = e => { tourDragging = true; const p = e.touches ? e.touches[0] : e; tourLastX = p.clientX; tourLastY = p.clientY; };
+  const onMove = e => {
+    if (!tourDragging) return;
+    const p = e.touches ? e.touches[0] : e;
+    const dx = p.clientX - tourLastX, dy = p.clientY - tourLastY;
+    tourLastX = p.clientX; tourLastY = p.clientY;
+    tourYaw -= dx * 0.005;
+    tourPitch -= dy * 0.005;
+    tourPitch = Math.max(-1.3, Math.min(1.3, tourPitch));
+    e.preventDefault();
+  };
+  const onUp = () => { tourDragging = false; };
+  wrap.addEventListener('mousedown', onDown);
+  wrap.addEventListener('mousemove', onMove);
+  wrap.addEventListener('touchstart', onDown, { passive: true });
+  wrap.addEventListener('touchmove', onMove, { passive: false });
+  wrap.addEventListener('touchend', onUp);
+
+  const bind = (id, key) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const set = v => e => { tourKeys[key] = v; e.preventDefault(); };
+    btn.addEventListener('mousedown', set(true));
+    btn.addEventListener('mouseup', set(false));
+    btn.addEventListener('mouseleave', set(false));
+    btn.addEventListener('touchstart', set(true), { passive: false });
+    btn.addEventListener('touchend', set(false));
+  };
+  bind('tourBtnF', 'w');
+  bind('tourBtnB', 's');
+  bind('tourBtnL', 'a');
+  bind('tourBtnR', 'd');
+
+  if (!tourControlsBound) {
+    tourControlsBound = true;
+    window.addEventListener('keydown', e => { tourKeys[e.key.toLowerCase()] = true; });
+    window.addEventListener('keyup', e => { tourKeys[e.key.toLowerCase()] = false; });
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('resize', () => {
+      if (!tourRenderer) return;
+      const r = wrap.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      tourRenderer.setSize(r.width, r.height);
+      tourCamera.aspect = r.width / r.height;
+      tourCamera.updateProjectionMatrix();
+    });
+  }
 }
 
 function loadProfile() {
