@@ -219,17 +219,6 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .modal-title { font-family: 'Unbounded', sans-serif; font-size: clamp(24px, 4vw, 36px); font-weight: 900; letter-spacing: -1px; line-height: 1; color: #1a1208; margin-bottom: 32px; }
 .popup-box.dark .modal-title { color: #f5f2ed; }
 
-.country-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 8px; }
-.country-card { background: #f5f2ed; border: 1px solid rgba(42,34,24,0.1); padding: 28px; }
-.country-flag { font-size: 28px; margin-bottom: 12px; }
-.country-name { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #1a1208; }
-.country-desc { font-size: 12px; color: #8a7a66; line-height: 1.6; margin-bottom: 14px; }
-.country-firms { list-style: none; }
-.country-firms li { font-size: 12px; color: #1a1208; line-height: 1.6; padding: 6px 0; border-top: 1px solid rgba(42,34,24,0.08); }
-.country-firms li:first-child { border-top: none; }
-.country-firms strong { color: #b48c5a; }
-@media (max-width: 600px) { .country-grid { grid-template-columns: minmax(0,1fr); } }
-
 .about { padding: 120px 48px; border-top: 1px solid rgba(42,34,24,0.1); background: #2d2318; }
 .about-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 80px; align-items: center; }
 .about-title { font-family: 'Unbounded', sans-serif; font-size: clamp(22px, 3vw, 36px); font-weight: 900; line-height: 1.05; letter-spacing: -0.5px; margin-bottom: 32px; color: #f5f2ed; overflow-wrap: break-word; word-break: break-word; }
@@ -392,71 +381,6 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
-<div class="popup-overlay" id="countriesModal">
-  <div class="popup-box wide">
-    <button class="popup-close" onclick="closeModal('countriesModal')">✕</button>
-    <span class="modal-eyebrow" data-i18n="countries.eyebrow">Мировой рынок</span>
-    <h2 class="modal-title" data-i18n="countries.title">Мебель по странам</h2>
-    <div class="country-grid">
-      <div class="country-card">
-        <div class="country-flag">🇨🇳</div>
-        <h3 class="country-name" data-i18n="country.china">Китай</h3>
-        <p class="country-desc" data-i18n="country.chinaDesc">Крупнейший в мире производитель и экспортёр мебели. Огромная промышленная база — провинция Гуандун и город Фошань считаются неофициальной «мебельной столицей» мира. Диапазон — от бюджетного OEM-производства для мировых брендов до собственных марок международного уровня.</p>
-        <ul class="country-firms">
-          <li><strong>Kuka Home</strong><span data-i18n="cn.firm1"> — один из крупнейших в мире производителей мягкой мебели и диванов</span></li>
-          <li><strong>Man Wah Holdings</strong><span data-i18n="cn.firm2"> — крупный производитель кресел-реклайнеров и диванов, международный бренд Cheers</span></li>
-          <li><strong>Markor Furnishings</strong><span data-i18n="cn.firm3"> — крупная мебельная группа с международным присутствием</span></li>
-          <li><strong>Suofeiya</strong><span data-i18n="cn.firm4"> — один из лидеров рынка встроенной мебели и шкафов-купе</span></li>
-        </ul>
-      </div>
-      <div class="country-card">
-        <div class="country-flag">🇹🇷</div>
-        <h3 class="country-name" data-i18n="country.turkey">Турция</h3>
-        <p class="country-desc" data-i18n="country.turkeyDesc">Один из крупнейших экспортёров мебели в Европу, на Ближний Восток и в Россию. Сильные производственные кластеры — Инегёль и Кайсери. Сочетает массовое производство и современный дизайнерский сегмент.</p>
-        <ul class="country-firms">
-          <li><strong>İstikbal</strong><span data-i18n="tr.firm1"> — один из крупнейших производителей мебели и матрасов в Турции</span></li>
-          <li><strong>Bellona</strong><span data-i18n="tr.firm2"> — известный бренд мебели для дома с широкой розничной сетью</span></li>
-          <li><strong>Yataş</strong><span data-i18n="tr.firm3"> — специализируется на матрасах и мягкой мебели</span></li>
-          <li><strong>Doğtaş</strong><span data-i18n="tr.firm4"> — производитель мебели, известен спальными и гостиными гарнитурами</span></li>
-        </ul>
-      </div>
-      <div class="country-card">
-        <div class="country-flag">🇮🇹</div>
-        <h3 class="country-name" data-i18n="country.italy">Италия</h3>
-        <p class="country-desc" data-i18n="country.italyDesc">Законодатель мод в мировом мебельном дизайне и статусе «Made in Italy». Центр производства — регион Брианца под Миланом. Ежегодная выставка Salone del Mobile в Милане — главное событие мировой мебельной индустрии.</p>
-        <ul class="country-firms">
-          <li><strong>Natuzzi</strong><span data-i18n="it.firm1"> — всемирно известный производитель кожаных диванов</span></li>
-          <li><strong>B&amp;B Italia</strong><span data-i18n="it.firm2"> — культовый дизайнерский бренд мебели</span></li>
-          <li><strong>Poliform</strong><span data-i18n="it.firm3"> — современная мебель и кухни премиум-класса</span></li>
-          <li><strong>Cassina</strong><span data-i18n="it.firm4"> — исторический бренд, авторская мебель признанных дизайнеров</span></li>
-        </ul>
-      </div>
-      <div class="country-card">
-        <div class="country-flag">🇩🇪</div>
-        <h3 class="country-name" data-i18n="country.germany">Германия</h3>
-        <p class="country-desc" data-i18n="country.germanyDesc">Известна инженерным качеством и функциональным дизайном мебели, особенно сильна в системных решениях для спален и гостиных. Ключевая отраслевая выставка — imm cologne.</p>
-        <ul class="country-firms">
-          <li><strong>Hülsta</strong><span data-i18n="de.firm1"> — крупный производитель мебели для дома</span></li>
-          <li><strong>Rolf Benz</strong><span data-i18n="de.firm2"> — премиальные дизайнерские диваны</span></li>
-          <li><strong>Interlübke</strong><span data-i18n="de.firm3"> — модульная дизайнерская мебель</span></li>
-          <li><strong>Nolte Möbel</strong><span data-i18n="de.firm4"> — один из крупнейших производителей мебели в Германии</span></li>
-        </ul>
-      </div>
-      <div class="country-card">
-        <div class="country-flag">🇧🇾</div>
-        <h3 class="country-name" data-i18n="country.belarus">Беларусь</h3>
-        <p class="country-desc" data-i18n="country.belarusDesc">Один из крупнейших поставщиков мебели на рынки России и СНГ, с развитой деревообрабатывающей промышленностью и известными комбинатами полного цикла производства.</p>
-        <ul class="country-firms">
-          <li><strong>Пинскдрев</strong><span data-i18n="by.firm1"> — один из крупнейших мебельных концернов Беларуси</span></li>
-          <li><strong>Гомельдрев</strong><span data-i18n="by.firm2"> — известен мебелью из массива дерева</span></li>
-          <li><strong>Ивацевичдрев</strong><span data-i18n="by.firm3"> — крупный деревообрабатывающий и мебельный комбинат</span></li>
-          <li><strong>Молодечномебель</strong><span data-i18n="by.firm4"> — производитель корпусной и мягкой мебели</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
@@ -464,7 +388,6 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()" data-i18n="sidebar.how">Как это работает</a>
   <a href="#generator" onclick="showHome();closeSidebar()">Room Factory</a>
   <a href="javascript:void(0)" onclick="showTour();closeSidebar()" data-i18n="sidebar.tour">3D-тур</a>
-  <a href="javascript:void(0)" onclick="openModal('countriesModal');closeSidebar()" data-i18n="sidebar.countries">Мебель по странам</a>
   <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()" data-i18n="sidebar.about">О проекте</a>
   <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()" data-i18n="sidebar.try">Попробовать</a>
   <div class="sidebar-lang">
@@ -820,7 +743,6 @@ const translations = {
     'sidebar.examples': `Примеры`,
     'sidebar.how': `Как это работает`,
     'sidebar.tour': `3D-тур`,
-    'sidebar.countries': `Мебель по странам`,
     'sidebar.about': `О проекте`,
     'sidebar.try': `Попробовать`,
     'tour.title': `3D-тур`,
@@ -880,38 +802,6 @@ const translations = {
     'about.feat3Desc': `ИИ следует структуре вашей комнаты — окна, двери и пропорции`,
     'about.feat4Title': `Мебель под рукой`,
     'about.feat4Desc': `После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit`,
-    'countries.eyebrow': `Мировой рынок`,
-    'countries.title': `Мебель по странам`,
-    'country.china': `Китай`,
-    'country.chinaDesc': `Крупнейший в мире производитель и экспортёр мебели. Огромная промышленная база — провинция Гуандун и город Фошань считаются неофициальной «мебельной столицей» мира. Диапазон — от бюджетного OEM-производства для мировых брендов до собственных марок международного уровня.`,
-    'cn.firm1': ` — один из крупнейших в мире производителей мягкой мебели и диванов`,
-    'cn.firm2': ` — крупный производитель кресел-реклайнеров и диванов, международный бренд Cheers`,
-    'cn.firm3': ` — крупная мебельная группа с международным присутствием`,
-    'cn.firm4': ` — один из лидеров рынка встроенной мебели и шкафов-купе`,
-    'country.turkey': `Турция`,
-    'country.turkeyDesc': `Один из крупнейших экспортёров мебели в Европу, на Ближний Восток и в Россию. Сильные производственные кластеры — Инегёль и Кайсери. Сочетает массовое производство и современный дизайнерский сегмент.`,
-    'tr.firm1': ` — один из крупнейших производителей мебели и матрасов в Турции`,
-    'tr.firm2': ` — известный бренд мебели для дома с широкой розничной сетью`,
-    'tr.firm3': ` — специализируется на матрасах и мягкой мебели`,
-    'tr.firm4': ` — производитель мебели, известен спальными и гостиными гарнитурами`,
-    'country.italy': `Италия`,
-    'country.italyDesc': `Законодатель мод в мировом мебельном дизайне и статусе «Made in Italy». Центр производства — регион Брианца под Миланом. Ежегодная выставка Salone del Mobile в Милане — главное событие мировой мебельной индустрии.`,
-    'it.firm1': ` — всемирно известный производитель кожаных диванов`,
-    'it.firm2': ` — культовый дизайнерский бренд мебели`,
-    'it.firm3': ` — современная мебель и кухни премиум-класса`,
-    'it.firm4': ` — исторический бренд, авторская мебель признанных дизайнеров`,
-    'country.germany': `Германия`,
-    'country.germanyDesc': `Известна инженерным качеством и функциональным дизайном мебели, особенно сильна в системных решениях для спален и гостиных. Ключевая отраслевая выставка — imm cologne.`,
-    'de.firm1': ` — крупный производитель мебели для дома`,
-    'de.firm2': ` — премиальные дизайнерские диваны`,
-    'de.firm3': ` — модульная дизайнерская мебель`,
-    'de.firm4': ` — один из крупнейших производителей мебели в Германии`,
-    'country.belarus': `Беларусь`,
-    'country.belarusDesc': `Один из крупнейших поставщиков мебели на рынки России и СНГ, с развитой деревообрабатывающей промышленностью и известными комбинатами полного цикла производства.`,
-    'by.firm1': ` — один из крупнейших мебельных концернов Беларуси`,
-    'by.firm2': ` — известен мебелью из массива дерева`,
-    'by.firm3': ` — крупный деревообрабатывающий и мебельный комбинат`,
-    'by.firm4': ` — производитель корпусной и мягкой мебели`,
     'generator.eyebrow': `Генератор`,
     'generator.title': `Создайте<br>дизайн<br><span style="color:#b48c5a">мечты</span>`,
     'generator.sub': `Бесплатно, без регистрации. Загрузите фото и получите готовый дизайн вашей комнаты.`,
@@ -980,7 +870,6 @@ const translations = {
     'sidebar.examples': `Examples`,
     'sidebar.how': `How it works`,
     'sidebar.tour': `3D Tour`,
-    'sidebar.countries': `Furniture by Country`,
     'sidebar.about': `About`,
     'sidebar.try': `Try it`,
     'tour.title': `3D Tour`,
@@ -1040,38 +929,6 @@ const translations = {
     'about.feat3Desc': `AI follows your room's structure — windows, doors and proportions`,
     'about.feat4Title': `Furniture at hand`,
     'about.feat4Desc': `After generation, find similar furniture at Hoff, Askona, Roomer and Baumit`,
-    'countries.eyebrow': `Global Market`,
-    'countries.title': `Furniture by Country`,
-    'country.china': `China`,
-    'country.chinaDesc': `The world's largest furniture producer and exporter. A massive industrial base — Guangdong province and the city of Foshan are considered the unofficial "furniture capital" of the world. Ranges from budget OEM manufacturing for global brands to internationally recognized labels of its own.`,
-    'cn.firm1': ` — one of the world's largest manufacturers of upholstered furniture and sofas`,
-    'cn.firm2': ` — major maker of recliners and sofas, owner of the international Cheers brand`,
-    'cn.firm3': ` — large furniture group with an international presence`,
-    'cn.firm4': ` — one of the market leaders in built-in furniture and wardrobes`,
-    'country.turkey': `Turkey`,
-    'country.turkeyDesc': `One of the largest furniture exporters to Europe, the Middle East and Russia. Strong manufacturing clusters in İnegöl and Kayseri. Combines mass production with a modern design segment.`,
-    'tr.firm1': ` — one of Turkey's largest furniture and mattress manufacturers`,
-    'tr.firm2': ` — well-known home furniture brand with a wide retail network`,
-    'tr.firm3': ` — specializes in mattresses and upholstered furniture`,
-    'tr.firm4': ` — furniture manufacturer known for bedroom and living room sets`,
-    'country.italy': `Italy`,
-    'country.italyDesc': `A trendsetter in global furniture design and the "Made in Italy" status. The production hub is the Brianza region near Milan. The annual Salone del Mobile in Milan is the leading event in the global furniture industry.`,
-    'it.firm1': ` — world-renowned manufacturer of leather sofas`,
-    'it.firm2': ` — iconic designer furniture brand`,
-    'it.firm3': ` — modern premium furniture and kitchens`,
-    'it.firm4': ` — historic brand producing furniture by celebrated designers`,
-    'country.germany': `Germany`,
-    'country.germanyDesc': `Known for engineering quality and functional furniture design, especially strong in modular systems for bedrooms and living rooms. The key trade fair is imm cologne.`,
-    'de.firm1': ` — major manufacturer of home furniture`,
-    'de.firm2': ` — premium designer sofas`,
-    'de.firm3': ` — modular designer furniture`,
-    'de.firm4': ` — one of Germany's largest furniture manufacturers`,
-    'country.belarus': `Belarus`,
-    'country.belarusDesc': `One of the largest furniture suppliers to Russia and the CIS, with a developed woodworking industry and well-known full-cycle furniture plants.`,
-    'by.firm1': ` — one of the largest furniture concerns in Belarus`,
-    'by.firm2': ` — known for solid wood furniture`,
-    'by.firm3': ` — major woodworking and furniture plant`,
-    'by.firm4': ` — manufacturer of cabinet and upholstered furniture`,
     'generator.eyebrow': `Generator`,
     'generator.title': `Create<br>your dream<br><span style="color:#b48c5a">design</span>`,
     'generator.sub': `Free, no registration required. Upload a photo and get a finished design for your room.`,
@@ -1293,7 +1150,7 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.remove('visible');
 }
-['howModal', 'aboutModal', 'countriesModal'].forEach(id => {
+['howModal', 'aboutModal'].forEach(id => {
   document.getElementById(id).addEventListener('click', e => {
     if (e.target === document.getElementById(id)) closeModal(id);
   });
@@ -1409,18 +1266,25 @@ function initTourScene(rooms) {
   if (oldCanvas) oldCanvas.remove();
   if (tourRenderer) tourRenderer.dispose();
 
-  const WALL_H = 2.7, WALL_T = 0.1;
+  const WALL_H = 2.7, WALL_T = 0.1, DOOR_H = 2.05, BASE_H = 0.09;
   tourScene = new THREE.Scene();
   tourScene.background = new THREE.Color(0x1a1208);
 
-  tourScene.add(new THREE.AmbientLight(0xffffff, 0.7));
-  const dirLight = new THREE.DirectionalLight(0xfff2e0, 0.6);
+  tourScene.add(new THREE.AmbientLight(0xfff6ea, 0.75));
+  const dirLight = new THREE.DirectionalLight(0xfff2e0, 0.7);
   dirLight.position.set(5, 10, 5);
   tourScene.add(dirLight);
+  const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+  dirLight2.position.set(-5, 8, -5);
+  tourScene.add(dirLight2);
 
-  const floorMat = new THREE.MeshStandardMaterial({ color: 0xd8c8a8 });
-  const wallMat = new THREE.MeshStandardMaterial({ color: 0xf0ece2 });
-  const ceilMat = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0xb99668, roughness: 0.55 });
+  const wallMat = new THREE.MeshStandardMaterial({ color: 0xf7f3ec, roughness: 0.9 });
+  const ceilMat = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide, roughness: 0.9 });
+  const baseMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
+  const doorFrameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
+  const doorLeafMat = new THREE.MeshStandardMaterial({ color: 0xb48c5a, roughness: 0.5 });
+  const handleMat = new THREE.MeshStandardMaterial({ color: 0x2d2318, metalness: 0.6, roughness: 0.3 });
 
   let x = 0;
   const bounds = [];
@@ -1441,30 +1305,56 @@ function initTourScene(rooms) {
   ceil.position.set(totalW / 2, WALL_H, maxL / 2);
   tourScene.add(ceil);
 
-  function addWallSeg(x0, x1, z0, z1) {
+  function addWallSeg(x0, x1, z0, z1, yBottom, yTop, mat) {
+    yBottom = yBottom === undefined ? 0 : yBottom;
+    yTop = yTop === undefined ? WALL_H : yTop;
+    mat = mat || wallMat;
     const w = Math.max(0.01, x1 - x0);
     const d = Math.max(0.01, z1 - z0);
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, WALL_H, d), wallMat);
-    mesh.position.set((x0 + x1) / 2, WALL_H / 2, (z0 + z1) / 2);
+    const h = Math.max(0.01, yTop - yBottom);
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+    mesh.position.set((x0 + x1) / 2, yBottom + h / 2, (z0 + z1) / 2);
     tourScene.add(mesh);
   }
 
+  function addFullWall(x0, x1, z0, z1) {
+    addWallSeg(x0, x1, z0, z1, 0, WALL_H, wallMat);
+    const bw = Math.max(0.01, (x1 - x0) + 0.02);
+    const bd = Math.max(0.01, (z1 - z0) + 0.02);
+    const base = new THREE.Mesh(new THREE.BoxGeometry(bw, BASE_H, bd), baseMat);
+    base.position.set((x0 + x1) / 2, BASE_H / 2, (z0 + z1) / 2);
+    tourScene.add(base);
+  }
+
+  function addDoor(xPos, z0, z1) {
+    addWallSeg(xPos - WALL_T / 2, xPos + WALL_T / 2, z0, z1, DOOR_H, WALL_H, doorFrameMat);
+    const inset = 0.05;
+    const lz0 = z0 + inset, lz1 = z1 - inset;
+    const leaf = new THREE.Mesh(new THREE.BoxGeometry(0.05, DOOR_H - 0.03, Math.max(0.01, lz1 - lz0)), doorLeafMat);
+    leaf.position.set(xPos, (DOOR_H - 0.03) / 2, (lz0 + lz1) / 2);
+    tourScene.add(leaf);
+    const handle = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.03, 0.03), handleMat);
+    handle.position.set(xPos + 0.035, 1.0, lz1 - 0.12);
+    tourScene.add(handle);
+  }
+
   bounds.forEach((b, i) => {
-    addWallSeg(b.x0, b.x1, b.z0 - WALL_T / 2, b.z0 + WALL_T / 2);
-    addWallSeg(b.x0, b.x1, b.z1 - WALL_T / 2, b.z1 + WALL_T / 2);
-    if (i === 0) addWallSeg(b.x0 - WALL_T / 2, b.x0 + WALL_T / 2, b.z0, b.z1);
-    if (i === bounds.length - 1) addWallSeg(b.x1 - WALL_T / 2, b.x1 + WALL_T / 2, b.z0, b.z1);
+    addFullWall(b.x0, b.x1, b.z0 - WALL_T / 2, b.z0 + WALL_T / 2);
+    addFullWall(b.x0, b.x1, b.z1 - WALL_T / 2, b.z1 + WALL_T / 2);
+    if (i === 0) addFullWall(b.x0 - WALL_T / 2, b.x0 + WALL_T / 2, b.z0, b.z1);
+    if (i === bounds.length - 1) addFullWall(b.x1 - WALL_T / 2, b.x1 + WALL_T / 2, b.z0, b.z1);
     if (i > 0) {
       const prev = bounds[i - 1];
       const shared = b.x0;
       const zTop = Math.min(prev.z1, b.z1);
       if (b.door) {
-        const gap = Math.min(1.2, zTop * 0.6);
+        const gap = Math.min(1.0, zTop * 0.5);
         const mid = zTop / 2;
-        if (mid - gap / 2 > 0.05) addWallSeg(shared - WALL_T / 2, shared + WALL_T / 2, 0, mid - gap / 2);
-        if (zTop - (mid + gap / 2) > 0.05) addWallSeg(shared - WALL_T / 2, shared + WALL_T / 2, mid + gap / 2, zTop);
+        if (mid - gap / 2 > 0.05) addFullWall(shared - WALL_T / 2, shared + WALL_T / 2, 0, mid - gap / 2);
+        if (zTop - (mid + gap / 2) > 0.05) addFullWall(shared - WALL_T / 2, shared + WALL_T / 2, mid + gap / 2, zTop);
+        addDoor(shared, mid - gap / 2, mid + gap / 2);
       } else {
-        addWallSeg(shared - WALL_T / 2, shared + WALL_T / 2, 0, zTop);
+        addFullWall(shared - WALL_T / 2, shared + WALL_T / 2, 0, zTop);
       }
     }
   });
@@ -1479,6 +1369,7 @@ function initTourScene(rooms) {
   tourRenderer = new THREE.WebGLRenderer({ antialias: true });
   tourRenderer.setSize(rect.width, rect.height);
   tourRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  if (THREE.sRGBEncoding !== undefined) tourRenderer.outputEncoding = THREE.sRGBEncoding;
   wrap.appendChild(tourRenderer.domElement);
 
   setupTourControls(wrap, totalW, maxL);
@@ -1668,7 +1559,7 @@ async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel)
   }
 }
 
-const WORKER_URL = 'https://roomfactory.gwirglemly.workers.dev/';
+const WORKER_URL = 'https://roomfactory-gigachat.onrender.com/generate';
 const budgetPrompts = ['budget economy interior, affordable furniture','affordable interior, IKEA style','mid-range interior, quality furniture','premium interior, high-end furniture','ultra luxury bespoke interior'];
 
 let file = null;
