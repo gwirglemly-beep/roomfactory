@@ -1758,13 +1758,20 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const furnitureHint = (storeStyleHints[sel.storeKey] && storeStyleHints[sel.storeKey][sel.styleKey]) || '';
   const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
 
+  const roomLabelsRu = { 'living room':'Гостиная','bedroom':'Спальня','kitchen':'Кухня','bathroom':'Ванная','children room':'Детская','home office':'Кабинет','hallway':'Прихожая','dining room':'Столовая' };
+  const roomLabelRu = roomLabelsRu[sel.room] || sel.roomLabel;
+  const colorLabelRu = (colorNames[sel.color] && colorNames[sel.color].ru) || sel.color;
+  const styleLabelRu = translations.ru['style.' + sel.styleKey] || sel.styleLabel;
+
   try {
     const fd = new FormData();
     fd.append('image', file);
     fd.append('prompt', prompt);
     fd.append('comment', comment);
+    fd.append('roomLabel', roomLabelRu);
+    fd.append('colorLabel', colorLabelRu);
+    fd.append('styleLabel', styleLabelRu);
     fd.append('output_format', 'jpeg');
-
     const res = await fetch(WORKER_URL, { method: 'POST', body: fd });
     if (!res.ok) throw new Error(res.status);
     const blob = await res.blob();
