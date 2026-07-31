@@ -162,6 +162,22 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .comment-input { width: 100%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 14px; color: #1a1208; font-family: 'Inter', sans-serif; font-size: 13px; resize: vertical; min-height: 80px; transition: border-color 0.2s; border-radius: 0; }
 .comment-input::placeholder { color: #b4a898; }
 .comment-input:focus { outline: none; border-color: #b48c5a; }
+.comment-wrap { position: relative; }
+.comment-wrap .comment-input { padding-right: 52px; }
+.mic-btn { position: absolute; right: 8px; bottom: 8px; width: 34px; height: 34px; border-radius: 50%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.15); color: #8a7a66; font-size: 15px; cursor: pointer; transition: all 0.15s; }
+.mic-btn:hover { border-color: #b48c5a; color: #b48c5a; }
+.mic-btn.recording { background: #b48c5a; color: white; border-color: #b48c5a; animation: micPulse 1s ease-in-out infinite; }
+@keyframes micPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+.quiz-progress { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a66; margin-bottom: 20px; }
+.quiz-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.quiz-option { cursor: pointer; border: 2px solid transparent; overflow: hidden; background: none; padding: 0; font-family: 'Inter', sans-serif; transition: border-color 0.15s; }
+.quiz-option:hover { border-color: #b48c5a; }
+.quiz-option img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+.quiz-option span { display: block; padding: 10px; font-size: 12px; text-align: center; color: #1a1208; font-family: 'Unbounded', sans-serif; }
+.quiz-result-text { font-size: 14px; color: #8a7a66; line-height: 1.7; margin-bottom: 20px; }
+.account-style-text { font-size: 13px; color: #8a7a66; line-height: 1.7; margin-bottom: 16px; }
+@media (max-width: 600px) { .quiz-pair { grid-template-columns: 1fr; } }
 
 .gen-btn { width: 100%; background: #b48c5a; color: white; border: none; padding: 18px; font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; margin-top: 32px; }
 .gen-btn:hover:not(:disabled) { background: #c9a06a; transform: translateY(-1px); }
@@ -381,6 +397,20 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
+<div class="popup-overlay" id="quizModal">
+  <div class="popup-box wide">
+    <button class="popup-close" onclick="closeQuizModal()">✕</button>
+    <span class="modal-eyebrow" data-i18n="quiz.eyebrow">Тест стиля</span>
+    <h2 class="modal-title" data-i18n="quiz.title">Что тебе больше нравится?</h2>
+    <div class="quiz-progress" id="quizProgress"></div>
+    <div class="quiz-pair" id="quizPair"></div>
+    <div class="quiz-result" id="quizResult" style="display:none">
+      <p class="quiz-result-text" id="quizResultText"></p>
+      <button type="button" class="btn-gold" onclick="closeQuizModal()" data-i18n="quiz.finishBtn">Готово</button>
+    </div>
+  </div>
+</div>
+
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
@@ -527,7 +557,7 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
     <div class="gen-left">
       <div class="section-eyebrow" data-i18n="generator.eyebrow">Генератор</div>
       <h2 class="gen-title" data-i18n-html="generator.title">Создайте<br>дизайн<br><span style="color:#b48c5a">мечты</span></h2>
-      <p class="gen-sub" data-i18n="generator.sub">Бесплатно, без регистрации. Загрузите фото и получите готовый дизайн вашей комнаты.</p>
+      <p class="gen-sub" data-i18n="generator.sub">Загрузите фото и получите готовый дизайн вашей комнаты.</p>
       <div class="gen-stats">
         <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.time">Время</span><span class="gen-stat-val" data-i18n="stat.timeVal">~30 сек</span></div>
         <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.styles">Стилей</span><span class="gen-stat-val">6</span></div>
@@ -620,7 +650,10 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 
         <div class="form-section">
           <span class="form-label" data-i18n="form.comment">Комментарий</span>
-          <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
+          <div class="comment-wrap">
+            <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
+            <button type="button" class="mic-btn" id="micBtn" title="Голосовой ввод" data-i18n-title="mic.title">🎤</button>
+          </div>
         </div>
 
         <button class="gen-btn" id="genBtn" disabled data-i18n="genBtnUpload">Загрузите фото для начала</button>
@@ -688,6 +721,12 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <button type="submit" class="profile-save" id="profileSaveBtn" data-i18n="profile.save">Сохранить</button>
         <div class="profile-msg" id="profileMsg"></div>
       </form>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="account.styleLabel">Твой стиль</span>
+      <p class="account-style-text" id="accountStyleText"></p>
+      <button type="button" class="tour-add-btn" style="max-width:280px" onclick="openQuizModal()" data-i18n="quiz.retakeBtn">Пройти тест на стиль</button>
     </div>
 
     <div class="account-section">
@@ -804,7 +843,7 @@ const translations = {
     'about.feat4Desc': `После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit`,
     'generator.eyebrow': `Генератор`,
     'generator.title': `Создайте<br>дизайн<br><span style="color:#b48c5a">мечты</span>`,
-    'generator.sub': `Бесплатно, без регистрации. Загрузите фото и получите готовый дизайн вашей комнаты.`,
+    'generator.sub': `Загрузите фото и получите готовый дизайн вашей комнаты.`,
     'stat.time': `Время`,
     'stat.timeVal': `~30 сек`,
     'stat.styles': `Стилей`,
@@ -819,6 +858,14 @@ const translations = {
     'form.budget': `Бюджет ремонта`,
     'form.comment': `Комментарий`,
     'commentPlaceholder': `Пожелания: больше света, место для детей, открытые полки...`,
+    'mic.title': `Голосовой ввод`,
+    'quiz.eyebrow': `Тест стиля`,
+    'quiz.title': `Что тебе больше нравится?`,
+    'quiz.resultPrefix': `Тебе подходит стиль:`,
+    'quiz.finishBtn': `Готово`,
+    'quiz.retakeBtn': `Пройти тест на стиль`,
+    'account.styleLabel': `Твой стиль`,
+    'account.styleNone': `Пока не проходили тест — пройди, чтобы мы подбирали стиль под тебя.`,
     'room.living': `Гостиная`,
     'room.bedroom': `Спальня`,
     'room.kitchen': `Кухня`,
@@ -931,7 +978,7 @@ const translations = {
     'about.feat4Desc': `After generation, find similar furniture at Hoff, Askona, Roomer and Baumit`,
     'generator.eyebrow': `Generator`,
     'generator.title': `Create<br>your dream<br><span style="color:#b48c5a">design</span>`,
-    'generator.sub': `Free, no registration required. Upload a photo and get a finished design for your room.`,
+    'generator.sub': `Upload a photo and get a finished design for your room.`,
     'stat.time': `Time`,
     'stat.timeVal': `~30 sec`,
     'stat.styles': `Styles`,
@@ -946,6 +993,14 @@ const translations = {
     'form.budget': `Renovation budget`,
     'form.comment': `Comment`,
     'commentPlaceholder': `Wishes: more light, space for kids, open shelving...`,
+    'mic.title': `Voice input`,
+    'quiz.eyebrow': `Style quiz`,
+    'quiz.title': `Which do you like more?`,
+    'quiz.resultPrefix': `Your style:`,
+    'quiz.finishBtn': `Done`,
+    'quiz.retakeBtn': `Take the style quiz`,
+    'account.styleLabel': `Your style`,
+    'account.styleNone': `You haven't taken the quiz yet — take it so we can match styles to you.`,
     'room.living': `Living room`,
     'room.bedroom': `Bedroom`,
     'room.kitchen': `Kitchen`,
@@ -1039,6 +1094,76 @@ function showStyleInfo(key) {
   showPopup(t('style.' + key), t('styleDesc.' + key), styleInfoImgs[key]);
 }
 
+const quizStyleKeys = ['scandinavian', 'minimalism', 'loft', 'classic', 'japandi', 'boho'];
+let quizRounds = [];
+let quizIndex = 0;
+let quizScores = {};
+
+function buildQuizRounds() {
+  const shuffled = [...quizStyleKeys].sort(() => Math.random() - 0.5);
+  const rounds = [];
+  for (let i = 0; i < 5; i++) {
+    const a = shuffled[i % shuffled.length];
+    let b = shuffled[(i + 2) % shuffled.length];
+    if (b === a) b = shuffled[(shuffled.indexOf(a) + 1) % shuffled.length];
+    rounds.push([a, b]);
+  }
+  return rounds;
+}
+
+function openQuizModal() {
+  quizRounds = buildQuizRounds();
+  quizIndex = 0;
+  quizScores = {};
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizPair').style.display = 'grid';
+  renderQuizRound();
+  document.getElementById('quizModal').classList.add('visible');
+}
+function closeQuizModal() {
+  document.getElementById('quizModal').classList.remove('visible');
+}
+function renderQuizRound() {
+  document.getElementById('quizProgress').textContent = (quizIndex + 1) + ' / ' + quizRounds.length;
+  const [a, b] = quizRounds[quizIndex];
+  const pair = document.getElementById('quizPair');
+  pair.innerHTML = [a, b].map(key =>
+    '<button type="button" class="quiz-option" data-key="' + key + '">' +
+      '<img src="' + styleInfoImgs[key] + '" alt="">' +
+      '<span>' + t('style.' + key) + '</span>' +
+    '</button>'
+  ).join('');
+  pair.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.key;
+      quizScores[key] = (quizScores[key] || 0) + 1;
+      quizIndex++;
+      if (quizIndex < quizRounds.length) renderQuizRound();
+      else finishQuiz();
+    });
+  });
+}
+async function finishQuiz() {
+  const ranked = Object.entries(quizScores).sort((a, b) => b[1] - a[1]);
+  const topKey = ranked.length ? ranked[0][0] : quizStyleKeys[0];
+  document.getElementById('quizPair').style.display = 'none';
+  document.getElementById('quizResultText').textContent = t('quiz.resultPrefix') + ' ' + t('style.' + topKey) + '.';
+  document.getElementById('quizResult').style.display = 'block';
+  if (currentSession) {
+    try {
+      const { data } = await sb.auth.updateUser({ data: { preferred_style: topKey } });
+      if (data && data.user) currentSession.user = data.user;
+    } catch (e) {}
+  }
+  applyPreferredStyle(topKey);
+  const styleText = document.getElementById('accountStyleText');
+  if (styleText) styleText.textContent = t('quiz.resultPrefix') + ' ' + t('style.' + topKey);
+}
+function applyPreferredStyle(key) {
+  const btn = document.querySelector('.opt-btn[data-group="style"][data-key="' + key + '"]');
+  if (btn) btn.click();
+}
+
 function applyTranslations() {
   document.documentElement.lang = LANG;
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1049,6 +1174,9 @@ function applyTranslations() {
   });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    el.title = t(el.getAttribute('data-i18n-title'));
   });
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === LANG));
 
@@ -1138,10 +1266,15 @@ document.getElementById('authForm').addEventListener('submit', async e => {
 sb.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
   renderAuthArea(session);
+  if (_event === 'SIGNED_IN' && session && session.user && !(session.user.user_metadata && session.user.user_metadata.preferred_style)) {
+    setTimeout(openQuizModal, 400);
+  }
 });
 sb.auth.getSession().then(({ data }) => {
   currentSession = data.session;
   renderAuthArea(data.session);
+  const pref = data.session && data.session.user && data.session.user.user_metadata && data.session.user.user_metadata.preferred_style;
+  if (pref) applyPreferredStyle(pref);
 });
 
 function openModal(id) {
@@ -1150,7 +1283,7 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.remove('visible');
 }
-['howModal', 'aboutModal'].forEach(id => {
+['howModal', 'aboutModal', 'quizModal'].forEach(id => {
   document.getElementById(id).addEventListener('click', e => {
     if (e.target === document.getElementById(id)) closeModal(id);
   });
@@ -1459,6 +1592,10 @@ function loadProfile() {
   document.getElementById('profileFirstName').value = meta.first_name || '';
   document.getElementById('profileLastName').value = meta.last_name || '';
   document.getElementById('profilePhone').value = meta.phone || '';
+  const styleText = document.getElementById('accountStyleText');
+  if (styleText) {
+    styleText.textContent = meta.preferred_style ? (t('quiz.resultPrefix') + ' ' + t('style.' + meta.preferred_style)) : t('account.styleNone');
+  }
 }
 
 document.getElementById('profileForm').addEventListener('submit', async e => {
@@ -1730,6 +1867,31 @@ document.getElementById('fileInput').addEventListener('change', e => {
   btn.textContent = t('genBtnReady');
 });
 
+const micBtn = document.getElementById('micBtn');
+const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SpeechRecognitionCtor) {
+  const recognition = new SpeechRecognitionCtor();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  let micRecording = false;
+  recognition.onresult = e => {
+    const text = e.results[0][0].transcript;
+    const ta = document.getElementById('comment');
+    ta.value = (ta.value.trim() ? ta.value.trim() + ' ' : '') + text;
+  };
+  recognition.onend = () => { micRecording = false; micBtn.classList.remove('recording'); };
+  recognition.onerror = () => { micRecording = false; micBtn.classList.remove('recording'); };
+  micBtn.addEventListener('click', () => {
+    if (micRecording) { recognition.stop(); return; }
+    recognition.lang = LANG === 'ru' ? 'ru-RU' : 'en-US';
+    micRecording = true;
+    micBtn.classList.add('recording');
+    try { recognition.start(); } catch (e) { micRecording = false; micBtn.classList.remove('recording'); }
+  });
+} else if (micBtn) {
+  micBtn.style.display = 'none';
+}
+
 const zone = document.getElementById('uploadZone');
 zone.addEventListener('dragover', e => e.preventDefault());
 zone.addEventListener('drop', e => {
@@ -1772,6 +1934,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     fd.append('colorLabel', colorLabelRu);
     fd.append('styleLabel', styleLabelRu);
     fd.append('output_format', 'jpeg');
+
     const res = await fetch(WORKER_URL, { method: 'POST', body: fd });
     if (!res.ok) throw new Error(res.status);
     const blob = await res.blob();
