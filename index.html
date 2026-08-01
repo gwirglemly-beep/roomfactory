@@ -149,7 +149,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .info-btn { background: none; border: none; color: #c4b4a4; font-size: 11px; cursor: pointer; flex-shrink: 0; transition: color 0.2s; }
 .info-btn:hover { color: #b48c5a; }
 
-.colors-row { display: flex; gap: 10px; overflow-x: auto; padding: 0 24px 20px; margin: 0 -24px; flex-wrap: nowrap; scrollbar-width: none; }
+.colors-row { display: flex; gap: 34px; overflow-x: auto; padding: 0 24px 20px; margin: 0 -24px; flex-wrap: nowrap; scrollbar-width: none; }
 .colors-row::-webkit-scrollbar { display: none; }
 .color-dot { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; position: relative; flex-shrink: 0; }
 .color-dot.active { border-color: #b48c5a; transform: scale(1.2); }
@@ -585,11 +585,11 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <div class="form-section">
           <span class="form-label" data-i18n="form.style">Стиль интерьера</span>
           <div class="opts-grid opts-3">
-            <div class="style-row"><button class="opt-btn active" style="flex:1" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, light wood, white walls, minimalist, cozy" data-i18n="style.scandinavian">Скандинавский</button><button class="info-btn" onclick="showStyleInfo('scandinavian')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="minimalism" data-val="modern minimalist interior, concrete, glass, steel, clean lines" data-i18n="style.minimalism">Минимализм</button><button class="info-btn" onclick="showStyleInfo('minimalism')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="loft" data-val="loft industrial interior, exposed brick, metal, dark tones" data-i18n="style.loft">Лофт</button><button class="info-btn" onclick="showStyleInfo('loft')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="classic" data-val="classic luxury interior, rich wood, elegant furniture, warm lighting" data-i18n="style.classic">Классика</button><button class="info-btn" onclick="showStyleInfo('classic')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="japandi" data-val="japandi interior design, natural materials, zen, neutral tones" data-i18n="style.japandi">Japandi</button><button class="info-btn" onclick="showStyleInfo('japandi')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn active" style="flex:1" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures" data-i18n="style.scandinavian">Скандинавский</button><button class="info-btn" onclick="showStyleInfo('scandinavian')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="minimalism" data-val="modern minimalist interior, clean straight lines, uncluttered open space, no ornamentation, simple geometric forms" data-i18n="style.minimalism">Минимализм</button><button class="info-btn" onclick="showStyleInfo('minimalism')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="loft" data-val="loft industrial interior, exposed brick texture accents, metal fixtures, high ceilings" data-i18n="style.loft">Лофт</button><button class="info-btn" onclick="showStyleInfo('loft')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="classic" data-val="classic luxury interior, elegant furniture silhouettes, ornate details, symmetrical composition" data-i18n="style.classic">Классика</button><button class="info-btn" onclick="showStyleInfo('classic')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="japandi" data-val="japandi interior design, natural material textures, zen simplicity, low furniture silhouettes" data-i18n="style.japandi">Japandi</button><button class="info-btn" onclick="showStyleInfo('japandi')">ⓘ</button></div>
             <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="boho" data-val="bohemian eclectic interior, colorful, plants, vintage furniture" data-i18n="style.boho">Бохо</button><button class="info-btn" onclick="showStyleInfo('boho')">ⓘ</button></div>
           </div>
         </div>
@@ -1700,7 +1700,7 @@ const budgetPrompts = ['budget economy interior, affordable furniture','affordab
 
 let file = null;
 let generating = false;
-let sel = { style:'scandinavian interior design, light wood, white walls, minimalist, cozy', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
+let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
 
 const storeCatalogs = {
 hoff: {
@@ -1865,28 +1865,33 @@ divan: {
 
 const storeStyleHints = {
   hoff: {
-    scandinavian: 'mustard yellow velvet sofa on wooden legs, light oak velvet accent chair, warm wood floor lamp',
-    loft: 'dark grey quilted corner sofa, black metal industrial floor lamp',
-    classic: 'beige tufted sofa with rolled arms, elegant wood-framed floor mirror',
-    minimalism: 'clean grey corduroy corner sofa, minimal silhouette, no ornamentation',
-    japandi: 'natural wood rocking chair with beige cushion, warm wood tones, low furniture',
-    boho: 'sage green bouclé sofa without legs, round brown velvet swivel chair, rattan accents'
+    scandinavian: ['mustard yellow velvet sofa on wooden legs, light oak velvet accent chair, warm wood floor lamp', 'pale oak sideboard, cream bouclé armchair, woven jute rug, brass floor lamp', 'white oak TV console, sage green accent chair, linen curtains, wooden coffee table'],
+    loft: ['dark grey quilted corner sofa, black metal industrial floor lamp', 'exposed-frame leather armchair, black metal shelving unit, concrete-look coffee table', 'charcoal boucle sofa, industrial pipe floor lamp, reclaimed wood side table'],
+    classic: ['beige tufted sofa with rolled arms, elegant wood-framed floor mirror', 'chesterfield-style leather armchair, ornate wood console table, crystal table lamp', 'rich mahogany bookcase, tufted wingback chair, gold-framed mirror'],
+    minimalism: ['clean grey corduroy corner sofa, minimal silhouette, no ornamentation', 'low platform sofa in oatmeal fabric, single sculptural floor lamp, no clutter', 'matte white modular shelving, slim-profile grey sofa, geometric coffee table'],
+    japandi: ['natural wood rocking chair with beige cushion, warm wood tones, low furniture', 'low wooden bed frame, paper floor lamp, woven wall hanging, ceramic vases', 'oak dining table, rattan pendant light, linen floor cushions'],
+    boho: ['sage green bouclé sofa without legs, round brown velvet swivel chair, rattan accents', 'macrame wall hanging, rattan peacock chair, layered kilim rugs, potted palms', 'terracotta ceramic lamp, woven pouf, vintage patterned rug, hanging plants']
   },
   askona: {
-    scandinavian: 'light beige upholstered low bed, simple wooden coffee table',
-    loft: 'grey striped faux fur sofa, dark moody upholstery',
-    minimalism: 'light beige velour modular sofa, clean simple silhouette',
-    japandi: 'low upholstered bed in soft neutral fabric, simple wooden coffee table',
-    classic: 'dark wood-framed sofa with rolled arms, traditional silhouette, warm wood coffee table',
-    boho: 'rounded coffee table in warm oak or walnut finish, organic curved silhouette'
+    scandinavian: ['light beige upholstered low bed, simple wooden coffee table', 'white oak bed frame, pale linen bedding, minimal nightstand with brass handle'],
+    loft: ['grey striped faux fur sofa, dark moody upholstery', 'black metal bed frame, dark grey bedding, industrial pendant light'],
+    minimalism: ['light beige velour modular sofa, clean simple silhouette', 'low platform bed in oatmeal fabric, single nightstand, no ornamentation'],
+    japandi: ['low upholstered bed in soft neutral fabric, simple wooden coffee table', 'tatami-style low bed, paper lantern lamp, woven storage baskets'],
+    classic: ['dark wood-framed sofa with rolled arms, traditional silhouette, warm wood coffee table', 'carved wood bed frame, tufted headboard, ornate nightstands'],
+    boho: ['rounded coffee table in warm oak or walnut finish, organic curved silhouette', 'rattan headboard bed, layered textured throws, macrame wall art']
   },
   divan: {
-    scandinavian: 'light velvet sofa in soft grey, beige or dusty pink, tapered wooden legs, airy Scandinavian silhouette',
-    loft: 'boxy velvet modular sofa in deep brown, olive or charcoal, industrial silhouette',
-    minimalism: 'modular fabric sofa in muted grey, beige or mustard, clean geometric lines, no ornamentation',
-    boho: 'woven area rug in warm terracotta, cream or diamond pattern, natural fiber texture'
+    scandinavian: ['light velvet sofa in soft grey, beige or dusty pink, tapered wooden legs, airy Scandinavian silhouette', 'pale wood dining set, linen chair covers, simple pendant light'],
+    loft: ['boxy velvet modular sofa in deep brown, olive or charcoal, industrial silhouette', 'black steel-frame dining table, leather chairs, exposed bulb pendant'],
+    minimalism: ['modular fabric sofa in muted grey, beige or mustard, clean geometric lines, no ornamentation', 'slim wood dining table, matte ceramic vases, no clutter'],
+    boho: ['woven area rug in warm terracotta, cream or diamond pattern, natural fiber texture', 'rattan dining chairs, layered patterned rugs, hanging plants']
   }
 };
+function pickFurnitureHint(storeKey, styleKey) {
+  const variants = storeStyleHints[storeKey] && storeStyleHints[storeKey][styleKey];
+  if (!variants || !variants.length) return '';
+  return variants[Math.floor(Math.random() * variants.length)];
+}
 
 function renderStoreProducts(storeKey, styleKey) {
   const grid = document.getElementById('hoffProductsGrid');
@@ -2039,7 +2044,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = t('genBtnLoading');
 
-  const furnitureHint = (storeStyleHints[sel.storeKey] && storeStyleHints[sel.storeKey][sel.styleKey]) || '';
+  const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey);
   const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
 
   const roomLabelsRu = { 'living room':'Гостиная','bedroom':'Спальня','kitchen':'Кухня','bathroom':'Ванная','children room':'Детская','home office':'Кабинет','hallway':'Прихожая','dining room':'Столовая' };
