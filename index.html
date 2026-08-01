@@ -1074,6 +1074,25 @@ const colorNames = {
   'dusty rose mauve tones': { ru: 'Пыльная роза', en: 'Dusty Rose' },
   'mint aqua fresh tones': { ru: 'Мятный', en: 'Mint' }
 };
+const colorPromptRu = {
+  'neutral beige and white': 'нейтральный бежево-белый',
+  'dark moody deep tones': 'тёмный, глубокие приглушённые тона',
+  'warm brown chocolate': 'тёплый шоколадно-коричневый',
+  'cool blue grey': 'холодный сине-серый',
+  'sage green natural': 'приглушённый зелёный шалфей, зелёный цвет должен быть хорошо заметен на стенах и крупной мебели',
+  'blush pink soft': 'мягкий пудрово-розовый',
+  'pure white bright interior': 'чистый белый, светлый интерьер',
+  'pure black dark interior': 'глубокий чёрный, тёмный интерьер',
+  'golden luxury warm': 'тёплый золотистый',
+  'lavender purple violet tones': 'сиреневый, лавандовый',
+  'deep burgundy wine red tones': 'глубокий бордовый, винный красный',
+  'warm terracotta orange tones': 'тёплая терракота, оранжевые тона',
+  'navy dark blue indigo tones': 'тёмно-синий, индиго',
+  'warm olive khaki tones': 'тёплый оливково-хаки',
+  'soft grey silver tones': 'мягкий серебристо-серый',
+  'dusty rose mauve tones': 'пыльная роза, мов',
+  'mint aqua fresh tones': 'мятный, свежий бирюзовый'
+};
 function refreshColorNames() {
   document.querySelectorAll('.color-dot').forEach(el => {
     const names = colorNames[el.dataset.val];
@@ -2049,7 +2068,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
 
   const roomLabelsRu = { 'living room':'Гостиная','bedroom':'Спальня','kitchen':'Кухня','bathroom':'Ванная','children room':'Детская','home office':'Кабинет','hallway':'Прихожая','dining room':'Столовая' };
   const roomLabelRu = roomLabelsRu[sel.room] || sel.roomLabel;
-  const colorLabelRu = (colorNames[sel.color] && colorNames[sel.color].ru) || sel.color;
+  const colorLabelRu = colorPromptRu[sel.color] || (colorNames[sel.color] && colorNames[sel.color].ru) || sel.color;
   const styleLabelRu = translations.ru['style.' + sel.styleKey] || sel.styleLabel;
 
   try {
