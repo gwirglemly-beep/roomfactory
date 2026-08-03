@@ -1985,12 +1985,28 @@ function pickFurnitureHint(storeKey, styleKey) {
   return variants[Math.floor(Math.random() * variants.length)];
 }
 
-function renderStoreProducts(storeKey, styleKey) {
+const roomKeywordsRu = {
+  'living room': ['диван', 'кресло', 'журнальный стол', 'тумба', 'стеллаж'],
+  'bedroom': ['кровать', 'тумб', 'комод'],
+  'kitchen': ['кухон', 'обеденн', 'стул'],
+  'bathroom': ['зеркал'],
+  'children room': ['кровать', 'стол', 'стул', 'полк'],
+  'home office': ['стол', 'кресло', 'стеллаж', 'полк'],
+  'hallway': ['вешалк', 'зеркал', 'обувниц'],
+  'dining room': ['обеденн', 'стул', 'стол', 'буфет', 'сервант']
+};
+function renderStoreProducts(storeKey, styleKey, roomKey) {
   const grid = document.getElementById('hoffProductsGrid');
-  const items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
+  let items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
   if (!items.length) {
     grid.innerHTML = '<div class="hoff-products-empty">' + t('storeEmpty') + '</div>';
     return;
+  }
+  const keywords = roomKeywordsRu[roomKey];
+  if (keywords && keywords.length) {
+    const matches = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
+    const rest = items.filter(p => !matches.includes(p));
+    items = matches.concat(rest);
   }
   grid.innerHTML = items.map(p =>
     '<a class="hoff-product-card" href="' + p.url + '" target="_blank" rel="noopener">' +
@@ -2165,7 +2181,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     const q = encodeURIComponent(sel.style.split(',')[0]+' '+sel.room);
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
-    renderStoreProducts(sel.storeKey, sel.styleKey);
+    renderStoreProducts(sel.storeKey, sel.styleKey, sel.room);
     if (currentSession) saveGeneration(blob, sel.styleKey, sel.styleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
     err.textContent = t('genError');
