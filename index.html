@@ -648,6 +648,19 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <hr class="form-divider">
 
         <div class="form-section">
+          <span class="form-label" data-i18n="form.roomShape">Форма и площадь комнаты (необязательно)</span>
+          <div class="opts-grid opts-4">
+            <button class="opt-btn" data-group="roomShape" data-val="Прямоугольная" data-i18n="roomShape.rect">Прямоугольная</button>
+            <button class="opt-btn" data-group="roomShape" data-val="Квадратная" data-i18n="roomShape.square">Квадратная</button>
+            <button class="opt-btn" data-group="roomShape" data-val="Г-образная" data-i18n="roomShape.lshape">Г-образная</button>
+            <button class="opt-btn" data-group="roomShape" data-val="Трапеция" data-i18n="roomShape.trapezoid">Трапеция</button>
+          </div>
+          <input type="number" id="roomArea" class="comment-input" style="margin-top:10px;min-height:auto" min="1" step="0.5" placeholder="Площадь, м² (необязательно)" data-i18n-placeholder="roomAreaPlaceholder">
+        </div>
+
+        <hr class="form-divider">
+
+        <div class="form-section">
           <span class="form-label" data-i18n="form.comment">Комментарий</span>
           <div class="comment-wrap">
             <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
@@ -855,6 +868,12 @@ const translations = {
     'form.room': `Тип комнаты`,
     'form.color': `Цветовая гамма`,
     'form.budget': `Бюджет ремонта`,
+    'form.roomShape': `Форма и площадь комнаты (необязательно)`,
+    'roomShape.rect': `Прямоугольная`,
+    'roomShape.square': `Квадратная`,
+    'roomShape.lshape': `Г-образная`,
+    'roomShape.trapezoid': `Трапеция`,
+    'roomAreaPlaceholder': `Площадь, м² (необязательно)`,
     'form.comment': `Комментарий`,
     'commentPlaceholder': `Пожелания: больше света, место для детей, открытые полки...`,
     'mic.title': `Голосовой ввод`,
@@ -990,6 +1009,12 @@ const translations = {
     'form.room': `Room type`,
     'form.color': `Color palette`,
     'form.budget': `Renovation budget`,
+    'form.roomShape': `Room shape and area (optional)`,
+    'roomShape.rect': `Rectangular`,
+    'roomShape.square': `Square`,
+    'roomShape.lshape': `L-shaped`,
+    'roomShape.trapezoid': `Trapezoid`,
+    'roomAreaPlaceholder': `Area, m² (optional)`,
     'form.comment': `Comment`,
     'commentPlaceholder': `Wishes: more light, space for kids, open shelving...`,
     'mic.title': `Voice input`,
@@ -2168,6 +2193,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     fd.append('roomLabel', roomLabelRu);
     fd.append('colorLabel', colorLabelRu);
     fd.append('styleLabel', styleLabelRu);
+    fd.append('roomShape', sel.roomShape || '');
+    fd.append('roomArea', document.getElementById('roomArea').value.trim());
     fd.append('output_format', 'jpeg');
 
     const res = await fetch(WORKER_URL, { method: 'POST', body: fd });
