@@ -664,26 +664,6 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <hr class="form-divider">
 
         <div class="form-section">
-          <span class="form-label" data-i18n="form.extraFurniture">Обязательная мебель (необязательно, можно выбрать несколько)</span>
-          <div class="opts-grid opts-4">
-            <button class="opt-btn furniture-opt" data-val="кровать" data-i18n="furn.bed">Кровать</button>
-            <button class="opt-btn furniture-opt" data-val="диван" data-i18n="furn.sofa">Диван</button>
-            <button class="opt-btn furniture-opt" data-val="рабочий стол" data-i18n="furn.desk">Рабочий стол</button>
-            <button class="opt-btn furniture-opt" data-val="обеденный стол" data-i18n="furn.diningTable">Обеденный стол</button>
-            <button class="opt-btn furniture-opt" data-val="шкаф для одежды" data-i18n="furn.wardrobe">Шкаф</button>
-            <button class="opt-btn furniture-opt" data-val="стеллаж или полки" data-i18n="furn.shelving">Стеллаж</button>
-            <button class="opt-btn furniture-opt" data-val="кресло" data-i18n="furn.armchair">Кресло</button>
-            <button class="opt-btn furniture-opt" data-val="комод" data-i18n="furn.dresser">Комод</button>
-            <button class="opt-btn furniture-opt" data-val="зеркало" data-i18n="furn.mirror">Зеркало</button>
-            <button class="opt-btn furniture-opt" data-val="ковёр" data-i18n="furn.rug">Ковёр</button>
-            <button class="opt-btn furniture-opt" data-val="растения" data-i18n="furn.plants">Растения</button>
-            <button class="opt-btn furniture-opt" data-val="торшер или светильник" data-i18n="furn.lamp">Светильник</button>
-          </div>
-        </div>
-
-        <hr class="form-divider">
-
-        <div class="form-section">
           <span class="form-label" data-i18n="form.comment">Комментарий</span>
           <div class="comment-wrap">
             <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
@@ -898,19 +878,6 @@ const translations = {
     'roomShape.trapezoid': `Трапеция`,
     'roomAreaPlaceholder': `Площадь, м² (необязательно)`,
     'windowCountPlaceholder': `Число окон (необязательно)`,
-    'form.extraFurniture': `Обязательная мебель (необязательно, можно выбрать несколько)`,
-    'furn.bed': `Кровать`,
-    'furn.sofa': `Диван`,
-    'furn.desk': `Рабочий стол`,
-    'furn.diningTable': `Обеденный стол`,
-    'furn.wardrobe': `Шкаф`,
-    'furn.shelving': `Стеллаж`,
-    'furn.armchair': `Кресло`,
-    'furn.dresser': `Комод`,
-    'furn.mirror': `Зеркало`,
-    'furn.rug': `Ковёр`,
-    'furn.plants': `Растения`,
-    'furn.lamp': `Светильник`,
     'form.comment': `Комментарий`,
     'commentPlaceholder': `Пожелания: больше света, место для детей, открытые полки...`,
     'mic.title': `Голосовой ввод`,
@@ -1053,19 +1020,6 @@ const translations = {
     'roomShape.trapezoid': `Trapezoid`,
     'roomAreaPlaceholder': `Area, m² (optional)`,
     'windowCountPlaceholder': `Number of windows (optional)`,
-    'form.extraFurniture': `Required furniture (optional, pick several)`,
-    'furn.bed': `Bed`,
-    'furn.sofa': `Sofa`,
-    'furn.desk': `Desk`,
-    'furn.diningTable': `Dining table`,
-    'furn.wardrobe': `Wardrobe`,
-    'furn.shelving': `Shelving`,
-    'furn.armchair': `Armchair`,
-    'furn.dresser': `Dresser`,
-    'furn.mirror': `Mirror`,
-    'furn.rug': `Rug`,
-    'furn.plants': `Plants`,
-    'furn.lamp': `Lamp`,
     'form.comment': `Comment`,
     'commentPlaceholder': `Wishes: more light, space for kids, open shelving...`,
     'mic.title': `Voice input`,
@@ -2131,7 +2085,7 @@ function showPopup(title, desc, img) {
 function closePopup() { document.getElementById('popup').classList.remove('visible'); }
 document.getElementById('popup').addEventListener('click', e => { if(e.target===document.getElementById('popup')) closePopup(); });
 
-document.querySelectorAll('.opt-btn:not(.furniture-opt)').forEach(btn => {
+document.querySelectorAll('.opt-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const g = btn.dataset.group;
     document.querySelectorAll('.opt-btn[data-group="'+g+'"]').forEach(b => b.classList.remove('active'));
@@ -2147,12 +2101,6 @@ document.querySelectorAll('.opt-btn:not(.furniture-opt)').forEach(btn => {
       sel.storeLabel = btn.textContent.trim();
       document.getElementById('storeProductsLabel').textContent = sel.storeLabel;
     }
-  });
-});
-
-document.querySelectorAll('.opt-btn.furniture-opt').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('active');
   });
 });
 
@@ -2253,8 +2201,6 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     fd.append('roomShape', sel.roomShape || '');
     fd.append('roomArea', document.getElementById('roomArea').value.trim());
     fd.append('windowCount', document.getElementById('windowCount').value.trim());
-    const extraFurniture = Array.from(document.querySelectorAll('.furniture-opt.active')).map(b => b.dataset.val).join(', ');
-    fd.append('extraFurniture', extraFurniture);
     fd.append('output_format', 'jpeg');
 
     const res = await fetch(WORKER_URL, { method: 'POST', body: fd });
