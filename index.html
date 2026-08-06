@@ -1985,34 +1985,46 @@ divan: {
 }
 };
 
-const storeStyleHints = {
-  hoff: {
-    scandinavian: ['mustard yellow velvet sofa on wooden legs, light oak velvet accent chair, warm wood floor lamp', 'pale oak sideboard, cream bouclé armchair, woven jute rug, brass floor lamp', 'white oak TV console, sage green accent chair, linen curtains, wooden coffee table'],
-    loft: ['dark grey quilted corner sofa, black metal industrial floor lamp', 'exposed-frame leather armchair, black metal shelving unit, concrete-look coffee table', 'charcoal boucle sofa, industrial pipe floor lamp, reclaimed wood side table'],
-    classic: ['beige tufted sofa with rolled arms, elegant wood-framed floor mirror', 'chesterfield-style leather armchair, ornate wood console table, crystal table lamp', 'rich mahogany bookcase, tufted wingback chair, gold-framed mirror'],
-    minimalism: ['clean grey corduroy corner sofa, minimal silhouette, no ornamentation', 'low platform sofa in oatmeal fabric, single sculptural floor lamp, no clutter', 'matte white modular shelving, slim-profile grey sofa, geometric coffee table'],
-    japandi: ['natural wood rocking chair with beige cushion, warm wood tones, low furniture', 'low wooden bed frame, paper floor lamp, woven wall hanging, ceramic vases', 'oak dining table, rattan pendant light, linen floor cushions'],
-    boho: ['sage green bouclé sofa without legs, round brown velvet swivel chair, rattan accents', 'macrame wall hanging, rattan peacock chair, layered kilim rugs, potted palms', 'terracotta ceramic lamp, woven pouf, vintage patterned rug, hanging plants']
-  },
-  askona: {
-    scandinavian: ['light beige upholstered low bed, simple wooden coffee table', 'white oak bed frame, pale linen bedding, minimal nightstand with brass handle'],
-    loft: ['grey striped faux fur sofa, dark moody upholstery', 'black metal bed frame, dark grey bedding, industrial pendant light'],
-    minimalism: ['light beige velour modular sofa, clean simple silhouette', 'low platform bed in oatmeal fabric, single nightstand, no ornamentation'],
-    japandi: ['low upholstered bed in soft neutral fabric, simple wooden coffee table', 'tatami-style low bed, paper lantern lamp, woven storage baskets'],
-    classic: ['dark wood-framed sofa with rolled arms, traditional silhouette, warm wood coffee table', 'carved wood bed frame, tufted headboard, ornate nightstands'],
-    boho: ['rounded coffee table in warm oak or walnut finish, organic curved silhouette', 'rattan headboard bed, layered textured throws, macrame wall art']
-  },
-  divan: {
-    scandinavian: ['light velvet sofa in soft grey, beige or dusty pink, tapered wooden legs, airy Scandinavian silhouette', 'pale wood dining set, linen chair covers, simple pendant light'],
-    loft: ['boxy velvet modular sofa in deep brown, olive or charcoal, industrial silhouette', 'black steel-frame dining table, leather chairs, exposed bulb pendant'],
-    minimalism: ['modular fabric sofa in muted grey, beige or mustard, clean geometric lines, no ornamentation', 'slim wood dining table, matte ceramic vases, no clutter'],
-    boho: ['woven area rug in warm terracotta, cream or diamond pattern, natural fiber texture', 'rattan dining chairs, layered patterned rugs, hanging plants']
-  }
-};
-function pickFurnitureHint(storeKey, styleKey) {
-  const variants = storeStyleHints[storeKey] && storeStyleHints[storeKey][styleKey];
-  if (!variants || !variants.length) return '';
-  return variants[Math.floor(Math.random() * variants.length)];
+const ruToEnFurnitureType = [
+  ['диван-кровать', 'sofa bed'], ['кресло-качалка', 'rocking chair'], ['кресло-качалк', 'rocking chair'],
+  ['кресло-мешок', 'bean bag chair'], ['кресло-гру', 'bean bag chair'], ['бескаркасн', 'beanbag-style'],
+  ['угловой диван', 'corner sofa'], ['модульный диван', 'modular sofa'], ['прямой диван', 'straight sofa'], ['диван', 'sofa'],
+  ['кресло-трансформер', 'convertible armchair'], ['кресло', 'armchair'],
+  ['кровать', 'bed'], ['пуф', 'pouf'], ['банкетк', 'bench'],
+  ['стол обеденный', 'dining table'], ['обеденный стол', 'dining table'], ['журнальный стол', 'coffee table'],
+  ['кухонный стол', 'kitchen table'], ['стол раскладной', 'extendable table'], ['стол', 'table'],
+  ['стул барный', 'bar stool'], ['стул', 'chair'],
+  ['шкаф навесной', 'wall cabinet'], ['шкаф-модуль', 'modular wardrobe'], ['шкаф', 'wardrobe'],
+  ['зеркало', 'mirror'], ['ковёр', 'rug'], ['ковер', 'rug'], ['тумба', 'console table'], ['комод', 'dresser'],
+  ['стеллаж', 'shelving unit'], ['светильник настольный', 'table lamp'], ['лампа настольная', 'table lamp'],
+  ['люстра', 'chandelier'], ['светильник', 'lamp'], ['лампа', 'lamp'],
+  ['растение', 'potted plant'], ['гостиная', 'living room furniture set']
+];
+const ruToEnColor = [
+  ['светло-серый', 'light grey'], ['тёмно-серый', 'dark grey'], ['темно-серый', 'dark grey'], ['серый', 'grey'],
+  ['бежевый', 'beige'], ['розовый', 'pink'], ['коралл', 'coral'],
+  ['зелёный', 'green'], ['зеленый', 'green'], ['оливков', 'olive'], ['изумруд', 'emerald'],
+  ['синий', 'blue'], ['голубой', 'light blue'], ['индиго', 'indigo'],
+  ['чёрный', 'black'], ['черный', 'black'], ['белый', 'white'], ['молочный', 'milky white'],
+  ['коричневый', 'brown'], ['графит', 'graphite'], ['бирюзов', 'turquoise'], ['терракот', 'terracotta'],
+  ['кремов', 'cream'], ['песочный', 'sand'], ['жёлтый', 'yellow'], ['желтый', 'yellow']
+];
+const ruToEnMaterial = [
+  ['велюр', 'velvet'], ['вельвет', 'corduroy'], ['рогожка', 'boucle-textured fabric'],
+  ['кож зам', 'faux leather'], ['кожа', 'leather'], ['мех', 'faux fur'], ['лён', 'linen'],
+  ['рафия', 'rattan'], ['ротанг', 'rattan'], ['металл', 'metal'], ['дуб', 'oak wood'],
+  ['орех', 'walnut wood'], ['дерев', 'wood']
+];
+function matchDict(lower, dict) {
+  for (const [key, val] of dict) { if (lower.includes(key)) return val; }
+  return '';
+}
+function describeProductEn(name) {
+  const lower = name.toLowerCase();
+  const type = matchDict(lower, ruToEnFurnitureType) || 'furniture piece';
+  const color = matchDict(lower, ruToEnColor);
+  const material = matchDict(lower, ruToEnMaterial);
+  return [color, material, type].filter(Boolean).join(' ');
 }
 
 const roomKeywordsRu = {
@@ -2025,6 +2037,23 @@ const roomKeywordsRu = {
   'hallway': ['вешалк', 'зеркал', 'обувниц'],
   'dining room': ['обеденн', 'стул', 'стол', 'буфет', 'сервант']
 };
+function pickFurnitureHint(storeKey, styleKey, roomKey) {
+  let items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
+  if (!items.length) return '';
+  const keywords = roomKeywordsRu[roomKey];
+  if (keywords && keywords.length) {
+    const matches = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
+    if (matches.length) items = matches;
+  }
+  const shuffled = items.slice().sort(() => Math.random() - 0.5);
+  const descriptions = [];
+  for (const p of shuffled) {
+    const desc = describeProductEn(p.name);
+    if (desc && !descriptions.includes(desc)) descriptions.push(desc);
+    if (descriptions.length >= 3) break;
+  }
+  return descriptions.join(', ');
+}
 function renderStoreProducts(storeKey, styleKey, roomKey) {
   const grid = document.getElementById('hoffProductsGrid');
   let items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
@@ -2182,7 +2211,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = t('genBtnLoading');
 
-  const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey);
+  const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
   const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
 
   const roomLabelsRu = { 'living room':'Гостиная','bedroom':'Спальня','kitchen':'Кухня','bathroom':'Ванная','children room':'Детская','home office':'Кабинет','hallway':'Прихожая','dining room':'Столовая' };
