@@ -59,7 +59,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .slides { position: absolute; inset: 0; }
 .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
 .slide.active { opacity: 1; }
-.slide-img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.slide-img { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.12); transition: transform 1.6s cubic-bezier(.2,.8,.3,1); }
+.hero-viewport.pulled-back .slide-img { transform: scale(1); }
+.hero-content { transition: transform 1.6s cubic-bezier(.2,.8,.3,1), opacity 0.8s ease; }
+.hero-viewport.pulled-back .hero-content { transform: scale(0.94); opacity: 0.5; }
 .slide-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(245,242,237,0.75) 40%, rgba(245,242,237,0.1) 100%); }
 
 .hero-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 48px; max-width: 900px; z-index: 10; pointer-events: none; }
@@ -84,8 +87,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .intro-scroll-cue { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; opacity: 0; color: rgba(245,242,237,0.55); font-size: 22px; line-height: 1; animation: fadeUp 0.8s ease forwards, bounceCue 1.8s ease-in-out infinite; animation-delay: 2.5s, 2.5s; }
 @keyframes bounceCue { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
 
-.room3d-scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 60px; perspective: 1400px; opacity: 0.85; }
-.room3d-slot { transform-style: preserve-3d; }
+.room3d-scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; perspective: 1400px; opacity: 0.9; }
+@media (max-width: 900px) { .room3d-scene { display: none; } }
+.room3d-slot { position: relative; width: 260px; height: 260px; transform-style: preserve-3d; }
 .room3d-slot.slot-2 { transform: scale(0.68) translateY(10px); }
 .room3d { position: relative; width: 260px; height: 260px; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(-38deg); animation: roomIdle 10s ease-in-out infinite; animation-delay: 3.2s; animation-play-state: paused; }
 .room3d.spin { animation-play-state: running; }
@@ -97,12 +101,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .room3d-wall-back.rise { opacity: 1; transform: translateZ(-130px) scaleY(1); }
 .room3d-wall-left { background: linear-gradient(180deg, #cbbb9a, #a8926a); transform: rotateY(90deg) translateZ(-130px) scaleY(0); }
 .room3d-wall-left.rise { opacity: 1; transform: rotateY(90deg) translateZ(-130px) scaleY(1); }
-.room3d-furniture { position: absolute; left: 50%; top: 50%; border-radius: 6px; opacity: 0; transform: translate(-50%,-50%) rotateX(90deg) translateZ(-129px) scale(0.2); transition: transform 0.7s cubic-bezier(.2,.8,.3,1), opacity 0.5s ease; box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
-.room3d-furniture.bed-base { width: 100px; height: 60px; margin-left: -32px; margin-top: 66px; background: #c9a876; }
-.room3d-furniture.bed-pillow { width: 86px; height: 18px; margin-left: -25px; margin-top: 46px; background: #f2ead9; box-shadow: none; }
-.room3d-furniture.nightstand { width: 30px; height: 30px; margin-left: 46px; margin-top: 44px; background: #d9a15c; }
-.room3d-furniture.wardrobe { width: 28px; height: 62px; margin-left: -75px; margin-top: -48px; background: #a4805a; }
-.room3d-furniture.rise { opacity: 0.95; transform: translate(-50%,-50%) rotateX(90deg) translateZ(-129px) scale(1); }
+.room3d-furniture { position: absolute; bottom: 8%; opacity: 0; transform: scale(0.3) translateY(10px); transition: transform 0.6s cubic-bezier(.2,.8,.3,1), opacity 0.4s ease; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4)); z-index: 5; color: #dcc39c; }
+.room3d-furniture svg { display: block; width: 100%; height: 100%; }
+.room3d-furniture.furn-bed { width: 108px; height: 64px; left: 26%; }
+.room3d-furniture.furn-wardrobe { width: 30px; height: 68px; left: 8%; color: #b99c72; }
+.room3d-furniture.furn-lamp { width: 40px; height: 48px; left: 68%; color: #e8d4ae; }
+.room3d-furniture.rise { opacity: 1; transform: scale(1) translateY(0); }
 .room3d-furniture.bed-pillow.rise { opacity: 1; }
 
 .slide-style-label { position: absolute; top: 50%; right: 48px; transform: translateY(-50%); z-index: 10; display: flex; flex-direction: column; gap: 10px; }
@@ -479,22 +483,20 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <div class="room3d-face room3d-floor" id="rFloor"></div>
         <div class="room3d-face room3d-wall-back" id="rBack"></div>
         <div class="room3d-face room3d-wall-left" id="rLeft"></div>
-        <div class="room3d-furniture wardrobe" id="rF1"></div>
-        <div class="room3d-furniture bed-base" id="rF2"></div>
-        <div class="room3d-furniture bed-pillow" id="rF3"></div>
-        <div class="room3d-furniture nightstand" id="rF4"></div>
       </div>
+      <div class="room3d-furniture furn-wardrobe" id="rF1"><svg viewBox="0 0 40 90"><rect x="2" y="2" width="36" height="86" rx="3" fill="currentColor"/><line x1="20" y1="2" x2="20" y2="88" stroke="#2d2318" stroke-width="2" opacity="0.4"/><circle cx="16" cy="45" r="2" fill="#2d2318" opacity="0.5"/><circle cx="24" cy="45" r="2" fill="#2d2318" opacity="0.5"/></svg></div>
+      <div class="room3d-furniture furn-bed" id="rF2"><svg viewBox="0 0 100 60"><rect x="6" y="30" width="88" height="22" rx="4" fill="currentColor"/><rect x="6" y="14" width="20" height="24" rx="4" fill="currentColor"/><rect x="14" y="20" width="14" height="12" rx="3" fill="#2d2318" opacity="0.35"/><rect x="0" y="48" width="6" height="10" rx="2" fill="currentColor"/><rect x="94" y="48" width="6" height="10" rx="2" fill="currentColor"/></svg></div>
+      <div class="room3d-furniture furn-lamp" id="rF3"><svg viewBox="0 0 40 50"><rect x="6" y="32" width="28" height="14" rx="2" fill="currentColor"/><rect x="17" y="18" width="6" height="14" fill="currentColor"/><path d="M10 18 L30 18 L26 6 L14 6 Z" fill="currentColor"/></svg></div>
     </div>
     <div class="room3d-slot slot-2">
       <div class="room3d" id="room3d_2">
         <div class="room3d-face room3d-floor" id="rFloor2"></div>
         <div class="room3d-face room3d-wall-back" id="rBack2"></div>
         <div class="room3d-face room3d-wall-left" id="rLeft2"></div>
-        <div class="room3d-furniture wardrobe" id="r2F1"></div>
-        <div class="room3d-furniture bed-base" id="r2F2"></div>
-        <div class="room3d-furniture bed-pillow" id="r2F3"></div>
-        <div class="room3d-furniture nightstand" id="r2F4"></div>
       </div>
+      <div class="room3d-furniture furn-wardrobe" id="r2F1"><svg viewBox="0 0 40 90"><rect x="2" y="2" width="36" height="86" rx="3" fill="currentColor"/><line x1="20" y1="2" x2="20" y2="88" stroke="#2d2318" stroke-width="2" opacity="0.4"/><circle cx="16" cy="45" r="2" fill="#2d2318" opacity="0.5"/><circle cx="24" cy="45" r="2" fill="#2d2318" opacity="0.5"/></svg></div>
+      <div class="room3d-furniture furn-bed" id="r2F2"><svg viewBox="0 0 100 60"><rect x="6" y="30" width="88" height="22" rx="4" fill="currentColor"/><rect x="6" y="14" width="20" height="24" rx="4" fill="currentColor"/><rect x="14" y="20" width="14" height="12" rx="3" fill="#2d2318" opacity="0.35"/><rect x="0" y="48" width="6" height="10" rx="2" fill="currentColor"/><rect x="94" y="48" width="6" height="10" rx="2" fill="currentColor"/></svg></div>
+      <div class="room3d-furniture furn-lamp" id="r2F3"><svg viewBox="0 0 40 50"><rect x="6" y="32" width="28" height="14" rx="2" fill="currentColor"/><rect x="17" y="18" width="6" height="14" fill="currentColor"/><path d="M10 18 L30 18 L26 6 L14 6 Z" fill="currentColor"/></svg></div>
     </div>
   </div>
   <div class="intro-cover-content">
@@ -2451,6 +2453,10 @@ if (revealEls.length && 'IntersectionObserver' in window) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('in-view');
+        if (entry.target.closest('.hero-about')) {
+          const hv = document.querySelector('.hero-viewport');
+          if (hv) hv.classList.add('pulled-back');
+        }
         revealObserver.unobserve(entry.target);
       }
     });
@@ -2467,8 +2473,8 @@ function buildRoom3d(roomId, faceIds, furnitureIds, startDelay) {
   furnitureIds.forEach((fid, i) => setTimeout(() => document.getElementById(fid).classList.add('rise'), startDelay + 1500 + i * 130));
   setTimeout(() => el.classList.add('spin'), startDelay + 2600);
 }
-buildRoom3d('room3d', ['rFloor', 'rBack', 'rLeft'], ['rF1', 'rF2', 'rF3', 'rF4'], 300);
-buildRoom3d('room3d_2', ['rFloor2', 'rBack2', 'rLeft2'], ['r2F1', 'r2F2', 'r2F3', 'r2F4'], 900);
+buildRoom3d('room3d', ['rFloor', 'rBack', 'rLeft'], ['rF1', 'rF2', 'rF3'], 300);
+buildRoom3d('room3d_2', ['rFloor2', 'rBack2', 'rLeft2'], ['r2F1', 'r2F2', 'r2F3'], 900);
 
 applyTranslations();
 </script>
