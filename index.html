@@ -2121,9 +2121,11 @@ function renderStoreProducts(storeKey, styleKey, roomKey) {
   }
   const keywords = roomKeywordsRu[roomKey];
   if (keywords && keywords.length) {
-    const matches = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
-    const rest = items.filter(p => !matches.includes(p));
-    items = matches.concat(rest);
+    items = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
+  }
+  if (!items.length) {
+    grid.innerHTML = '<div class="hoff-products-empty">' + t('storeEmpty') + '</div>';
+    return;
   }
   grid.innerHTML = items.map(p =>
     '<a class="hoff-product-card" href="' + p.url + '" target="_blank" rel="noopener">' +
