@@ -53,7 +53,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .lang-btn:hover { border-color: #b48c5a; color: #b48c5a; }
 .lang-btn.active { border-color: #b48c5a; color: #b48c5a; background: rgba(180,140,90,0.08); }
 
-.hero { position: relative; height: 100vh; overflow: hidden; }
+.hero { position: relative; }
+.hero-viewport { position: relative; height: 100vh; overflow: hidden; }
+.hero-about { padding: 120px 48px; background: #2d2318; border-top: 1px solid rgba(245,242,237,0.08); }
 .slides { position: absolute; inset: 0; }
 .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
 .slide.active { opacity: 1; }
@@ -73,6 +75,35 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .btn-outline:hover { border-color: #1a1208; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+.intro-cover { position: relative; height: 100vh; min-height: 640px; background: radial-gradient(ellipse at 50% 30%, #3a2e1f 0%, #1a1208 75%); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.intro-cover-content { position: relative; z-index: 10; text-align: center; padding: 0 24px; pointer-events: none; max-width: 900px; }
+.intro-eyebrow { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #b48c5a; margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; animation-delay: 1.7s; }
+.intro-title { font-family: 'Unbounded', sans-serif; font-size: clamp(34px, 6vw, 84px); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; color: #f5f2ed; opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s ease forwards; animation-delay: 2s; }
+.intro-title em { font-style: normal; color: #b48c5a; }
+.intro-scroll-cue { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; opacity: 0; color: rgba(245,242,237,0.55); font-size: 22px; line-height: 1; animation: fadeUp 0.8s ease forwards, bounceCue 1.8s ease-in-out infinite; animation-delay: 2.5s, 2.5s; }
+@keyframes bounceCue { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+
+.room3d-scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 60px; perspective: 1400px; opacity: 0.85; }
+.room3d-slot { transform-style: preserve-3d; }
+.room3d-slot.slot-2 { transform: scale(0.68) translateY(10px); }
+.room3d { position: relative; width: 260px; height: 260px; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(-38deg); animation: roomIdle 10s ease-in-out infinite; animation-delay: 3.2s; animation-play-state: paused; }
+.room3d.spin { animation-play-state: running; }
+@keyframes roomIdle { 0%, 100% { transform: rotateX(-20deg) rotateY(-38deg); } 50% { transform: rotateX(-20deg) rotateY(-30deg); } }
+.room3d-face { position: absolute; width: 260px; height: 260px; transform-origin: bottom center; opacity: 0; transition: transform 1s cubic-bezier(.2,.8,.3,1), opacity 0.5s ease; }
+.room3d-floor { background: linear-gradient(135deg, #4a3a26, #362a1b); transform: rotateX(90deg) translateZ(-130px) scaleY(0); }
+.room3d-floor.rise { opacity: 1; transform: rotateX(90deg) translateZ(-130px) scaleY(1); }
+.room3d-wall-back { background: linear-gradient(180deg, #e4d8c2, #c9b896); transform: translateZ(-130px) scaleY(0); }
+.room3d-wall-back.rise { opacity: 1; transform: translateZ(-130px) scaleY(1); }
+.room3d-wall-left { background: linear-gradient(180deg, #cbbb9a, #a8926a); transform: rotateY(90deg) translateZ(-130px) scaleY(0); }
+.room3d-wall-left.rise { opacity: 1; transform: rotateY(90deg) translateZ(-130px) scaleY(1); }
+.room3d-furniture { position: absolute; left: 50%; top: 50%; border-radius: 6px; opacity: 0; transform: translate(-50%,-50%) rotateX(90deg) translateZ(-129px) scale(0.2); transition: transform 0.7s cubic-bezier(.2,.8,.3,1), opacity 0.5s ease; box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+.room3d-furniture.bed-base { width: 100px; height: 60px; margin-left: -32px; margin-top: 66px; background: #c9a876; }
+.room3d-furniture.bed-pillow { width: 86px; height: 18px; margin-left: -25px; margin-top: 46px; background: #f2ead9; box-shadow: none; }
+.room3d-furniture.nightstand { width: 30px; height: 30px; margin-left: 46px; margin-top: 44px; background: #d9a15c; }
+.room3d-furniture.wardrobe { width: 28px; height: 62px; margin-left: -75px; margin-top: -48px; background: #a4805a; }
+.room3d-furniture.rise { opacity: 0.95; transform: translate(-50%,-50%) rotateX(90deg) translateZ(-129px) scale(1); }
+.room3d-furniture.bed-pillow.rise { opacity: 1; }
 
 .slide-style-label { position: absolute; top: 50%; right: 48px; transform: translateY(-50%); z-index: 10; display: flex; flex-direction: column; gap: 10px; }
 .style-pill { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.9); padding: 10px 18px; border: 1px solid rgba(255,255,255,0.6); border-radius: 30px; cursor: pointer; transition: all 0.3s; text-align: center; font-family: 'Inter', sans-serif; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); font-weight: 600; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
@@ -246,6 +277,12 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .feat-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
 .feat-title { font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; color: #f5f2ed; }
 .feat-desc { font-size: 12px; color: rgba(245,242,237,0.45); line-height: 1.6; }
+
+.intro-how { padding: 120px 48px; background: #f5f2ed; border-top: 1px solid rgba(42,34,24,0.1); }
+.intro-how-inner { max-width: 1400px; margin: 0 auto; }
+
+.reveal-zoom { opacity: 0; transform: scale(0.88); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.8,.3,1); }
+.reveal-zoom.in-view { opacity: 1; transform: scale(1); }
 
 footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex; justify-content: space-between; align-items: center; background: #f5f2ed; }
 .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: 2px; color: #1a1208; }
@@ -435,7 +472,40 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 </nav>
 
 <div id="homeView">
+<section class="intro-cover" id="introCover">
+  <div class="room3d-scene">
+    <div class="room3d-slot">
+      <div class="room3d" id="room3d">
+        <div class="room3d-face room3d-floor" id="rFloor"></div>
+        <div class="room3d-face room3d-wall-back" id="rBack"></div>
+        <div class="room3d-face room3d-wall-left" id="rLeft"></div>
+        <div class="room3d-furniture wardrobe" id="rF1"></div>
+        <div class="room3d-furniture bed-base" id="rF2"></div>
+        <div class="room3d-furniture bed-pillow" id="rF3"></div>
+        <div class="room3d-furniture nightstand" id="rF4"></div>
+      </div>
+    </div>
+    <div class="room3d-slot slot-2">
+      <div class="room3d" id="room3d_2">
+        <div class="room3d-face room3d-floor" id="rFloor2"></div>
+        <div class="room3d-face room3d-wall-back" id="rBack2"></div>
+        <div class="room3d-face room3d-wall-left" id="rLeft2"></div>
+        <div class="room3d-furniture wardrobe" id="r2F1"></div>
+        <div class="room3d-furniture bed-base" id="r2F2"></div>
+        <div class="room3d-furniture bed-pillow" id="r2F3"></div>
+        <div class="room3d-furniture nightstand" id="r2F4"></div>
+      </div>
+    </div>
+  </div>
+  <div class="intro-cover-content">
+    <div class="intro-eyebrow" data-i18n="cover.eyebrow">Room Factory</div>
+    <h1 class="intro-title" data-i18n-html="cover.title">Новый уровень<br>дизайна вашего <em>интерьера</em></h1>
+  </div>
+  <div class="intro-scroll-cue">↓</div>
+</section>
+
 <section class="hero">
+  <div class="hero-viewport">
   <div class="slides" id="slides">
     <div class="slide active">
       <div class="slide-img" style="background-image:url('https://i.imgur.com/4jgsqhI.jpg')"></div>
@@ -479,6 +549,48 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
     <div class="indicator" onclick="goToSlide(3)"></div>
   </div>
   <div class="slide-counter"><span id="currentSlide">01</span> / 04</div>
+  </div>
+
+  <div class="hero-about">
+    <div class="about-inner reveal-zoom">
+      <div>
+        <span class="modal-eyebrow" data-i18n="about.eyebrow">О проекте</span>
+        <h2 class="about-title" data-i18n-html="about.title">Дизайн<br>стал <em>доступным</em><br>для всех</h2>
+        <p class="about-text" data-i18n="about.text1">Room Factory — AI-сервис который делает профессиональный дизайн интерьера доступным без дизайнеров и долгого ожидания.</p>
+        <p class="about-text" data-i18n="about.text2">Загрузите фото — получите результат за 30 секунд.</p>
+      </div>
+      <div class="about-features">
+        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat1Title">Для любой комнаты</div><div class="feat-desc" data-i18n="about.feat1Desc">Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением</div></div></div>
+        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat2Title">Множество стилей</div><div class="feat-desc" data-i18n="about.feat2Desc">Скандинавский, лофт, классика, минимализм, бохо — выбирайте</div></div></div>
+        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat3Title">Сохраняет планировку</div><div class="feat-desc" data-i18n="about.feat3Desc">ИИ следует структуре вашей комнаты — окна, двери и пропорции</div></div></div>
+        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat4Title">Мебель под рукой</div><div class="feat-desc" data-i18n="about.feat4Desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="intro-how" id="introHow">
+  <div class="intro-how-inner reveal-zoom">
+    <span class="section-eyebrow" data-i18n="how.eyebrow">Процесс</span>
+    <h2 class="section-title" data-i18n="how.title">Как это работает</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <div class="step-title" data-i18n="how.step1Title">Загрузите фото</div>
+        <div class="step-desc" data-i18n="how.step1Desc">Сфотографируйте комнату или загрузите готовое фото. Подходит любое состояние.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <div class="step-title" data-i18n="how.step2Title">Выберите стиль</div>
+        <div class="step-desc" data-i18n="how.step2Desc">Укажите магазин мебели, стиль интерьера, тип комнаты, цветовую гамму и бюджет.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <div class="step-title" data-i18n="how.step3Title">Получите дизайн</div>
+        <div class="step-desc" data-i18n="how.step3Desc">За 30 секунд ИИ создаст дизайн вашей комнаты и подберёт мебель из каталога.</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <div class="marquee-wrap">
@@ -810,6 +922,8 @@ const translations = {
     'tour.length': `Длина, м`,
     'tour.doorway': `Дверной проём`,
     'tour.refImgHint': `Загрузи фото планировки для справки (необязательно) — картинка останется только у тебя на экране, никуда не отправляется`,
+    'cover.eyebrow': `Room Factory`,
+    'cover.title': `Новый уровень<br>дизайна вашего <em>интерьера</em>`,
     'hero.eyebrow': `AI дизайн интерьера`,
     'hero.title': `Дизайн<br>вашей<span class="line2">комнаты</span>`,
     'hero.sub': `Загрузите фото — ИИ создаст профессиональный дизайн в любом стиле за 30 секунд`,
@@ -952,6 +1066,8 @@ const translations = {
     'tour.length': `Length, m`,
     'tour.doorway': `Doorway`,
     'tour.refImgHint': `Upload a floor plan photo for reference (optional) — it stays on your screen only, nothing is sent anywhere`,
+    'cover.eyebrow': `Room Factory`,
+    'cover.title': `A new level<br>of your <em>interior</em> design`,
     'hero.eyebrow': `AI Interior Design`,
     'hero.title': `Design<br>your<span class="line2">room</span>`,
     'hero.sub': `Upload a photo — AI creates a professional design in any style in 30 seconds`,
@@ -2328,6 +2444,31 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
 });
+
+const revealEls = document.querySelectorAll('.reveal-zoom');
+if (revealEls.length && 'IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  revealEls.forEach(el => revealObserver.observe(el));
+}
+
+function buildRoom3d(roomId, faceIds, furnitureIds, startDelay) {
+  const el = document.getElementById(roomId);
+  if (!el) return;
+  setTimeout(() => document.getElementById(faceIds[0]).classList.add('rise'), startDelay + 0);
+  setTimeout(() => document.getElementById(faceIds[1]).classList.add('rise'), startDelay + 600);
+  setTimeout(() => document.getElementById(faceIds[2]).classList.add('rise'), startDelay + 1000);
+  furnitureIds.forEach((fid, i) => setTimeout(() => document.getElementById(fid).classList.add('rise'), startDelay + 1500 + i * 130));
+  setTimeout(() => el.classList.add('spin'), startDelay + 2600);
+}
+buildRoom3d('room3d', ['rFloor', 'rBack', 'rLeft'], ['rF1', 'rF2', 'rF3', 'rF4'], 300);
+buildRoom3d('room3d_2', ['rFloor2', 'rBack2', 'rLeft2'], ['r2F1', 'r2F2', 'r2F3', 'r2F4'], 900);
 
 applyTranslations();
 </script>
