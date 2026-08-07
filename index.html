@@ -2054,6 +2054,64 @@ function pickFurnitureHint(storeKey, styleKey, roomKey) {
   }
   return descriptions.join(', ');
 }
+const furnitureTypeSearch = {
+  'диван': ['диван'],
+  'кресло': ['кресло'],
+  'кровать': ['кровать'],
+  'стол': ['стол'],
+  'стул': ['стул'],
+  'шкаф': ['шкаф'],
+  'полка': ['стеллаж', 'полк'],
+  'зеркало': ['зеркал'],
+  'ковёр': ['ковер', 'ковёр'],
+  'светильник': ['светильник', 'лампа', 'люстра'],
+  'тумба': ['тумба'],
+  'комод': ['комод'],
+  'пуф': ['пуф']
+};
+const furnitureColorSearch = {
+  'белый': ['бел'],
+  'бежевый': ['беж'],
+  'серый': ['сер'],
+  'чёрный': ['черн', 'чёрн'],
+  'коричневый': ['коричнев'],
+  'зелёный': ['зелен', 'зелён'],
+  'синий': ['син'],
+  'розовый': ['розов'],
+  'жёлтый': ['желт', 'жёлт']
+};
+function findCatalogMatch(items, typeWord, colorWord) {
+  const typeKeys = furnitureTypeSearch[typeWord] || [typeWord];
+  const colorKeys = furnitureColorSearch[colorWord] || [colorWord];
+  const byType = items.filter(p => typeKeys.some(k => p.name.toLowerCase().includes(k)));
+  if (!byType.length) return null;
+  const exact = byType.find(p => colorKeys.some(k => p.name.toLowerCase().includes(k)));
+  return { product: exact || byType[0], exact: !!exact };
+}
+function renderMatchedFurniture(storeKey, styleKey, roomKey, detected) {
+  const items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
+  if (!detected || !detected.length || !items.length) { renderStoreProducts(storeKey, styleKey, roomKey); return; }
+  const used = new Set();
+  const cards = [];
+  detected.forEach(d => {
+    const match = findCatalogMatch(items, d.type, d.color);
+    if (match && !used.has(match.product.name)) {
+      used.add(match.product.name);
+      cards.push(match);
+    }
+  });
+  if (!cards.length) { renderStoreProducts(storeKey, styleKey, roomKey); return; }
+  const grid = document.getElementById('hoffProductsGrid');
+  grid.innerHTML = cards.map(c =>
+    '<a class="hoff-product-card" href="' + c.product.url + '" target="_blank" rel="noopener">' +
+      '<img src="' + c.product.img + '" alt="' + c.product.name + '" loading="lazy">' +
+      '<div class="hoff-product-info">' +
+        '<div class="hoff-product-name">' + c.product.name + (c.exact ? '' : ' <span style="opacity:.6;font-size:.85em">— похожий вариант</span>') + '</div>' +
+        '<div class="hoff-product-price">' + c.product.price + '</div>' +
+      '</div>' +
+    '</a>'
+  ).join('');
+}
 function renderStoreProducts(storeKey, styleKey, roomKey) {
   const grid = document.getElementById('hoffProductsGrid');
   let items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
@@ -2234,6 +2292,11 @@ document.getElementById('genBtn').addEventListener('click', async () => {
 
     const res = await fetch(WORKER_URL, { method: 'POST', body: fd });
     if (!res.ok) throw new Error(res.status);
+    let detectedFurniture = [];
+    const furnitureHeader = res.headers.get('X-Furniture-List');
+    if (furnitureHeader) {
+      try { detectedFurniture = JSON.parse(decodeURIComponent(furnitureHeader)); } catch(e) {}
+    }
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
     document.getElementById('resultImg').src = url;
@@ -2243,7 +2306,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     const q = encodeURIComponent(sel.style.split(',')[0]+' '+sel.room);
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
-    renderStoreProducts(sel.storeKey, sel.styleKey, sel.room);
+    renderMatchedFurniture(sel.storeKey, sel.styleKey, sel.room, detectedFurniture);
     if (currentSession) saveGeneration(blob, sel.styleKey, sel.styleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
     err.textContent = t('genError');
