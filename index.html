@@ -79,35 +79,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-.intro-cover { position: relative; height: 100vh; min-height: 640px; background: radial-gradient(ellipse at 50% 30%, #3a2e1f 0%, #1a1208 75%); overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.intro-cover-content { position: relative; z-index: 10; text-align: center; padding: 0 24px; pointer-events: none; max-width: 900px; }
-.intro-eyebrow { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #b48c5a; margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; animation-delay: 1.7s; }
-.intro-title { font-family: 'Unbounded', sans-serif; font-size: clamp(34px, 6vw, 84px); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; color: #f5f2ed; opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s ease forwards; animation-delay: 2s; }
-.intro-title em { font-style: normal; color: #b48c5a; }
-.intro-scroll-cue { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; opacity: 0; color: rgba(245,242,237,0.55); font-size: 22px; line-height: 1; animation: fadeUp 0.8s ease forwards, bounceCue 1.8s ease-in-out infinite; animation-delay: 2.5s, 2.5s; }
-@keyframes bounceCue { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
-
-.room3d-scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; perspective: 1400px; opacity: 0.9; }
-@media (max-width: 900px) { .room3d-scene { display: none; } }
-.room3d-slot { position: relative; width: 260px; height: 260px; transform-style: preserve-3d; }
-.room3d-slot.slot-2 { transform: scale(0.68) translateY(10px); }
-.room3d { position: relative; width: 260px; height: 260px; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(-38deg); animation: roomIdle 10s ease-in-out infinite; animation-delay: 3.2s; animation-play-state: paused; }
-.room3d.spin { animation-play-state: running; }
-@keyframes roomIdle { 0%, 100% { transform: rotateX(-20deg) rotateY(-38deg); } 50% { transform: rotateX(-20deg) rotateY(-30deg); } }
-.room3d-face { position: absolute; width: 260px; height: 260px; transform-origin: bottom center; opacity: 0; transition: transform 1s cubic-bezier(.2,.8,.3,1), opacity 0.5s ease; }
-.room3d-floor { background: linear-gradient(135deg, #4a3a26, #362a1b); transform: rotateX(90deg) translateZ(-130px) scaleY(0); }
-.room3d-floor.rise { opacity: 1; transform: rotateX(90deg) translateZ(-130px) scaleY(1); }
-.room3d-wall-back { background: linear-gradient(180deg, #e4d8c2, #c9b896); transform: translateZ(-130px) scaleY(0); }
-.room3d-wall-back.rise { opacity: 1; transform: translateZ(-130px) scaleY(1); }
-.room3d-wall-left { background: linear-gradient(180deg, #cbbb9a, #a8926a); transform: rotateY(90deg) translateZ(-130px) scaleY(0); }
-.room3d-wall-left.rise { opacity: 1; transform: rotateY(90deg) translateZ(-130px) scaleY(1); }
-.room3d-furniture { position: absolute; left: 50%; top: 50%; opacity: 0; transform: translate(-50%,-50%) rotateX(90deg) translateZ(-128px) scale(0.25); transition: transform 0.7s cubic-bezier(.2,.8,.3,1), opacity 0.4s ease; filter: drop-shadow(0 5px 8px rgba(0,0,0,0.4)); z-index: 5; color: #dcc39c; }
-.room3d-furniture svg { display: block; width: 100%; height: 100%; }
-.room3d-furniture.furn-bed { width: 72px; height: 100px; margin-left: -30px; margin-top: 32px; }
-.room3d-furniture.furn-wardrobe { width: 92px; height: 26px; margin-left: -110px; margin-top: -62px; color: #b99c72; }
-.room3d-furniture.furn-lamp { width: 34px; height: 34px; margin-left: 60px; margin-top: 42px; color: #e8d4ae; }
-.room3d-furniture.rise { opacity: 1; transform: translate(-50%,-50%) rotateX(90deg) translateZ(-128px) scale(1); }
-
 .slide-style-label { position: absolute; top: 50%; right: 48px; transform: translateY(-50%); z-index: 10; display: flex; flex-direction: column; gap: 10px; }
 .style-pill { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.9); padding: 10px 18px; border: 1px solid rgba(255,255,255,0.6); border-radius: 30px; cursor: pointer; transition: all 0.3s; text-align: center; font-family: 'Inter', sans-serif; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); font-weight: 600; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
 .style-pill:hover { background: rgba(0,0,0,0.5); border-color: white; color: white; }
@@ -291,6 +262,19 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: 2px; color: #1a1208; }
 .footer-logo span { color: #b48c5a; }
 .footer-text { font-size: 11px; color: #8a7a66; letter-spacing: 1px; }
+.footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.footer-contacts { display: flex; gap: 24px; }
+.contact-item { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.contact-item-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #b48c5a; }
+.contact-item a { font-size: 11px; color: #8a7a66; letter-spacing: 0.5px; text-decoration: none; transition: color 0.2s; }
+.contact-item a:hover { color: #b48c5a; }
+.footer-legal { display: flex; gap: 16px; }
+.footer-legal a { font-size: 10px; color: #b0a48e; letter-spacing: 0.5px; text-decoration: underline; cursor: pointer; transition: color 0.2s; }
+.footer-legal a:hover { color: #b48c5a; }
+@media (max-width: 600px) { .footer-legal { flex-wrap: wrap; } }
+@media (max-width: 600px) { .footer-right { align-items: flex-start; } .contact-item { align-items: flex-start; } }
+.contacts-block { display: flex; gap: 32px; flex-wrap: wrap; }
+.contacts-block .contact-item { align-items: flex-start; }
 
 .account-page { padding: 140px 48px 100px; max-width: 900px; margin: 0 auto; }
 .account-back { background: none; border: none; color: #8a7a66; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; margin-bottom: 40px; padding: 0; }
@@ -298,6 +282,14 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 .account-title { font-family: 'Unbounded', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 900; letter-spacing: -1px; margin-bottom: 48px; color: #1a1208; }
 .account-section { margin-bottom: 56px; }
 .account-section-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #b48c5a; margin-bottom: 20px; display: block; font-family: 'Inter', sans-serif; }
+.legal-text { font-size: 13px; color: #5a4d3d; line-height: 1.8; }
+
+.cookie-banner { display: none; position: fixed; left: 24px; right: 24px; bottom: 24px; z-index: 600; max-width: 640px; margin: 0 auto; background: #2d2318; color: #f5f2ed; padding: 20px 24px; border-radius: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); align-items: center; gap: 20px; flex-wrap: wrap; }
+.cookie-banner.visible { display: flex; }
+.cookie-banner p { font-size: 12px; line-height: 1.6; color: rgba(245,242,237,0.8); flex: 1; min-width: 200px; margin: 0; }
+.cookie-banner a { color: #b48c5a; text-decoration: underline; }
+.cookie-banner button { background: #b48c5a; color: white; border: none; padding: 10px 22px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap; }
+@media (max-width: 480px) { .cookie-banner { left: 12px; right: 12px; bottom: 12px; padding: 16px; } }
 .profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; max-width: 520px; }
 .profile-grid .full { grid-column: 1 / -1; }
 .profile-input { width: 100%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 14px; color: #1a1208; font-family: 'Inter', sans-serif; font-size: 13px; }
@@ -475,36 +467,6 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 </nav>
 
 <div id="homeView">
-<section class="intro-cover" id="introCover">
-  <div class="room3d-scene">
-    <div class="room3d-slot">
-      <div class="room3d" id="room3d">
-        <div class="room3d-face room3d-floor" id="rFloor"></div>
-        <div class="room3d-face room3d-wall-back" id="rBack"></div>
-        <div class="room3d-face room3d-wall-left" id="rLeft"></div>
-        <div class="room3d-furniture furn-wardrobe" id="rF1"><svg viewBox="0 0 120 34"><rect x="2" y="2" width="116" height="30" rx="3" fill="currentColor"/><line x1="60" y1="2" x2="60" y2="32" stroke="#2d2318" stroke-width="2" opacity="0.35"/></svg></div>
-        <div class="room3d-furniture furn-bed" id="rF2"><svg viewBox="0 0 72 100"><rect x="2" y="2" width="68" height="96" rx="10" fill="currentColor"/><rect x="10" y="10" width="52" height="26" rx="6" fill="#2d2318" opacity="0.3"/></svg></div>
-        <div class="room3d-furniture furn-lamp" id="rF3"><svg viewBox="0 0 50 50"><rect x="1" y="1" width="48" height="48" rx="8" fill="currentColor"/><circle cx="25" cy="25" r="14" fill="#2d2318" opacity="0.25"/></svg></div>
-      </div>
-    </div>
-    <div class="room3d-slot slot-2">
-      <div class="room3d" id="room3d_2">
-        <div class="room3d-face room3d-floor" id="rFloor2"></div>
-        <div class="room3d-face room3d-wall-back" id="rBack2"></div>
-        <div class="room3d-face room3d-wall-left" id="rLeft2"></div>
-        <div class="room3d-furniture furn-wardrobe" id="r2F1"><svg viewBox="0 0 120 34"><rect x="2" y="2" width="116" height="30" rx="3" fill="currentColor"/><line x1="60" y1="2" x2="60" y2="32" stroke="#2d2318" stroke-width="2" opacity="0.35"/></svg></div>
-        <div class="room3d-furniture furn-bed" id="r2F2"><svg viewBox="0 0 72 100"><rect x="2" y="2" width="68" height="96" rx="10" fill="currentColor"/><rect x="10" y="10" width="52" height="26" rx="6" fill="#2d2318" opacity="0.3"/></svg></div>
-        <div class="room3d-furniture furn-lamp" id="r2F3"><svg viewBox="0 0 50 50"><rect x="1" y="1" width="48" height="48" rx="8" fill="currentColor"/><circle cx="25" cy="25" r="14" fill="#2d2318" opacity="0.25"/></svg></div>
-      </div>
-    </div>
-  </div>
-  <div class="intro-cover-content">
-    <div class="intro-eyebrow" data-i18n="cover.eyebrow">Room Factory</div>
-    <h1 class="intro-title" data-i18n-html="cover.title">Новый уровень<br>дизайна вашего <em>интерьера</em></h1>
-  </div>
-  <div class="intro-scroll-cue">↓</div>
-</section>
-
 <section class="hero">
   <div class="hero-viewport">
   <div class="slides" id="slides">
@@ -811,7 +773,23 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 
 <footer>
   <div class="footer-logo">Room<span>.</span>Factory</div>
-  <div class="footer-text" data-i18n="footer.text">© 2026 · AI дизайн интерьера</div>
+  <div class="footer-right">
+    <div class="footer-text" data-i18n="footer.text">© 2026 · AI дизайн интерьера</div>
+    <div class="footer-contacts">
+      <div class="contact-item">
+        <span class="contact-item-label" data-i18n="contact.supportLabel">Поддержка</span>
+        <a href="mailto:roomfactory_help@mail.ru">roomfactory_help@mail.ru</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label" data-i18n="contact.centerLabel">Реклама и другие вопросы</span>
+        <a href="mailto:roomfactory_center@mail.ru">roomfactory_center@mail.ru</a>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <a href="javascript:void(0)" onclick="showPrivacy()" data-i18n="footer.privacyLink">Политика конфиденциальности</a>
+      <a href="javascript:void(0)" onclick="showTerms()" data-i18n="footer.termsLink">Пользовательское соглашение</a>
+    </div>
+  </div>
 </footer>
 </div>
 
@@ -898,6 +876,90 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
+<div id="privacyView" style="display:none">
+  <div class="account-page">
+    <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
+    <h1 class="account-title" data-i18n="privacy.title">Политика конфиденциальности</h1>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="privacy.s1Label">Общие положения</span>
+      <p class="legal-text" data-i18n="privacy.s1Text">Room Factory (далее — «Сервис») обрабатывает персональные данные пользователей в соответствии с Федеральным законом № 152-ФЗ «О персональных данных». Используя Сервис, вы соглашаетесь с условиями этой политики.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="privacy.s2Label">Какие данные мы собираем</span>
+      <p class="legal-text" data-i18n="privacy.s2Text">Адрес электронной почты, имя и фамилия, номер телефона (если вы его указали), загруженные вами фотографии помещений и сгенерированные на их основе изображения, а также выбранный язык интерфейса.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="privacy.s3Label">Цели обработки</span>
+      <p class="legal-text" data-i18n="privacy.s3Text">Данные используются для регистрации и работы личного кабинета, генерации дизайна интерьера, сохранения истории ваших генераций и связи с вами по вопросам работы Сервиса.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="privacy.s4Label">Передача данных третьим лицам</span>
+      <p class="legal-text" data-i18n="privacy.s4Text">Мы не продаём и не передаём ваши данные третьим лицам для рекламных целей. Для работы Сервиса данные передаются только сервисам, обеспечивающим его функционирование: хранение аккаунта и загруженных изображений, а также сервису генерации изображений на основе ИИ, обрабатывающему присланные фото для создания дизайна.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="privacy.s5Label">Локальное хранилище и файлы cookie</span>
+      <p class="legal-text" data-i18n="privacy.s5Text">Сервис использует локальное хранилище браузера (localStorage), а не рекламные или трекинговые cookie. Там сохраняются: выбранный язык интерфейса и токен вашей сессии, чтобы не запрашивать вход при каждом визите. Эти данные хранятся только в вашем браузере и не передаются рекламным сетям.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="privacy.s6Label">Ваши права</span>
+      <p class="legal-text" data-i18n="privacy.s6Text">Вы можете в любой момент запросить доступ к своим данным, их исправление или удаление, а также отозвать согласие на обработку — для этого напишите на roomfactory_help@mail.ru.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="privacy.s7Label">Изменения политики</span>
+      <p class="legal-text" data-i18n="privacy.s7Text">Мы можем обновлять эту политику. Актуальная версия всегда доступна на этой странице.</p>
+    </div>
+  </div>
+</div>
+
+<div id="termsView" style="display:none">
+  <div class="account-page">
+    <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
+    <h1 class="account-title" data-i18n="terms.title">Пользовательское соглашение</h1>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="terms.s1Label">О сервисе</span>
+      <p class="legal-text" data-i18n="terms.s1Text">Room Factory — онлайн-сервис, который с помощью искусственного интеллекта создаёт варианты дизайна интерьера на основе загруженной вами фотографии помещения. Используя Сервис, вы принимаете условия этого соглашения.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="terms.s2Label">Обязанности пользователя</span>
+      <p class="legal-text" data-i18n="terms.s2Text">Загружайте только фотографии, на использование которых у вас есть право (свои помещения или помещения, которые вы вправе фотографировать и использовать). Не используйте Сервис для загрузки незаконного, оскорбительного контента или контента, нарушающего права третьих лиц.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="terms.s3Label">Результаты генерации</span>
+      <p class="legal-text" data-i18n="terms.s3Text">Сгенерированные изображения вы можете использовать в личных целях. Результаты создаются искусственным интеллектом и носят ознакомительный, рекомендательный характер — они не являются профессиональным дизайн-проектом и не гарантируют точное соответствие ожиданиям, реальным размерам или возможности воплощения в реальном ремонте.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="terms.s4Label">Ограничение ответственности</span>
+      <p class="legal-text" data-i18n="terms.s4Text">Сервис предоставляется «как есть». Мы не несём ответственности за решения, принятые на основе сгенерированных изображений, а также за временную недоступность Сервиса.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="terms.s5Label">Оплата</span>
+      <p class="legal-text" data-i18n="terms.s5Text">На данный момент основные функции Сервиса бесплатны. Если в будущем появятся платные функции, условия их оплаты будут описаны отдельно в публичной оферте.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="terms.s6Label">Применимое право</span>
+      <p class="legal-text" data-i18n="terms.s6Text">К этому соглашению применяется законодательство Российской Федерации. По всем вопросам пишите на roomfactory_help@mail.ru.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p data-i18n-html="cookie.text">Мы используем локальное хранилище браузера для входа в аккаунт и запоминания языка — не рекламные cookie. Подробнее в <a href="javascript:void(0)" onclick="showPrivacy()">политике конфиденциальности</a>.</p>
+  <button type="button" onclick="acceptCookies()" data-i18n="cookie.accept">Хорошо</button>
+</div>
+
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -923,8 +985,6 @@ const translations = {
     'tour.length': `Длина, м`,
     'tour.doorway': `Дверной проём`,
     'tour.refImgHint': `Загрузи фото планировки для справки (необязательно) — картинка останется только у тебя на экране, никуда не отправляется`,
-    'cover.eyebrow': `Room Factory`,
-    'cover.title': `Новый уровень<br>дизайна вашего <em>интерьера</em>`,
     'hero.eyebrow': `AI дизайн интерьера`,
     'hero.title': `Дизайн<br>вашей<span class="line2">комнаты</span>`,
     'hero.sub': `Загрузите фото — ИИ создаст профессиональный дизайн в любом стиле за 30 секунд`,
@@ -1027,6 +1087,40 @@ const translations = {
     'searchMorePrefix': `Ещё поискать`,
     'storeEmpty': `Пока нет подборки под этот стиль в выбранном магазине — загляните в общий каталог.`,
     'footer.text': `© 2026 · AI дизайн интерьера`,
+    'contact.supportLabel': `Поддержка`,
+    'contact.centerLabel': `Реклама и другие вопросы`,
+    'footer.privacyLink': `Политика конфиденциальности`,
+    'footer.termsLink': `Пользовательское соглашение`,
+    'cookie.text': `Мы используем локальное хранилище браузера для входа в аккаунт и запоминания языка — не рекламные cookie. Подробнее в <a href="javascript:void(0)" onclick="showPrivacy()">политике конфиденциальности</a>.`,
+    'cookie.accept': `Хорошо`,
+    'privacy.title': `Политика конфиденциальности`,
+    'privacy.s1Label': `Общие положения`,
+    'privacy.s1Text': `Room Factory (далее — «Сервис») обрабатывает персональные данные пользователей в соответствии с Федеральным законом № 152-ФЗ «О персональных данных». Используя Сервис, вы соглашаетесь с условиями этой политики.`,
+    'privacy.s2Label': `Какие данные мы собираем`,
+    'privacy.s2Text': `Адрес электронной почты, имя и фамилия, номер телефона (если вы его указали), загруженные вами фотографии помещений и сгенерированные на их основе изображения, а также выбранный язык интерфейса.`,
+    'privacy.s3Label': `Цели обработки`,
+    'privacy.s3Text': `Данные используются для регистрации и работы личного кабинета, генерации дизайна интерьера, сохранения истории ваших генераций и связи с вами по вопросам работы Сервиса.`,
+    'privacy.s4Label': `Передача данных третьим лицам`,
+    'privacy.s4Text': `Мы не продаём и не передаём ваши данные третьим лицам для рекламных целей. Для работы Сервиса данные передаются только сервисам, обеспечивающим его функционирование: хранение аккаунта и загруженных изображений, а также сервису генерации изображений на основе ИИ, обрабатывающему присланные фото для создания дизайна.`,
+    'privacy.s5Label': `Локальное хранилище и файлы cookie`,
+    'privacy.s5Text': `Сервис использует локальное хранилище браузера (localStorage), а не рекламные или трекинговые cookie. Там сохраняются: выбранный язык интерфейса и токен вашей сессии, чтобы не запрашивать вход при каждом визите. Эти данные хранятся только в вашем браузере и не передаются рекламным сетям.`,
+    'privacy.s6Label': `Ваши права`,
+    'privacy.s6Text': `Вы можете в любой момент запросить доступ к своим данным, их исправление или удаление, а также отозвать согласие на обработку — для этого напишите на roomfactory_help@mail.ru.`,
+    'privacy.s7Label': `Изменения политики`,
+    'privacy.s7Text': `Мы можем обновлять эту политику. Актуальная версия всегда доступна на этой странице.`,
+    'terms.title': `Пользовательское соглашение`,
+    'terms.s1Label': `О сервисе`,
+    'terms.s1Text': `Room Factory — онлайн-сервис, который с помощью искусственного интеллекта создаёт варианты дизайна интерьера на основе загруженной вами фотографии помещения. Используя Сервис, вы принимаете условия этого соглашения.`,
+    'terms.s2Label': `Обязанности пользователя`,
+    'terms.s2Text': `Загружайте только фотографии, на использование которых у вас есть право (свои помещения или помещения, которые вы вправе фотографировать и использовать). Не используйте Сервис для загрузки незаконного, оскорбительного контента или контента, нарушающего права третьих лиц.`,
+    'terms.s3Label': `Результаты генерации`,
+    'terms.s3Text': `Сгенерированные изображения вы можете использовать в личных целях. Результаты создаются искусственным интеллектом и носят ознакомительный, рекомендательный характер — они не являются профессиональным дизайн-проектом и не гарантируют точное соответствие ожиданиям, реальным размерам или возможности воплощения в реальном ремонте.`,
+    'terms.s4Label': `Ограничение ответственности`,
+    'terms.s4Text': `Сервис предоставляется «как есть». Мы не несём ответственности за решения, принятые на основе сгенерированных изображений, а также за временную недоступность Сервиса.`,
+    'terms.s5Label': `Оплата`,
+    'terms.s5Text': `На данный момент основные функции Сервиса бесплатны. Если в будущем появятся платные функции, условия их оплаты будут описаны отдельно в публичной оферте.`,
+    'terms.s6Label': `Применимое право`,
+    'terms.s6Text': `К этому соглашению применяется законодательство Российской Федерации. По всем вопросам пишите на roomfactory_help@mail.ru.`,
     'auth.tabLogin': `Вход`,
     'auth.tabSignup': `Регистрация`,
     'authPasswordPlaceholder': `Пароль`,
@@ -1067,8 +1161,6 @@ const translations = {
     'tour.length': `Length, m`,
     'tour.doorway': `Doorway`,
     'tour.refImgHint': `Upload a floor plan photo for reference (optional) — it stays on your screen only, nothing is sent anywhere`,
-    'cover.eyebrow': `Room Factory`,
-    'cover.title': `A new level<br>of your <em>interior</em> design`,
     'hero.eyebrow': `AI Interior Design`,
     'hero.title': `Design<br>your<span class="line2">room</span>`,
     'hero.sub': `Upload a photo — AI creates a professional design in any style in 30 seconds`,
@@ -1171,6 +1263,40 @@ const translations = {
     'searchMorePrefix': `Also try`,
     'storeEmpty': `No curated picks for this style in the selected store yet — check the full catalog.`,
     'footer.text': `© 2026 · AI Interior Design`,
+    'contact.supportLabel': `Support`,
+    'contact.centerLabel': `Advertising & other inquiries`,
+    'footer.privacyLink': `Privacy Policy`,
+    'footer.termsLink': `Terms of Use`,
+    'cookie.text': `We use browser local storage to keep you signed in and remember your language — not advertising cookies. More in the <a href="javascript:void(0)" onclick="showPrivacy()">Privacy Policy</a>.`,
+    'cookie.accept': `Got it`,
+    'privacy.title': `Privacy Policy`,
+    'privacy.s1Label': `General`,
+    'privacy.s1Text': `Room Factory (the "Service") processes users' personal data in accordance with Federal Law No. 152-FZ "On Personal Data" of the Russian Federation. By using the Service, you agree to this policy.`,
+    'privacy.s2Label': `What data we collect`,
+    'privacy.s2Text': `Your email address, first and last name, phone number (if you provide one), the room photos you upload and the images generated from them, and your selected interface language.`,
+    'privacy.s3Label': `Purpose of processing`,
+    'privacy.s3Text': `Data is used to run your account, generate interior designs, save your generation history, and contact you about the Service.`,
+    'privacy.s4Label': `Sharing data with third parties`,
+    'privacy.s4Text': `We do not sell or share your data with third parties for advertising purposes. Data is only passed to services required to run the Service: account and image storage, and the AI image-generation service that processes uploaded photos to create designs.`,
+    'privacy.s5Label': `Local storage and cookies`,
+    'privacy.s5Text': `The Service uses browser local storage (localStorage), not advertising or tracking cookies. It stores your selected interface language and your session token, so you don't need to sign in on every visit. This data stays in your browser and is not shared with ad networks.`,
+    'privacy.s6Label': `Your rights`,
+    'privacy.s6Text': `You may request access to, correction of, or deletion of your data at any time, and withdraw consent to processing — email roomfactory_help@mail.ru.`,
+    'privacy.s7Label': `Changes to this policy`,
+    'privacy.s7Text': `We may update this policy. The current version is always available on this page.`,
+    'terms.title': `Terms of Use`,
+    'terms.s1Label': `About the Service`,
+    'terms.s1Text': `Room Factory is an online service that uses AI to create interior design variations based on a photo of your room. By using the Service, you accept these terms.`,
+    'terms.s2Label': `User responsibilities`,
+    'terms.s2Text': `Only upload photos you have the right to use (your own spaces, or spaces you're entitled to photograph and use). Do not use the Service to upload illegal, abusive content, or content that infringes third-party rights.`,
+    'terms.s3Label': `Generated results`,
+    'terms.s3Text': `You may use generated images for personal purposes. Results are created by AI and are for reference only — they are not a professional design project and do not guarantee an exact match to expectations, real-world dimensions, or feasibility of an actual renovation.`,
+    'terms.s4Label': `Limitation of liability`,
+    'terms.s4Text': `The Service is provided "as is." We are not liable for decisions made based on generated images, or for temporary unavailability of the Service.`,
+    'terms.s5Label': `Payment`,
+    'terms.s5Text': `The core features of the Service are currently free. If paid features are introduced in the future, their terms will be described separately in a public offer agreement.`,
+    'terms.s6Label': `Governing law`,
+    'terms.s6Text': `This agreement is governed by the laws of the Russian Federation. For any questions, email roomfactory_help@mail.ru.`,
     'auth.tabLogin': `Log in`,
     'auth.tabSignup': `Sign up`,
     'authPasswordPlaceholder': `Password`,
@@ -1457,11 +1583,31 @@ function closeModal(id) {
 function showHome() {
   document.getElementById('accountView').style.display = 'none';
   document.getElementById('tourView').style.display = 'none';
+  document.getElementById('privacyView').style.display = 'none';
+  document.getElementById('termsView').style.display = 'none';
   document.getElementById('homeView').style.display = '';
+}
+function showPrivacy() {
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('accountView').style.display = 'none';
+  document.getElementById('tourView').style.display = 'none';
+  document.getElementById('termsView').style.display = 'none';
+  document.getElementById('privacyView').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+function showTerms() {
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('accountView').style.display = 'none';
+  document.getElementById('tourView').style.display = 'none';
+  document.getElementById('privacyView').style.display = 'none';
+  document.getElementById('termsView').style.display = 'block';
+  window.scrollTo(0, 0);
 }
 function showAccount() {
   document.getElementById('homeView').style.display = 'none';
   document.getElementById('tourView').style.display = 'none';
+  document.getElementById('privacyView').style.display = 'none';
+  document.getElementById('termsView').style.display = 'none';
   document.getElementById('accountView').style.display = 'block';
   window.scrollTo(0, 0);
   loadProfile();
@@ -1470,6 +1616,8 @@ function showAccount() {
 function showTour() {
   document.getElementById('homeView').style.display = 'none';
   document.getElementById('accountView').style.display = 'none';
+  document.getElementById('privacyView').style.display = 'none';
+  document.getElementById('termsView').style.display = 'none';
   document.getElementById('tourView').style.display = 'block';
   window.scrollTo(0, 0);
   if (!document.querySelector('#tourRoomsList .tour-room-card')) {
@@ -2463,17 +2611,13 @@ if (revealEls.length && 'IntersectionObserver' in window) {
   revealEls.forEach(el => revealObserver.observe(el));
 }
 
-function buildRoom3d(roomId, faceIds, furnitureIds, startDelay) {
-  const el = document.getElementById(roomId);
-  if (!el) return;
-  setTimeout(() => document.getElementById(faceIds[0]).classList.add('rise'), startDelay + 0);
-  setTimeout(() => document.getElementById(faceIds[1]).classList.add('rise'), startDelay + 600);
-  setTimeout(() => document.getElementById(faceIds[2]).classList.add('rise'), startDelay + 1000);
-  furnitureIds.forEach((fid, i) => setTimeout(() => document.getElementById(fid).classList.add('rise'), startDelay + 1500 + i * 130));
-  setTimeout(() => el.classList.add('spin'), startDelay + 2600);
+function acceptCookies() {
+  localStorage.setItem('rf_cookie_consent', '1');
+  document.getElementById('cookieBanner').classList.remove('visible');
 }
-buildRoom3d('room3d', ['rFloor', 'rBack', 'rLeft'], ['rF1', 'rF2', 'rF3'], 300);
-buildRoom3d('room3d_2', ['rFloor2', 'rBack2', 'rLeft2'], ['r2F1', 'r2F2', 'r2F3'], 900);
+if (!localStorage.getItem('rf_cookie_consent')) {
+  document.getElementById('cookieBanner').classList.add('visible');
+}
 
 applyTranslations();
 </script>
