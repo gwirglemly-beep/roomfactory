@@ -258,20 +258,23 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .reveal-zoom { opacity: 0; transform: scale(0.88); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.8,.3,1); }
 .reveal-zoom.in-view { opacity: 1; transform: scale(1); }
 
-footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex; justify-content: space-between; align-items: center; background: #f5f2ed; }
+footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); background: #f5f2ed; }
+.footer-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 32px; }
 .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: 2px; color: #1a1208; }
 .footer-logo span { color: #b48c5a; }
-.footer-text { font-size: 11px; color: #8a7a66; letter-spacing: 1px; }
-.footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 .footer-contacts { display: flex; gap: 24px; }
 .contact-item { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
 .contact-item-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #b48c5a; }
 .contact-item a { font-size: 11px; color: #8a7a66; letter-spacing: 0.5px; text-decoration: none; transition: color 0.2s; }
 .contact-item a:hover { color: #b48c5a; }
-.footer-legal { display: flex; gap: 16px; }
-.footer-legal a { font-size: 10px; color: #b0a48e; letter-spacing: 0.5px; text-decoration: underline; cursor: pointer; transition: color 0.2s; }
+.footer-bottom { border-top: 1px solid rgba(42,34,24,0.1); padding-top: 24px; }
+.footer-bottom-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-text { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a7a66; }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #8a7a66; text-decoration: none; cursor: pointer; transition: color 0.2s; }
 .footer-legal a:hover { color: #b48c5a; }
-@media (max-width: 600px) { .footer-legal { flex-wrap: wrap; } }
+.footer-requisites { font-size: 10px; color: rgba(42,34,24,0.45); letter-spacing: 0.3px; margin-top: 14px; }
+@media (max-width: 600px) { .footer-top { flex-direction: column; align-items: flex-start; gap: 20px; } .footer-contacts { flex-direction: column; gap: 12px; } .contact-item { align-items: flex-start; } .footer-legal { flex-wrap: wrap; } }
 @media (max-width: 600px) { .footer-right { align-items: flex-start; } .contact-item { align-items: flex-start; } }
 .contacts-block { display: flex; gap: 32px; flex-wrap: wrap; }
 .contacts-block .contact-item { align-items: flex-start; }
@@ -283,6 +286,7 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 .account-section { margin-bottom: 56px; }
 .account-section-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #b48c5a; margin-bottom: 20px; display: block; font-family: 'Inter', sans-serif; }
 .legal-text { font-size: 13px; color: #5a4d3d; line-height: 1.8; }
+.legal-meta { font-size: 11px; color: #8a7a66; letter-spacing: 0.5px; margin: -32px 0 40px; }
 
 .cookie-banner { display: none; position: fixed; left: 24px; right: 24px; bottom: 24px; z-index: 600; max-width: 640px; margin: 0 auto; background: #2d2318; color: #f5f2ed; padding: 20px 24px; border-radius: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); align-items: center; gap: 20px; flex-wrap: wrap; }
 .cookie-banner.visible { display: flex; }
@@ -772,9 +776,8 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
 </section>
 
 <footer>
-  <div class="footer-logo">Room<span>.</span>Factory</div>
-  <div class="footer-right">
-    <div class="footer-text" data-i18n="footer.text">© 2026 · AI дизайн интерьера</div>
+  <div class="footer-top">
+    <div class="footer-logo">Room<span>.</span>Factory</div>
     <div class="footer-contacts">
       <div class="contact-item">
         <span class="contact-item-label" data-i18n="contact.supportLabel">Поддержка</span>
@@ -785,10 +788,17 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
         <a href="mailto:roomfactory_center@mail.ru">roomfactory_center@mail.ru</a>
       </div>
     </div>
-    <div class="footer-legal">
-      <a href="javascript:void(0)" onclick="showPrivacy()" data-i18n="footer.privacyLink">Политика конфиденциальности</a>
-      <a href="javascript:void(0)" onclick="showTerms()" data-i18n="footer.termsLink">Пользовательское соглашение</a>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-row">
+      <span class="footer-text" data-i18n="footer.text">© 2026 Room Factory</span>
+      <div class="footer-legal">
+        <a href="javascript:void(0)" onclick="showPrivacy()" data-i18n="footer.privacyLink">Политика</a>
+        <a href="javascript:void(0)" onclick="showOffer()" data-i18n="footer.offerLink">Оферта</a>
+        <a href="javascript:void(0)" onclick="showConsent()" data-i18n="footer.consentLink">Согласие</a>
+      </div>
     </div>
+    <div class="footer-requisites" data-i18n="footer.requisites">[ФИО] · ИНН [_______] — заполняется после регистрации самозанятости/ИП</div>
   </div>
 </footer>
 </div>
@@ -918,39 +928,100 @@ footer { padding: 48px; border-top: 1px solid rgba(42,34,24,0.1); display: flex;
   </div>
 </div>
 
-<div id="termsView" style="display:none">
+<div id="offerView" style="display:none">
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
-    <h1 class="account-title" data-i18n="terms.title">Пользовательское соглашение</h1>
+    <h1 class="account-title" data-i18n="offer.title">Публичная оферта</h1>
+    <p class="legal-meta" data-i18n="offer.meta">Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]</p>
 
     <div class="account-section">
-      <span class="account-section-label" data-i18n="terms.s1Label">О сервисе</span>
-      <p class="legal-text" data-i18n="terms.s1Text">Room Factory — онлайн-сервис, который с помощью искусственного интеллекта создаёт варианты дизайна интерьера на основе загруженной вами фотографии помещения. Используя Сервис, вы принимаете условия этого соглашения.</p>
+      <span class="account-section-label" data-i18n="offer.s1Label">1. Общие положения</span>
+      <p class="legal-text" data-i18n="offer.s1Text">Настоящая оферта — предложение Оператора сайта Room Factory (далее — «Сервис») заключить договор на условиях, изложенных ниже. Начиная использовать Сервис, Пользователь принимает условия оферты в полном объёме.</p>
     </div>
 
     <div class="account-section">
-      <span class="account-section-label" data-i18n="terms.s2Label">Обязанности пользователя</span>
-      <p class="legal-text" data-i18n="terms.s2Text">Загружайте только фотографии, на использование которых у вас есть право (свои помещения или помещения, которые вы вправе фотографировать и использовать). Не используйте Сервис для загрузки незаконного, оскорбительного контента или контента, нарушающего права третьих лиц.</p>
+      <span class="account-section-label" data-i18n="offer.s2Label">2. Предмет договора</span>
+      <p class="legal-text" data-i18n="offer.s2Text">Room Factory — онлайн-сервис, который с помощью искусственного интеллекта создаёт варианты дизайна интерьера на основе загруженной Пользователем фотографии помещения. Оператор предоставляет доступ к функциям Сервиса на условиях настоящей оферты.</p>
     </div>
 
     <div class="account-section">
-      <span class="account-section-label" data-i18n="terms.s3Label">Результаты генерации</span>
-      <p class="legal-text" data-i18n="terms.s3Text">Сгенерированные изображения вы можете использовать в личных целях. Результаты создаются искусственным интеллектом и носят ознакомительный, рекомендательный характер — они не являются профессиональным дизайн-проектом и не гарантируют точное соответствие ожиданиям, реальным размерам или возможности воплощения в реальном ремонте.</p>
+      <span class="account-section-label" data-i18n="offer.s3Label">3. Обязанности пользователя</span>
+      <p class="legal-text" data-i18n="offer.s3Text">Загружайте только фотографии, на использование которых у вас есть право (свои помещения или помещения, которые вы вправе фотографировать и использовать). Не используйте Сервис для загрузки незаконного, оскорбительного контента или контента, нарушающего права третьих лиц.</p>
     </div>
 
     <div class="account-section">
-      <span class="account-section-label" data-i18n="terms.s4Label">Ограничение ответственности</span>
-      <p class="legal-text" data-i18n="terms.s4Text">Сервис предоставляется «как есть». Мы не несём ответственности за решения, принятые на основе сгенерированных изображений, а также за временную недоступность Сервиса.</p>
+      <span class="account-section-label" data-i18n="offer.s4Label">4. Результаты генерации</span>
+      <p class="legal-text" data-i18n="offer.s4Text">Сгенерированные изображения вы можете использовать в личных целях. Результаты создаются искусственным интеллектом и носят ознакомительный, рекомендательный характер — они не являются профессиональным дизайн-проектом и не гарантируют точное соответствие ожиданиям, реальным размерам или возможности воплощения в реальном ремонте.</p>
     </div>
 
     <div class="account-section">
-      <span class="account-section-label" data-i18n="terms.s5Label">Оплата</span>
-      <p class="legal-text" data-i18n="terms.s5Text">На данный момент основные функции Сервиса бесплатны. Если в будущем появятся платные функции, условия их оплаты будут описаны отдельно в публичной оферте.</p>
+      <span class="account-section-label" data-i18n="offer.s5Label">5. Стоимость и оплата</span>
+      <p class="legal-text" data-i18n="offer.s5Text">На данный момент основные функции Сервиса бесплатны. Если в будущем появятся платные функции, их стоимость и порядок оплаты будут опубликованы на Сайте до момента их подключения. Обработку платежей осуществляет платёжный сервис-партнёр — Оператор не получает и не хранит реквизиты банковских карт.</p>
     </div>
 
     <div class="account-section">
-      <span class="account-section-label" data-i18n="terms.s6Label">Применимое право</span>
-      <p class="legal-text" data-i18n="terms.s6Text">К этому соглашению применяется законодательство Российской Федерации. По всем вопросам пишите на roomfactory_help@mail.ru.</p>
+      <span class="account-section-label" data-i18n="offer.s6Label">6. Ответственность сторон</span>
+      <p class="legal-text" data-i18n="offer.s6Text">Сервис предоставляется «как есть». Оператор не несёт ответственности за решения, принятые Пользователем на основе сгенерированных изображений, а также за временную недоступность Сервиса.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="offer.s7Label">7. Разрешение споров</span>
+      <p class="legal-text" data-i18n="offer.s7Text">До обращения в суд обязательно предъявление письменной претензии. Ответ на претензию направляется в течение 30 дней. При недостижении согласия спор передаётся в суд по месту нахождения Оператора в соответствии с законодательством РФ.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="offer.s8Label">Реквизиты Оператора</span>
+      <p class="legal-text" data-i18n="offer.s8Text">[ФИО] · [статус: самозанятый/ИП] · ИНН [_______] · roomfactory_help@mail.ru</p>
+    </div>
+  </div>
+</div>
+
+<div id="consentView" style="display:none">
+  <div class="account-page">
+    <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
+    <h1 class="account-title" data-i18n="consent.title">Согласие на обработку персональных данных</h1>
+    <p class="legal-meta" data-i18n="offer.meta">Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]</p>
+
+    <p class="legal-text" data-i18n="consent.intro">Оставляя свои персональные данные на сайте Room Factory (далее — «Сайт»), Пользователь предоставляет своё согласие Оператору Сайта на обработку указанных данных на изложенных ниже условиях.</p>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="consent.s1Label">1. Перечень персональных данных</span>
+      <p class="legal-text" data-i18n="consent.s1Text">Имя и фамилия, адрес электронной почты, номер телефона (если указан), загруженные фотографии помещений и сгенерированные на их основе изображения. Также, если применимо: дата рождения, идентификаторы в социальных сетях. Реквизиты банковской карты Оператор не собирает и не хранит — при подключении оплаты их обрабатывает исключительно платёжный сервис-партнёр.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="consent.s2Label">2. Цели обработки</span>
+      <p class="legal-text" data-i18n="consent.s2Text">Регистрация и работа личного кабинета; генерация дизайна интерьера; сохранение истории генераций; связь с пользователем и обработка обращений; расчёты при оплате платных функций (при их появлении); направление рекламных сообщений — только при отдельном согласии.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="consent.s3Label">3. Действия с персональными данными</span>
+      <p class="legal-text" data-i18n="consent.s3Text">Оператор вправе осуществлять сбор, запись, систематизацию, накопление, хранение, уточнение, использование, передачу, обезличивание, блокирование, удаление и уничтожение данных, с использованием автоматизированных средств и без них.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="consent.s4Label">4. Передача данных третьим лицам</span>
+      <p class="legal-text" data-i18n="consent.s4Text">Для работы Сайта данные передаются сервису хранения и аутентификации аккаунтов (Supabase) и сервису генерации изображений на основе ИИ (GigaChat, ПАО Сбербанк). При подключении оплаты — платёжному сервису-партнёру. Данные передаются только в объёме, необходимом для выполнения этих задач.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="consent.s5Label">5. Срок действия согласия</span>
+      <p class="legal-text" data-i18n="consent.s5Text">Согласие действует до момента его отзыва Пользователем. Отозвать согласие можно, направив уведомление на roomfactory_help@mail.ru с пометкой «Отзыв согласия на обработку персональных данных».</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="consent.s6Label">6. Срок хранения данных</span>
+      <p class="legal-text" data-i18n="consent.s6Text">Данные хранятся до достижения целей их обработки, если иной срок не установлен законом или договором. После достижения цели данные удаляются либо обезличиваются.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="consent.s7Label">7. Подтверждение согласия</span>
+      <p class="legal-text" data-i18n="consent.s7Text">Согласие считается предоставленным при регистрации на Сайте, заполнении форм личного кабинета или отправке любых форм обратной связи через Сайт.</p>
+    </div>
+
+    <div class="account-section">
+      <span class="account-section-label" data-i18n="offer.s8Label">Реквизиты Оператора</span>
+      <p class="legal-text" data-i18n="offer.s8Text">[ФИО] · [статус: самозанятый/ИП] · ИНН [_______] · roomfactory_help@mail.ru</p>
     </div>
   </div>
 </div>
@@ -1089,8 +1160,10 @@ const translations = {
     'footer.text': `© 2026 · AI дизайн интерьера`,
     'contact.supportLabel': `Поддержка`,
     'contact.centerLabel': `Реклама и другие вопросы`,
-    'footer.privacyLink': `Политика конфиденциальности`,
-    'footer.termsLink': `Пользовательское соглашение`,
+    'footer.privacyLink': `Политика`,
+    'footer.offerLink': `Оферта`,
+    'footer.consentLink': `Согласие`,
+    'footer.requisites': `[ФИО] · ИНН [_______] — заполняется после регистрации самозанятости/ИП`,
     'cookie.text': `Мы используем локальное хранилище браузера для входа в аккаунт и запоминания языка — не рекламные cookie. Подробнее в <a href="javascript:void(0)" onclick="showPrivacy()">политике конфиденциальности</a>.`,
     'cookie.accept': `Хорошо`,
     'privacy.title': `Политика конфиденциальности`,
@@ -1108,19 +1181,40 @@ const translations = {
     'privacy.s6Text': `Вы можете в любой момент запросить доступ к своим данным, их исправление или удаление, а также отозвать согласие на обработку — для этого напишите на roomfactory_help@mail.ru.`,
     'privacy.s7Label': `Изменения политики`,
     'privacy.s7Text': `Мы можем обновлять эту политику. Актуальная версия всегда доступна на этой странице.`,
-    'terms.title': `Пользовательское соглашение`,
-    'terms.s1Label': `О сервисе`,
-    'terms.s1Text': `Room Factory — онлайн-сервис, который с помощью искусственного интеллекта создаёт варианты дизайна интерьера на основе загруженной вами фотографии помещения. Используя Сервис, вы принимаете условия этого соглашения.`,
-    'terms.s2Label': `Обязанности пользователя`,
-    'terms.s2Text': `Загружайте только фотографии, на использование которых у вас есть право (свои помещения или помещения, которые вы вправе фотографировать и использовать). Не используйте Сервис для загрузки незаконного, оскорбительного контента или контента, нарушающего права третьих лиц.`,
-    'terms.s3Label': `Результаты генерации`,
-    'terms.s3Text': `Сгенерированные изображения вы можете использовать в личных целях. Результаты создаются искусственным интеллектом и носят ознакомительный, рекомендательный характер — они не являются профессиональным дизайн-проектом и не гарантируют точное соответствие ожиданиям, реальным размерам или возможности воплощения в реальном ремонте.`,
-    'terms.s4Label': `Ограничение ответственности`,
-    'terms.s4Text': `Сервис предоставляется «как есть». Мы не несём ответственности за решения, принятые на основе сгенерированных изображений, а также за временную недоступность Сервиса.`,
-    'terms.s5Label': `Оплата`,
-    'terms.s5Text': `На данный момент основные функции Сервиса бесплатны. Если в будущем появятся платные функции, условия их оплаты будут описаны отдельно в публичной оферте.`,
-    'terms.s6Label': `Применимое право`,
-    'terms.s6Text': `К этому соглашению применяется законодательство Российской Федерации. По всем вопросам пишите на roomfactory_help@mail.ru.`,
+    'offer.title': `Публичная оферта`,
+    'offer.meta': `Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]`,
+    'offer.s1Label': `1. Общие положения`,
+    'offer.s1Text': `Настоящая оферта — предложение Оператора сайта Room Factory (далее — «Сервис») заключить договор на условиях, изложенных ниже. Начиная использовать Сервис, Пользователь принимает условия оферты в полном объёме.`,
+    'offer.s2Label': `2. Предмет договора`,
+    'offer.s2Text': `Room Factory — онлайн-сервис, который с помощью искусственного интеллекта создаёт варианты дизайна интерьера на основе загруженной Пользователем фотографии помещения. Оператор предоставляет доступ к функциям Сервиса на условиях настоящей оферты.`,
+    'offer.s3Label': `3. Обязанности пользователя`,
+    'offer.s3Text': `Загружайте только фотографии, на использование которых у вас есть право (свои помещения или помещения, которые вы вправе фотографировать и использовать). Не используйте Сервис для загрузки незаконного, оскорбительного контента или контента, нарушающего права третьих лиц.`,
+    'offer.s4Label': `4. Результаты генерации`,
+    'offer.s4Text': `Сгенерированные изображения вы можете использовать в личных целях. Результаты создаются искусственным интеллектом и носят ознакомительный, рекомендательный характер — они не являются профессиональным дизайн-проектом и не гарантируют точное соответствие ожиданиям, реальным размерам или возможности воплощения в реальном ремонте.`,
+    'offer.s5Label': `5. Стоимость и оплата`,
+    'offer.s5Text': `На данный момент основные функции Сервиса бесплатны. Если в будущем появятся платные функции, их стоимость и порядок оплаты будут опубликованы на Сайте до момента их подключения. Обработку платежей осуществляет платёжный сервис-партнёр — Оператор не получает и не хранит реквизиты банковских карт.`,
+    'offer.s6Label': `6. Ответственность сторон`,
+    'offer.s6Text': `Сервис предоставляется «как есть». Оператор не несёт ответственности за решения, принятые Пользователем на основе сгенерированных изображений, а также за временную недоступность Сервиса.`,
+    'offer.s7Label': `7. Разрешение споров`,
+    'offer.s7Text': `До обращения в суд обязательно предъявление письменной претензии. Ответ на претензию направляется в течение 30 дней. При недостижении согласия спор передаётся в суд по месту нахождения Оператора в соответствии с законодательством РФ.`,
+    'offer.s8Label': `Реквизиты Оператора`,
+    'offer.s8Text': `[ФИО] · [статус: самозанятый/ИП] · ИНН [_______] · roomfactory_help@mail.ru`,
+    'consent.title': `Согласие на обработку персональных данных`,
+    'consent.intro': `Оставляя свои персональные данные на сайте Room Factory (далее — «Сайт»), Пользователь предоставляет своё согласие Оператору Сайта на обработку указанных данных на изложенных ниже условиях.`,
+    'consent.s1Label': `1. Перечень персональных данных`,
+    'consent.s1Text': `Имя и фамилия, адрес электронной почты, номер телефона (если указан), загруженные фотографии помещений и сгенерированные на их основе изображения. Также, если применимо: дата рождения, идентификаторы в социальных сетях. Реквизиты банковской карты Оператор не собирает и не хранит — при подключении оплаты их обрабатывает исключительно платёжный сервис-партнёр.`,
+    'consent.s2Label': `2. Цели обработки`,
+    'consent.s2Text': `Регистрация и работа личного кабинета; генерация дизайна интерьера; сохранение истории генераций; связь с пользователем и обработка обращений; расчёты при оплате платных функций (при их появлении); направление рекламных сообщений — только при отдельном согласии.`,
+    'consent.s3Label': `3. Действия с персональными данными`,
+    'consent.s3Text': `Оператор вправе осуществлять сбор, запись, систематизацию, накопление, хранение, уточнение, использование, передачу, обезличивание, блокирование, удаление и уничтожение данных, с использованием автоматизированных средств и без них.`,
+    'consent.s4Label': `4. Передача данных третьим лицам`,
+    'consent.s4Text': `Для работы Сайта данные передаются сервису хранения и аутентификации аккаунтов (Supabase) и сервису генерации изображений на основе ИИ (GigaChat, ПАО Сбербанк). При подключении оплаты — платёжному сервису-партнёру. Данные передаются только в объёме, необходимом для выполнения этих задач.`,
+    'consent.s5Label': `5. Срок действия согласия`,
+    'consent.s5Text': `Согласие действует до момента его отзыва Пользователем. Отозвать согласие можно, направив уведомление на roomfactory_help@mail.ru с пометкой «Отзыв согласия на обработку персональных данных».`,
+    'consent.s6Label': `6. Срок хранения данных`,
+    'consent.s6Text': `Данные хранятся до достижения целей их обработки, если иной срок не установлен законом или договором. После достижения цели данные удаляются либо обезличиваются.`,
+    'consent.s7Label': `7. Подтверждение согласия`,
+    'consent.s7Text': `Согласие считается предоставленным при регистрации на Сайте, заполнении форм личного кабинета или отправке любых форм обратной связи через Сайт.`,
     'auth.tabLogin': `Вход`,
     'auth.tabSignup': `Регистрация`,
     'authPasswordPlaceholder': `Пароль`,
@@ -1265,8 +1359,10 @@ const translations = {
     'footer.text': `© 2026 · AI Interior Design`,
     'contact.supportLabel': `Support`,
     'contact.centerLabel': `Advertising & other inquiries`,
-    'footer.privacyLink': `Privacy Policy`,
-    'footer.termsLink': `Terms of Use`,
+    'footer.privacyLink': `Privacy`,
+    'footer.offerLink': `Offer`,
+    'footer.consentLink': `Consent`,
+    'footer.requisites': `[Full name] · Tax ID [_______] — to be filled in after registering as a sole proprietor`,
     'cookie.text': `We use browser local storage to keep you signed in and remember your language — not advertising cookies. More in the <a href="javascript:void(0)" onclick="showPrivacy()">Privacy Policy</a>.`,
     'cookie.accept': `Got it`,
     'privacy.title': `Privacy Policy`,
@@ -1284,19 +1380,40 @@ const translations = {
     'privacy.s6Text': `You may request access to, correction of, or deletion of your data at any time, and withdraw consent to processing — email roomfactory_help@mail.ru.`,
     'privacy.s7Label': `Changes to this policy`,
     'privacy.s7Text': `We may update this policy. The current version is always available on this page.`,
-    'terms.title': `Terms of Use`,
-    'terms.s1Label': `About the Service`,
-    'terms.s1Text': `Room Factory is an online service that uses AI to create interior design variations based on a photo of your room. By using the Service, you accept these terms.`,
-    'terms.s2Label': `User responsibilities`,
-    'terms.s2Text': `Only upload photos you have the right to use (your own spaces, or spaces you're entitled to photograph and use). Do not use the Service to upload illegal, abusive content, or content that infringes third-party rights.`,
-    'terms.s3Label': `Generated results`,
-    'terms.s3Text': `You may use generated images for personal purposes. Results are created by AI and are for reference only — they are not a professional design project and do not guarantee an exact match to expectations, real-world dimensions, or feasibility of an actual renovation.`,
-    'terms.s4Label': `Limitation of liability`,
-    'terms.s4Text': `The Service is provided "as is." We are not liable for decisions made based on generated images, or for temporary unavailability of the Service.`,
-    'terms.s5Label': `Payment`,
-    'terms.s5Text': `The core features of the Service are currently free. If paid features are introduced in the future, their terms will be described separately in a public offer agreement.`,
-    'terms.s6Label': `Governing law`,
-    'terms.s6Text': `This agreement is governed by the laws of the Russian Federation. For any questions, email roomfactory_help@mail.ru.`,
+    'offer.title': `Public Offer`,
+    'offer.meta': `Operator: [Full name — to be filled in after registering as self-employed/sole proprietor]`,
+    'offer.s1Label': `1. General provisions`,
+    'offer.s1Text': `This offer is a proposal by the Operator of the Room Factory website (the "Service") to enter into an agreement on the terms below. By starting to use the Service, the User fully accepts the terms of this offer.`,
+    'offer.s2Label': `2. Subject of the agreement`,
+    'offer.s2Text': `Room Factory is an online service that uses AI to create interior design variations based on a photo of a room uploaded by the User. The Operator provides access to the Service's features on the terms of this offer.`,
+    'offer.s3Label': `3. User responsibilities`,
+    'offer.s3Text': `Only upload photos you have the right to use (your own spaces, or spaces you're entitled to photograph and use). Do not use the Service to upload illegal, abusive content, or content that infringes third-party rights.`,
+    'offer.s4Label': `4. Generated results`,
+    'offer.s4Text': `You may use generated images for personal purposes. Results are created by AI and are for reference only — they are not a professional design project and do not guarantee an exact match to expectations, real-world dimensions, or feasibility of an actual renovation.`,
+    'offer.s5Label': `5. Pricing and payment`,
+    'offer.s5Text': `The core features of the Service are currently free. If paid features are introduced in the future, their pricing and payment terms will be published on the Site before they go live. Payments are processed by a payment service partner — the Operator does not receive or store card details.`,
+    'offer.s6Label': `6. Liability`,
+    'offer.s6Text': `The Service is provided "as is." The Operator is not liable for decisions made by the User based on generated images, or for temporary unavailability of the Service.`,
+    'offer.s7Label': `7. Dispute resolution`,
+    'offer.s7Text': `Before going to court, a written claim must be submitted. A response to the claim is sent within 30 days. If no agreement is reached, the dispute is referred to a court under Russian law, at the Operator's place of registration.`,
+    'offer.s8Label': `Operator details`,
+    'offer.s8Text': `[Full name] · [status: self-employed/sole proprietor] · Tax ID [_______] · roomfactory_help@mail.ru`,
+    'consent.title': `Consent to Personal Data Processing`,
+    'consent.intro': `By providing personal data on the Room Factory website (the "Site"), the User gives consent to the Site's Operator to process that data on the terms below.`,
+    'consent.s1Label': `1. Personal data collected`,
+    'consent.s1Text': `First and last name, email address, phone number (if provided), uploaded room photos and the images generated from them. If applicable: date of birth, social media handles. The Operator does not collect or store card details — when payments are enabled, these are processed solely by a payment service partner.`,
+    'consent.s2Label': `2. Purpose of processing`,
+    'consent.s2Text': `Account registration and management; generating interior designs; saving generation history; contacting the user and handling inquiries; processing payments for paid features (once introduced); sending marketing messages — only with separate consent.`,
+    'consent.s3Label': `3. Actions performed with the data`,
+    'consent.s3Text': `The Operator may collect, record, organize, accumulate, store, update, use, transfer, anonymize, block, delete, and destroy the data, with or without automated means.`,
+    'consent.s4Label': `4. Sharing with third parties`,
+    'consent.s4Text': `To run the Site, data is shared with the account storage and authentication provider (Supabase) and the AI image-generation service (GigaChat, Sberbank). Once payments are enabled — with a payment service partner. Data is shared only to the extent needed for these tasks.`,
+    'consent.s5Label': `5. Duration of consent`,
+    'consent.s5Text': `Consent is valid until withdrawn by the User. To withdraw, email roomfactory_help@mail.ru with the subject "Withdrawal of consent to personal data processing".`,
+    'consent.s6Label': `6. Data retention period`,
+    'consent.s6Text': `Data is retained until the purpose of its processing is achieved, unless a different period is set by law or agreement. Once the purpose is achieved, data is deleted or anonymized.`,
+    'consent.s7Label': `7. Confirmation of consent`,
+    'consent.s7Text': `Consent is deemed given upon registering on the Site, filling in account forms, or submitting any contact form on the Site.`,
     'auth.tabLogin': `Log in`,
     'auth.tabSignup': `Sign up`,
     'authPasswordPlaceholder': `Password`,
@@ -1580,46 +1697,26 @@ function closeModal(id) {
   });
 });
 
+const LEGAL_VIEW_IDS = ['accountView', 'tourView', 'privacyView', 'offerView', 'consentView'];
 function showHome() {
-  document.getElementById('accountView').style.display = 'none';
-  document.getElementById('tourView').style.display = 'none';
-  document.getElementById('privacyView').style.display = 'none';
-  document.getElementById('termsView').style.display = 'none';
+  LEGAL_VIEW_IDS.forEach(id => document.getElementById(id).style.display = 'none');
   document.getElementById('homeView').style.display = '';
 }
-function showPrivacy() {
+function showLegalView(id) {
   document.getElementById('homeView').style.display = 'none';
-  document.getElementById('accountView').style.display = 'none';
-  document.getElementById('tourView').style.display = 'none';
-  document.getElementById('termsView').style.display = 'none';
-  document.getElementById('privacyView').style.display = 'block';
+  LEGAL_VIEW_IDS.forEach(vid => document.getElementById(vid).style.display = vid === id ? 'block' : 'none');
   window.scrollTo(0, 0);
 }
-function showTerms() {
-  document.getElementById('homeView').style.display = 'none';
-  document.getElementById('accountView').style.display = 'none';
-  document.getElementById('tourView').style.display = 'none';
-  document.getElementById('privacyView').style.display = 'none';
-  document.getElementById('termsView').style.display = 'block';
-  window.scrollTo(0, 0);
-}
+function showPrivacy() { showLegalView('privacyView'); }
+function showOffer() { showLegalView('offerView'); }
+function showConsent() { showLegalView('consentView'); }
 function showAccount() {
-  document.getElementById('homeView').style.display = 'none';
-  document.getElementById('tourView').style.display = 'none';
-  document.getElementById('privacyView').style.display = 'none';
-  document.getElementById('termsView').style.display = 'none';
-  document.getElementById('accountView').style.display = 'block';
-  window.scrollTo(0, 0);
+  showLegalView('accountView');
   loadProfile();
   loadLibrary();
 }
 function showTour() {
-  document.getElementById('homeView').style.display = 'none';
-  document.getElementById('accountView').style.display = 'none';
-  document.getElementById('privacyView').style.display = 'none';
-  document.getElementById('termsView').style.display = 'none';
-  document.getElementById('tourView').style.display = 'block';
-  window.scrollTo(0, 0);
+  showLegalView('tourView');
   if (!document.querySelector('#tourRoomsList .tour-room-card')) {
     addTourRoom();
   }
