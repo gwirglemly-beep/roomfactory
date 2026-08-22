@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Room Factory</title>
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  const POSTHOG_KEY = 'phc_rKuvZd3MmCJjdEKQ7vGe6MjrU5CkjDdMeghThXZa3cPs';
+  function initAnalytics() {
+    if (POSTHOG_KEY === 'PASTE_YOUR_KEY_HERE' || window.posthog.__loaded) return;
+    posthog.init(POSTHOG_KEY, { api_host: 'https://us.i.posthog.com', person_profiles: 'identified_only', capture_pageview: true });
+  }
+  if (localStorage.getItem('rf_cookie_consent')) initAnalytics();
+  function trackEvent(name, props) {
+    if (window.posthog && posthog.__loaded) posthog.capture(name, props || {});
+  }
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Inter:wght@300;400;500&display=swap');
 
@@ -1199,7 +1211,7 @@ const translations = {
     'footer.offerLink': `Оферта`,
     'footer.consentLink': `Согласие`,
     'footer.requisites': `[ФИО] · ИНН [_______] — заполняется после регистрации самозанятости/ИП`,
-    'cookie.text': `Мы используем локальное хранилище браузера для входа в аккаунт и запоминания языка — не рекламные cookie. Подробнее в <a href="javascript:void(0)" onclick="showPrivacy()">политике конфиденциальности</a>.`,
+    'cookie.text': `Мы используем локальное хранилище браузера для входа в аккаунт и запоминания языка, а с вашего согласия — анонимную аналитику посещений, чтобы улучшать сайт. Рекламные cookie не используем. Подробнее в <a href="javascript:void(0)" onclick="showPrivacy()">политике конфиденциальности</a>.`,
     'cookie.accept': `Хорошо`,
     'supportChat.toggleTitle': `Чат с поддержкой`,
     'supportChat.title': `Поддержка Room Factory`,
@@ -1217,7 +1229,7 @@ const translations = {
     'privacy.s4Label': `Передача данных третьим лицам`,
     'privacy.s4Text': `Мы не продаём и не передаём ваши данные третьим лицам для рекламных целей. Для работы Сервиса данные передаются только сервисам, обеспечивающим его функционирование: хранение аккаунта и загруженных изображений, а также сервису генерации изображений на основе ИИ, обрабатывающему присланные фото для создания дизайна.`,
     'privacy.s5Label': `Локальное хранилище и файлы cookie`,
-    'privacy.s5Text': `Сервис использует локальное хранилище браузера (localStorage), а не рекламные или трекинговые cookie. Там сохраняются: выбранный язык интерфейса и токен вашей сессии, чтобы не запрашивать вход при каждом визите. Эти данные хранятся только в вашем браузере и не передаются рекламным сетям.`,
+    'privacy.s5Text': `Сервис использует локальное хранилище браузера (localStorage) для хранения выбранного языка интерфейса и токена вашей сессии, чтобы не запрашивать вход при каждом визите. После вашего согласия на использование cookie (баннер при первом визите) Сервис также использует сервис веб-аналитики PostHog для анонимной статистики посещений и использования функций сайта — это помогает нам понимать, что работает хорошо, а что нужно улучшить. Рекламные или трекинговые cookie, продающие данные третьим лицам, не используются. Аналитика не запускается до вашего согласия.`,
     'privacy.s6Label': `Ваши права`,
     'privacy.s6Text': `Вы можете в любой момент запросить доступ к своим данным, их исправление или удаление, а также отозвать согласие на обработку — для этого напишите на roomfactory_help@mail.ru.`,
     'privacy.s7Label': `Изменения политики`,
@@ -1249,7 +1261,7 @@ const translations = {
     'consent.s3Label': `3. Действия с персональными данными`,
     'consent.s3Text': `Оператор вправе осуществлять сбор, запись, систематизацию, накопление, хранение, уточнение, использование, передачу, обезличивание, блокирование, удаление и уничтожение данных, с использованием автоматизированных средств и без них.`,
     'consent.s4Label': `4. Передача данных третьим лицам`,
-    'consent.s4Text': `Для работы Сайта данные передаются сервису хранения и аутентификации аккаунтов (Supabase) и сервису генерации изображений на основе ИИ (GigaChat, ПАО Сбербанк). При подключении оплаты — платёжному сервису-партнёру. Данные передаются только в объёме, необходимом для выполнения этих задач.`,
+    'consent.s4Text': `Для работы Сайта данные передаются сервису хранения и аутентификации аккаунтов (Supabase), сервису генерации изображений на основе ИИ (GigaChat, ПАО Сбербанк) и, с вашего согласия на cookie, сервису веб-аналитики (PostHog) для анонимной статистики использования сайта. При подключении оплаты — платёжному сервису-партнёру. Данные передаются только в объёме, необходимом для выполнения этих задач.`,
     'consent.s5Label': `5. Срок действия согласия`,
     'consent.s5Text': `Согласие действует до момента его отзыва Пользователем. Отозвать согласие можно, направив уведомление на roomfactory_help@mail.ru с пометкой «Отзыв согласия на обработку персональных данных».`,
     'consent.s6Label': `6. Срок хранения данных`,
@@ -1404,7 +1416,7 @@ const translations = {
     'footer.offerLink': `Offer`,
     'footer.consentLink': `Consent`,
     'footer.requisites': `[Full name] · Tax ID [_______] — to be filled in after registering as a sole proprietor`,
-    'cookie.text': `We use browser local storage to keep you signed in and remember your language — not advertising cookies. More in the <a href="javascript:void(0)" onclick="showPrivacy()">Privacy Policy</a>.`,
+    'cookie.text': `We use browser local storage to keep you signed in and remember your language, and — with your consent — anonymous visit analytics to improve the site. We don't use advertising cookies. More in the <a href="javascript:void(0)" onclick="showPrivacy()">Privacy Policy</a>.`,
     'cookie.accept': `Got it`,
     'supportChat.toggleTitle': `Chat with support`,
     'supportChat.title': `Room Factory Support`,
@@ -1422,7 +1434,7 @@ const translations = {
     'privacy.s4Label': `Sharing data with third parties`,
     'privacy.s4Text': `We do not sell or share your data with third parties for advertising purposes. Data is only passed to services required to run the Service: account and image storage, and the AI image-generation service that processes uploaded photos to create designs.`,
     'privacy.s5Label': `Local storage and cookies`,
-    'privacy.s5Text': `The Service uses browser local storage (localStorage), not advertising or tracking cookies. It stores your selected interface language and your session token, so you don't need to sign in on every visit. This data stays in your browser and is not shared with ad networks.`,
+    'privacy.s5Text': `The Service uses browser local storage (localStorage) to store your selected interface language and your session token, so you don't need to sign in on every visit. After you consent to cookies (the banner shown on your first visit), the Service also uses the PostHog web analytics service for anonymous visit and feature-usage statistics — this helps us understand what's working and what needs improving. We do not use advertising or tracking cookies that sell data to third parties. Analytics does not run before you give consent.`,
     'privacy.s6Label': `Your rights`,
     'privacy.s6Text': `You may request access to, correction of, or deletion of your data at any time, and withdraw consent to processing — email roomfactory_help@mail.ru.`,
     'privacy.s7Label': `Changes to this policy`,
@@ -1454,7 +1466,7 @@ const translations = {
     'consent.s3Label': `3. Actions performed with the data`,
     'consent.s3Text': `The Operator may collect, record, organize, accumulate, store, update, use, transfer, anonymize, block, delete, and destroy the data, with or without automated means.`,
     'consent.s4Label': `4. Sharing with third parties`,
-    'consent.s4Text': `To run the Site, data is shared with the account storage and authentication provider (Supabase) and the AI image-generation service (GigaChat, Sberbank). Once payments are enabled — with a payment service partner. Data is shared only to the extent needed for these tasks.`,
+    'consent.s4Text': `To run the Site, data is shared with the account storage and authentication provider (Supabase), the AI image-generation service (GigaChat, Sberbank), and, once you consent to cookies, the web analytics service (PostHog) for anonymous usage statistics. Once payments are enabled — with a payment service partner. Data is shared only to the extent needed for these tasks.`,
     'consent.s5Label': `5. Duration of consent`,
     'consent.s5Text': `Consent is valid until withdrawn by the User. To withdraw, email roomfactory_help@mail.ru with the subject "Withdrawal of consent to personal data processing".`,
     'consent.s6Label': `6. Data retention period`,
@@ -1703,10 +1715,12 @@ document.getElementById('authForm').addEventListener('submit', async e => {
     if (authMode === 'login') {
       const { error } = await sb.auth.signInWithPassword({ email, password });
       if (error) throw error;
+      trackEvent('login');
       closeAuthModal();
     } else {
       const { error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' } });
       if (error) throw error;
+      trackEvent('signup_completed');
       msg.textContent = t('authSuccess');
       msg.className = 'auth-msg success';
     }
@@ -2719,6 +2733,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
     renderMatchedFurniture(sel.storeKey, sel.styleKey, sel.room, detectedFurniture);
+    trackEvent('design_generated', { style: sel.styleKey, room: sel.room, store: sel.storeKey, budget: sel.budget });
     if (currentSession) saveGeneration(blob, sel.styleKey, sel.styleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
     err.textContent = t('genError');
@@ -2759,6 +2774,7 @@ if (revealEls.length && 'IntersectionObserver' in window) {
 function acceptCookies() {
   localStorage.setItem('rf_cookie_consent', '1');
   document.getElementById('cookieBanner').classList.remove('visible');
+  initAnalytics();
 }
 if (!localStorage.getItem('rf_cookie_consent')) {
   document.getElementById('cookieBanner').classList.add('visible');
@@ -2772,6 +2788,7 @@ function toggleSupportChat(forceOpen) {
   document.getElementById('supportChatToggle').classList.toggle('open', supportChatOpen);
   if (supportChatOpen && !supportChatHistory.length) {
     addSupportChatMessage('assistant', t('supportChat.greeting'));
+    trackEvent('support_chat_opened');
   }
   if (supportChatOpen) document.getElementById('supportChatInput').focus();
 }
