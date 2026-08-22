@@ -3,7 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Room Factory</title>
+<title>Room Factory — AI дизайн интерьера по фото</title>
+<meta name="description" content="Загрузите фото своей комнаты — ИИ создаст профессиональный дизайн интерьера в выбранном стиле за 30 секунд. Скандинавский, минимализм, лофт, классика и другие стили, подбор мебели из каталогов Hoff, Askona, Divan.ru.">
+<meta name="keywords" content="дизайн интерьера, дизайн комнаты онлайн, ИИ дизайн интерьера, нейросеть дизайн квартиры, room factory">
+<link rel="canonical" href="https://gwirglemly-beep.github.io/roomfactory/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWExMjA4Ii8+PHRleHQgeD0iNDIiIHk9IjcwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTgiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNmNWYyZWQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlI8L3RleHQ+PGNpcmNsZSBjeD0iNzYiIGN5PSI3NiIgcj0iOSIgZmlsbD0iI2I0OGM1YSIvPjwvc3ZnPg==">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Room Factory">
+<meta property="og:title" content="Room Factory — AI дизайн интерьера по фото">
+<meta property="og:description" content="Загрузите фото своей комнаты — ИИ создаст профессиональный дизайн интерьера в выбранном стиле за 30 секунд.">
+<meta property="og:image" content="https://i.imgur.com/4jgsqhI.jpg">
+<meta property="og:url" content="https://gwirglemly-beep.github.io/roomfactory/">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Room Factory — AI дизайн интерьера по фото">
+<meta name="twitter:description" content="Загрузите фото своей комнаты — ИИ создаст профессиональный дизайн интерьера за 30 секунд.">
+<meta name="twitter:image" content="https://i.imgur.com/4jgsqhI.jpg">
 <script>
   !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
   const POSTHOG_KEY = 'phc_rKuvZd3MmCJjdEKQ7vGe6MjrU5CkjDdMeghThXZa3cPs';
@@ -45,6 +60,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48
 .auth-msg { font-size: 11px; margin-top: 16px; text-align: center; line-height: 1.6; }
 .auth-msg.error { color: #c05050; }
 .auth-msg.success { color: #5a8060; }
+.auth-link { font-size: 11px; text-align: right; margin: -8px 0 14px; }
+.auth-link.auth-back { text-align: center; margin: 14px 0 0; }
+.auth-link a { color: #8a7a66; text-decoration: none; cursor: pointer; }
+.auth-link a:hover { color: #b48c5a; text-decoration: underline; }
+.auth-hint { font-size: 12px; color: #8a7a66; margin-bottom: 16px; text-align: center; line-height: 1.6; }
 @media (max-width: 480px) {
   nav { padding: 16px 12px; }
   .nav-logo { font-size: 10px; letter-spacing: 1px; }
@@ -411,11 +431,14 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
       <button class="auth-tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')" data-i18n="auth.tabLogin">Вход</button>
       <button class="auth-tab" id="tabSignup" type="button" onclick="switchAuthTab('signup')" data-i18n="auth.tabSignup">Регистрация</button>
     </div>
+    <p class="auth-hint" id="authRecoveryHint" style="display:none" data-i18n="auth.recoveryHint">Придумайте новый пароль для входа.</p>
     <form id="authForm">
       <input type="email" id="authEmail" placeholder="Email" required class="auth-input" autocomplete="email">
       <input type="password" id="authPassword" placeholder="Пароль" required class="auth-input" minlength="6" autocomplete="current-password" data-i18n-placeholder="authPasswordPlaceholder">
+      <a href="javascript:void(0)" class="auth-link" id="authForgotLink" onclick="switchAuthTab('reset')" data-i18n="auth.forgotPassword">Забыли пароль?</a>
       <button type="submit" class="auth-submit" id="authSubmitBtn" data-i18n="authSubmitLogin">Войти</button>
     </form>
+    <p class="auth-link auth-back" id="authBackLink" style="display:none"><a href="javascript:void(0)" onclick="switchAuthTab('login')" data-i18n="auth.backToLogin">← Назад ко входу</a></p>
     <p class="auth-msg" id="authMsg"></p>
   </div>
 </div>
@@ -1274,6 +1297,15 @@ const translations = {
     'authSubmitSignup': `Зарегистрироваться`,
     'authSuccess': `Проверьте почту, чтобы подтвердить регистрацию.`,
     'authErrorFallback': `Что-то пошло не так. Попробуйте ещё раз.`,
+    'auth.forgotPassword': `Забыли пароль?`,
+    'auth.backToLogin': `← Назад ко входу`,
+    'auth.recoveryHint': `Придумайте новый пароль для входа.`,
+    'auth.newPasswordPlaceholder': `Новый пароль`,
+    'auth.sendResetLink': `Отправить ссылку`,
+    'auth.savePassword': `Сохранить пароль`,
+    'auth.alreadyExists': `Аккаунт с такой почтой уже существует. Попробуйте войти или восстановить пароль.`,
+    'auth.resetLinkSent': `Если такой аккаунт существует, на почту отправлена ссылка для сброса пароля.`,
+    'auth.passwordSaved': `Пароль сохранён. Выполняется вход...`,
     'account.back': `← На главную`,
     'account.title': `Личный кабинет`,
     'account.emailLabel': `Почта`,
@@ -1479,6 +1511,15 @@ const translations = {
     'authSubmitSignup': `Sign up`,
     'authSuccess': `Check your email to confirm your registration.`,
     'authErrorFallback': `Something went wrong. Please try again.`,
+    'auth.forgotPassword': `Forgot password?`,
+    'auth.backToLogin': `← Back to login`,
+    'auth.recoveryHint': `Choose a new password to sign in with.`,
+    'auth.newPasswordPlaceholder': `New password`,
+    'auth.sendResetLink': `Send link`,
+    'auth.savePassword': `Save password`,
+    'auth.alreadyExists': `An account with this email already exists. Try logging in or resetting your password.`,
+    'auth.resetLinkSent': `If an account exists for this email, a password reset link has been sent.`,
+    'auth.passwordSaved': `Password saved. Signing you in...`,
     'account.back': `← Back home`,
     'account.title': `My Account`,
     'account.emailLabel': `Email`,
@@ -1686,9 +1727,30 @@ document.getElementById('authModal').addEventListener('click', e => {
 
 function switchAuthTab(mode) {
   authMode = mode;
+  const tabs = document.querySelector('.auth-tabs');
+  const pwField = document.getElementById('authPassword');
+  const forgotLink = document.getElementById('authForgotLink');
+  const backLink = document.getElementById('authBackLink');
+  const recoveryHint = document.getElementById('authRecoveryHint');
+  const emailField = document.getElementById('authEmail');
+  const submitBtn = document.getElementById('authSubmitBtn');
+
   document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
   document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
-  document.getElementById('authSubmitBtn').textContent = mode === 'login' ? t('authSubmitLogin') : t('authSubmitSignup');
+
+  tabs.style.display = (mode === 'login' || mode === 'signup') ? '' : 'none';
+  pwField.style.display = (mode === 'reset') ? 'none' : '';
+  pwField.required = mode !== 'reset';
+  pwField.placeholder = mode === 'recovery' ? t('auth.newPasswordPlaceholder') : t('authPasswordPlaceholder');
+  emailField.style.display = mode === 'recovery' ? 'none' : '';
+  emailField.required = mode !== 'recovery';
+  forgotLink.style.display = mode === 'login' ? '' : 'none';
+  backLink.style.display = (mode === 'reset') ? '' : 'none';
+  recoveryHint.style.display = mode === 'recovery' ? '' : 'none';
+
+  const submitLabels = { login: 'authSubmitLogin', signup: 'authSubmitSignup', reset: 'auth.sendResetLink', recovery: 'auth.savePassword' };
+  submitBtn.textContent = t(submitLabels[mode]);
+
   document.getElementById('authMsg').textContent = '';
   document.getElementById('authMsg').className = 'auth-msg';
 }
@@ -1716,12 +1778,28 @@ document.getElementById('authForm').addEventListener('submit', async e => {
       if (error) throw error;
       trackEvent('login');
       closeAuthModal();
-    } else {
-      const { error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' } });
+    } else if (authMode === 'signup') {
+      const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' } });
       if (error) throw error;
-      trackEvent('signup_completed');
-      msg.textContent = t('authSuccess');
+      if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+        msg.textContent = t('auth.alreadyExists');
+        msg.className = 'auth-msg error';
+      } else {
+        trackEvent('signup_completed');
+        msg.textContent = t('authSuccess');
+        msg.className = 'auth-msg success';
+      }
+    } else if (authMode === 'reset') {
+      const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' });
+      if (error) throw error;
+      msg.textContent = t('auth.resetLinkSent');
       msg.className = 'auth-msg success';
+    } else if (authMode === 'recovery') {
+      const { error } = await sb.auth.updateUser({ password });
+      if (error) throw error;
+      msg.textContent = t('auth.passwordSaved');
+      msg.className = 'auth-msg success';
+      setTimeout(() => { switchAuthTab('login'); closeAuthModal(); }, 1500);
     }
   } catch (err) {
     msg.textContent = err.message || t('authErrorFallback');
@@ -1734,6 +1812,10 @@ document.getElementById('authForm').addEventListener('submit', async e => {
 sb.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
   renderAuthArea(session);
+  if (_event === 'PASSWORD_RECOVERY') {
+    openAuthModal();
+    switchAuthTab('recovery');
+  }
   if (_event === 'SIGNED_IN' && session && session.user && !(session.user.user_metadata && session.user.user_metadata.preferred_style)) {
     setTimeout(openQuizModal, 400);
   }
