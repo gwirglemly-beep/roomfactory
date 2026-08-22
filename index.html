@@ -179,7 +179,8 @@ a.auth-link:hover, .auth-link a:hover { color: #b48c5a; }
 .opts-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
 .opts-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
 .opts-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
-.opt-btn { background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 10px 8px; font-size: 11px; color: #8a7a66; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; text-align: center; letter-spacing: 0.5px; overflow-wrap: break-word; word-break: break-word; }
+@media (max-width: 480px) { .opts-3, .opts-4 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+.opt-btn { background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 10px 8px; font-size: 11px; color: #8a7a66; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; text-align: center; letter-spacing: 0.5px; overflow-wrap: break-word; hyphens: none; }
 .opt-btn:hover { border-color: #b48c5a; color: #1a1208; }
 .opt-btn.active { border-color: #b48c5a; color: #b48c5a; background: rgba(180,140,90,0.08); }
 .style-row { display: flex; align-items: center; gap: 6px; }
@@ -207,6 +208,9 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .mic-btn.recording { background: #b48c5a; color: white; border-color: #b48c5a; animation: micPulse 1s ease-in-out infinite; }
 @keyframes micPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
 
+.preferred-style-check { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 12px; color: #5a4d3d; cursor: pointer; user-select: none; }
+.preferred-style-check input { width: 15px; height: 15px; accent-color: #b48c5a; cursor: pointer; }
+
 .quiz-progress { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a66; margin-bottom: 20px; }
 .quiz-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .quiz-option { cursor: pointer; border: 2px solid transparent; overflow: hidden; background: none; padding: 0; font-family: 'Inter', sans-serif; transition: border-color 0.15s; }
@@ -214,6 +218,9 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .quiz-option img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
 .quiz-option span { display: block; padding: 10px; font-size: 12px; text-align: center; color: #1a1208; font-family: 'Unbounded', sans-serif; }
 .quiz-result-text { font-size: 14px; color: #8a7a66; line-height: 1.7; margin-bottom: 20px; }
+.quiz-confirm-sub { font-size: 12px; color: #8a7a66; margin: 0 0 20px; }
+.quiz-confirm-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.quiz-confirm-btns .btn-gold, .quiz-confirm-btns .btn-outline { padding: 14px 24px; }
 .account-style-text { font-size: 13px; color: #8a7a66; line-height: 1.7; margin-bottom: 16px; }
 @media (max-width: 600px) { .quiz-pair { grid-template-columns: 1fr; } }
 
@@ -482,7 +489,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
         <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat1Title">Для любой комнаты</div><div class="feat-desc" data-i18n="about.feat1Desc">Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением</div></div></div>
         <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat2Title">Множество стилей</div><div class="feat-desc" data-i18n="about.feat2Desc">Скандинавский, лофт, классика, минимализм, бохо — выбирайте</div></div></div>
         <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat3Title">Сохраняет планировку</div><div class="feat-desc" data-i18n="about.feat3Desc">ИИ следует структуре вашей комнаты — окна, двери и пропорции</div></div></div>
-        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat4Title">Мебель под рукой</div><div class="feat-desc" data-i18n="about.feat4Desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit</div></div></div>
+        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat4Title">Мебель под рукой</div><div class="feat-desc" data-i18n="about.feat4Desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и т.д.</div></div></div>
       </div>
     </div>
   </div>
@@ -495,6 +502,14 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     <h2 class="modal-title" data-i18n="quiz.title">Что тебе больше нравится?</h2>
     <div class="quiz-progress" id="quizProgress"></div>
     <div class="quiz-pair" id="quizPair"></div>
+    <div class="quiz-confirm" id="quizConfirm" style="display:none">
+      <p class="quiz-result-text" id="quizConfirmText"></p>
+      <p class="quiz-confirm-sub" data-i18n="quiz.confirmSub">Согласны с выбором?</p>
+      <div class="quiz-confirm-btns">
+        <button type="button" class="btn-gold" onclick="quizAgree()" data-i18n="quiz.agreeBtn">Да, подходит</button>
+        <button type="button" class="btn-outline" onclick="quizDisagree()" data-i18n="quiz.disagreeBtn">Нет, показать ещё</button>
+      </div>
+    </div>
     <div class="quiz-result" id="quizResult" style="display:none">
       <p class="quiz-result-text" id="quizResultText"></p>
       <button type="button" class="btn-gold" onclick="closeQuizModal()" data-i18n="quiz.finishBtn">Готово</button>
@@ -587,7 +602,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
         <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat1Title">Для любой комнаты</div><div class="feat-desc" data-i18n="about.feat1Desc">Гостиная, спальня, кухня, ванная — ИИ справится с любым помещением</div></div></div>
         <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat2Title">Множество стилей</div><div class="feat-desc" data-i18n="about.feat2Desc">Скандинавский, лофт, классика, минимализм, бохо — выбирайте</div></div></div>
         <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat3Title">Сохраняет планировку</div><div class="feat-desc" data-i18n="about.feat3Desc">ИИ следует структуре вашей комнаты — окна, двери и пропорции</div></div></div>
-        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat4Title">Мебель под рукой</div><div class="feat-desc" data-i18n="about.feat4Desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit</div></div></div>
+        <div class="about-feat"><div><div class="feat-title" data-i18n="about.feat4Title">Мебель под рукой</div><div class="feat-desc" data-i18n="about.feat4Desc">После генерации ищите похожую мебель в Hoff, Askona, Roomer и т.д.</div></div></div>
       </div>
     </div>
   </div>
@@ -727,6 +742,10 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="classic" data-val="classic luxury interior, elegant furniture silhouettes, ornate details, symmetrical composition" data-i18n="style.classic">Классика</button><button class="info-btn" onclick="showStyleInfo('classic')">ⓘ</button></div>
             <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="japandi" data-val="japandi interior design, natural material textures, zen simplicity, low furniture silhouettes" data-i18n="style.japandi">Japandi</button><button class="info-btn" onclick="showStyleInfo('japandi')">ⓘ</button></div>
             <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="boho" data-val="bohemian eclectic interior, colorful, plants, vintage furniture" data-i18n="style.boho">Бохо</button><button class="info-btn" onclick="showStyleInfo('boho')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="artdeco" data-val="art deco interior design, bold geometric patterns, luxurious materials, brass and marble accents, symmetrical glamorous composition" data-i18n="style.artdeco">Ар-деко</button><button class="info-btn" onclick="showStyleInfo('artdeco')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="provence" data-val="provence french country interior design, pastel colors, floral patterns, rustic light wood furniture, vintage charm" data-i18n="style.provence">Прованс</button><button class="info-btn" onclick="showStyleInfo('provence')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="hightech" data-val="high-tech interior design, glossy white and metallic surfaces, futuristic minimalist forms, glass and chrome accents" data-i18n="style.hightech">Хай-тек</button><button class="info-btn" onclick="showStyleInfo('hightech')">ⓘ</button></div>
+            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="eco" data-val="eco natural interior design, organic wood textures, indoor plants, natural linen textiles, earthy tones" data-i18n="style.eco">Эко-стиль</button><button class="info-btn" onclick="showStyleInfo('eco')">ⓘ</button></div>
           </div>
         </div>
 
@@ -788,6 +807,10 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
             <button type="button" class="mic-btn" id="micBtn" title="Голосовой ввод" data-i18n-title="mic.title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"></path><path d="M19 11a7 7 0 0 1-14 0"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg></button>
           </div>
+          <label class="preferred-style-check" id="preferredStyleCheckWrap" style="display:none">
+            <input type="checkbox" id="usePreferredStyle">
+            <span data-i18n="form.usePreferredStyle">Учитывать ваш выбранный стиль</span>
+          </label>
         </div>
 
         <button class="gen-btn" id="genBtn" disabled data-i18n="genBtnUpload">Загрузите фото для начала</button>
@@ -1116,6 +1139,10 @@ const translations = {
     'hero.btnExamples': `Смотреть примеры`,
     'style.scandinavian': `Скандинавский`,
     'style.minimalism': `Минимализм`,
+    'style.artdeco': `Ар-деко`,
+    'style.provence': `Прованс`,
+    'style.hightech': `Хай-тек`,
+    'style.eco': `Эко-стиль`,
     'style.loft': `Лофт`,
     'style.classic': `Классика`,
     'style.japandi': `Japandi`,
@@ -1126,6 +1153,10 @@ const translations = {
     'styleDesc.classic': `Богатые материалы, симметрия, изящные детали.`,
     'styleDesc.japandi': `Японская философия встречает скандинавский уют.`,
     'styleDesc.boho': `Яркие цвета, растения, текстиль. Свободный стиль.`,
+    'styleDesc.artdeco': `Геометрия, роскошь, латунь и мрамор, симметрия.`,
+    'styleDesc.provence': `Пастельные тона, цветочные принты, деревенский уют.`,
+    'styleDesc.hightech': `Глянцевые поверхности, металл и стекло, футуризм.`,
+    'styleDesc.eco': `Натуральное дерево, растения, природные оттенки.`,
     'examples.eyebrow': `Примеры работ`,
     'examples.title': `До<br>и после`,
     'examples.sub': `ИИ преображает реальные комнаты — обновляем старый интерьер и создаём новый`,
@@ -1154,7 +1185,7 @@ const translations = {
     'about.feat3Title': `Сохраняет планировку`,
     'about.feat3Desc': `ИИ следует структуре вашей комнаты — окна, двери и пропорции`,
     'about.feat4Title': `Мебель под рукой`,
-    'about.feat4Desc': `После генерации ищите похожую мебель в Hoff, Askona, Roomer и Baumit`,
+    'about.feat4Desc': `После генерации ищите похожую мебель в Hoff, Askona, Roomer и т.д.`,
     'generator.eyebrow': `Генератор`,
     'generator.title': `Создайте<br>дизайн<br><span style="color:#b48c5a">мечты</span>`,
     'generator.sub': `Загрузите фото и получите готовый дизайн вашей комнаты.`,
@@ -1171,11 +1202,15 @@ const translations = {
     'form.color': `Цветовая гамма`,
     'form.budget': `Бюджет ремонта`,
     'form.comment': `Комментарий`,
+    'form.usePreferredStyle': `Учитывать ваш выбранный стиль`,
     'commentPlaceholder': `Пожелания: больше света, место для детей, открытые полки...`,
     'mic.title': `Голосовой ввод`,
     'quiz.eyebrow': `Тест стиля`,
     'quiz.title': `Что тебе больше нравится?`,
     'quiz.resultPrefix': `Тебе подходит стиль:`,
+    'quiz.confirmSub': `Согласны с выбором?`,
+    'quiz.agreeBtn': `Да, подходит`,
+    'quiz.disagreeBtn': `Нет, показать ещё`,
     'quiz.finishBtn': `Готово`,
     'quiz.retakeBtn': `Пройти тест на стиль`,
     'account.styleLabel': `Твой стиль`,
@@ -1323,6 +1358,10 @@ const translations = {
     'hero.btnExamples': `View examples`,
     'style.scandinavian': `Scandinavian`,
     'style.minimalism': `Minimalism`,
+    'style.artdeco': `Art Deco`,
+    'style.provence': `Provence`,
+    'style.hightech': `High-tech`,
+    'style.eco': `Eco style`,
     'style.loft': `Loft`,
     'style.classic': `Classic`,
     'style.japandi': `Japandi`,
@@ -1333,6 +1372,10 @@ const translations = {
     'styleDesc.classic': `Rich materials, symmetry, elegant details.`,
     'styleDesc.japandi': `Japanese philosophy meets Scandinavian coziness.`,
     'styleDesc.boho': `Bright colors, plants, textiles. A free-spirited style.`,
+    'styleDesc.artdeco': `Geometry, luxury, brass and marble, symmetry.`,
+    'styleDesc.provence': `Pastel tones, floral prints, rustic coziness.`,
+    'styleDesc.hightech': `Glossy surfaces, metal and glass, futurism.`,
+    'styleDesc.eco': `Natural wood, plants, organic earthy tones.`,
     'examples.eyebrow': `Featured Work`,
     'examples.title': `Before<br>and After`,
     'examples.sub': `AI transforms real rooms — refreshing old interiors and creating new ones`,
@@ -1361,7 +1404,7 @@ const translations = {
     'about.feat3Title': `Preserves the layout`,
     'about.feat3Desc': `AI follows your room's structure — windows, doors and proportions`,
     'about.feat4Title': `Furniture at hand`,
-    'about.feat4Desc': `After generation, find similar furniture at Hoff, Askona, Roomer and Baumit`,
+    'about.feat4Desc': `After generation, find similar furniture at Hoff, Askona, Roomer, etc.`,
     'generator.eyebrow': `Generator`,
     'generator.title': `Create<br>your dream<br><span style="color:#b48c5a">design</span>`,
     'generator.sub': `Upload a photo and get a finished design for your room.`,
@@ -1378,11 +1421,15 @@ const translations = {
     'form.color': `Color palette`,
     'form.budget': `Renovation budget`,
     'form.comment': `Comment`,
+    'form.usePreferredStyle': `Use your saved style preference`,
     'commentPlaceholder': `Wishes: more light, space for kids, open shelving...`,
     'mic.title': `Voice input`,
     'quiz.eyebrow': `Style quiz`,
     'quiz.title': `Which do you like more?`,
     'quiz.resultPrefix': `Your style:`,
+    'quiz.confirmSub': `Do you agree with this choice?`,
+    'quiz.agreeBtn': `Yes, I like it`,
+    'quiz.disagreeBtn': `No, show more`,
     'quiz.finishBtn': `Done`,
     'quiz.retakeBtn': `Take the style quiz`,
     'account.styleLabel': `Your style`,
@@ -1565,21 +1612,27 @@ const styleInfoImgs = {
   loft: 'https://i.imgur.com/m44HmWk.jpg',
   classic: 'https://i.imgur.com/CjswDfr.jpg',
   japandi: 'https://i.imgur.com/f5dOSSq.jpg',
-  boho: 'https://i.imgur.com/zCQCn4n.jpg'
+  boho: 'https://i.imgur.com/zCQCn4n.jpg',
+  artdeco: 'https://images.unsplash.com/photo-1563219125-1db796e20ff2?w=700&q=75&auto=format&fit=crop',
+  provence: 'https://images.unsplash.com/photo-1659114340599-089aca79fe2d?w=700&q=75&auto=format&fit=crop',
+  hightech: 'https://images.unsplash.com/photo-1725042893312-5ec0dea9e369?w=700&q=75&auto=format&fit=crop',
+  eco: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=75&auto=format&fit=crop'
 };
 function showStyleInfo(key) {
   showPopup(t('style.' + key), t('styleDesc.' + key), styleInfoImgs[key]);
 }
 
-const quizStyleKeys = ['scandinavian', 'minimalism', 'loft', 'classic', 'japandi', 'boho'];
+const quizStyleKeys = ['scandinavian', 'minimalism', 'loft', 'classic', 'japandi', 'boho', 'artdeco', 'provence', 'hightech', 'eco'];
 let quizRounds = [];
 let quizIndex = 0;
 let quizScores = {};
+let quizExcluded = [];
+let quizTopKey = null;
 
-function buildQuizRounds() {
-  const shuffled = [...quizStyleKeys].sort(() => Math.random() - 0.5);
+function buildQuizRounds(pool, count) {
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
   const rounds = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < count; i++) {
     const a = shuffled[i % shuffled.length];
     let b = shuffled[(i + 2) % shuffled.length];
     if (b === a) b = shuffled[(shuffled.indexOf(a) + 1) % shuffled.length];
@@ -1589,10 +1642,12 @@ function buildQuizRounds() {
 }
 
 function openQuizModal() {
-  quizRounds = buildQuizRounds();
+  quizExcluded = [];
+  quizRounds = buildQuizRounds(quizStyleKeys, 7);
   quizIndex = 0;
   quizScores = {};
   document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizConfirm').style.display = 'none';
   document.getElementById('quizPair').style.display = 'grid';
   renderQuizRound();
   document.getElementById('quizModal').classList.add('visible');
@@ -1616,14 +1671,35 @@ function renderQuizRound() {
       quizScores[key] = (quizScores[key] || 0) + 1;
       quizIndex++;
       if (quizIndex < quizRounds.length) renderQuizRound();
-      else finishQuiz();
+      else showQuizConfirm();
     });
   });
 }
-async function finishQuiz() {
+function showQuizConfirm() {
   const ranked = Object.entries(quizScores).sort((a, b) => b[1] - a[1]);
-  const topKey = ranked.length ? ranked[0][0] : quizStyleKeys[0];
+  quizTopKey = ranked.length ? ranked[0][0] : quizStyleKeys.find(k => !quizExcluded.includes(k));
   document.getElementById('quizPair').style.display = 'none';
+  document.getElementById('quizConfirmText').textContent = t('quiz.resultPrefix') + ' ' + t('style.' + quizTopKey) + '.';
+  document.getElementById('quizConfirm').style.display = 'block';
+}
+function quizAgree() {
+  document.getElementById('quizConfirm').style.display = 'none';
+  finishQuiz(quizTopKey);
+}
+function quizDisagree() {
+  if (quizTopKey) quizExcluded.push(quizTopKey);
+  const pool = quizStyleKeys.filter(k => !quizExcluded.includes(k));
+  if (pool.length < 2) { finishQuiz(quizTopKey); return; }
+  quizRounds = buildQuizRounds(pool, 5);
+  quizIndex = 0;
+  quizScores = {};
+  document.getElementById('quizConfirm').style.display = 'none';
+  document.getElementById('quizPair').style.display = 'grid';
+  renderQuizRound();
+}
+async function finishQuiz(topKey) {
+  document.getElementById('quizPair').style.display = 'none';
+  document.getElementById('quizConfirm').style.display = 'none';
   document.getElementById('quizResultText').textContent = t('quiz.resultPrefix') + ' ' + t('style.' + topKey) + '.';
   document.getElementById('quizResult').style.display = 'block';
   if (currentSession) {
@@ -1633,6 +1709,7 @@ async function finishQuiz() {
     } catch (e) {}
   }
   applyPreferredStyle(topKey);
+  updatePreferredStyleCheck(currentSession);
   const styleText = document.getElementById('accountStyleText');
   if (styleText) styleText.textContent = t('quiz.resultPrefix') + ' ' + t('style.' + topKey);
 }
@@ -1779,9 +1856,17 @@ document.getElementById('authForm').addEventListener('submit', async e => {
   }
 });
 
+function updatePreferredStyleCheck(session) {
+  const wrap = document.getElementById('preferredStyleCheckWrap');
+  const pref = session && session.user && session.user.user_metadata && session.user.user_metadata.preferred_style;
+  wrap.style.display = pref ? 'flex' : 'none';
+  if (!pref) document.getElementById('usePreferredStyle').checked = false;
+}
+
 sb.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
   renderAuthArea(session);
+  updatePreferredStyleCheck(session);
   if (_event === 'PASSWORD_RECOVERY') {
     openAuthModal();
     switchAuthTab('recovery');
@@ -1793,8 +1878,14 @@ sb.auth.onAuthStateChange((_event, session) => {
 sb.auth.getSession().then(({ data }) => {
   currentSession = data.session;
   renderAuthArea(data.session);
+  updatePreferredStyleCheck(data.session);
   const pref = data.session && data.session.user && data.session.user.user_metadata && data.session.user.user_metadata.preferred_style;
   if (pref) applyPreferredStyle(pref);
+});
+
+document.getElementById('usePreferredStyle').addEventListener('change', e => {
+  const pref = currentSession && currentSession.user && currentSession.user.user_metadata && currentSession.user.user_metadata.preferred_style;
+  if (e.target.checked && pref) applyPreferredStyle(pref);
 });
 
 function openModal(id) {
@@ -2226,6 +2317,12 @@ let file = null;
 let generating = false;
 let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
 
+const styleCatalogFallback = { artdeco: 'classic', provence: 'scandinavian', hightech: 'minimalism', eco: 'japandi' };
+function resolveCatalogItems(storeKey, styleKey) {
+  const store = storeCatalogs[storeKey];
+  if (!store) return [];
+  return store[styleKey] || store[styleCatalogFallback[styleKey]] || [];
+}
 const storeCatalogs = {
 hoff: {
   scandinavian: [
@@ -2512,7 +2609,7 @@ const roomKeywordsRu = {
   'hallway': ['вешалк', 'зеркал', 'обувниц']
 };
 function pickFurnitureHint(storeKey, styleKey, roomKey) {
-  let items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
+  let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) return '';
   const keywords = roomKeywordsRu[roomKey];
   if (keywords && keywords.length) {
@@ -2563,7 +2660,7 @@ function findCatalogMatch(items, typeWord, colorWord) {
   return { product: exact || byType[0], exact: !!exact };
 }
 function renderMatchedFurniture(storeKey, styleKey, roomKey, detected) {
-  const items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
+  const items = resolveCatalogItems(storeKey, styleKey);
   if (!detected || !detected.length || !items.length) { renderStoreProducts(storeKey, styleKey, roomKey); return; }
   const used = new Set();
   const cards = [];
@@ -2588,7 +2685,7 @@ function renderMatchedFurniture(storeKey, styleKey, roomKey, detected) {
 }
 function renderStoreProducts(storeKey, styleKey, roomKey) {
   const grid = document.getElementById('hoffProductsGrid');
-  let items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
+  let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) {
     grid.innerHTML = '<div class="hoff-products-empty">' + t('storeEmpty') + '</div>';
     return;
