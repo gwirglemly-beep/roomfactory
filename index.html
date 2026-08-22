@@ -208,8 +208,11 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .mic-btn.recording { background: #b48c5a; color: white; border-color: #b48c5a; animation: micPulse 1s ease-in-out infinite; }
 @keyframes micPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
 
-.preferred-style-check { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 12px; color: #5a4d3d; cursor: pointer; user-select: none; }
+.preferred-style-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.preferred-style-check { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #5a4d3d; cursor: pointer; user-select: none; }
 .preferred-style-check input { width: 15px; height: 15px; accent-color: #b48c5a; cursor: pointer; }
+.preferred-style-link { color: #8a7a66; font-size: 12px; letter-spacing: 0.3px; text-decoration: none; cursor: pointer; font-family: 'Inter', sans-serif; transition: color 0.15s; }
+.preferred-style-link:hover { color: #b48c5a; }
 
 .quiz-progress { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #8a7a66; margin-bottom: 20px; }
 .quiz-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -807,10 +810,13 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
             <button type="button" class="mic-btn" id="micBtn" title="Голосовой ввод" data-i18n-title="mic.title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"></path><path d="M19 11a7 7 0 0 1-14 0"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg></button>
           </div>
-          <label class="preferred-style-check" id="preferredStyleCheckWrap" style="display:none">
-            <input type="checkbox" id="usePreferredStyle">
-            <span data-i18n="form.usePreferredStyle">Учитывать ваш выбранный стиль</span>
-          </label>
+          <div class="preferred-style-row" id="preferredStyleCheckWrap" style="display:none">
+            <label class="preferred-style-check">
+              <input type="checkbox" id="usePreferredStyle">
+              <span data-i18n="form.usePreferredStyle">Учитывать выбранный стиль</span>
+            </label>
+            <a href="javascript:void(0)" class="preferred-style-link" id="preferredStyleLink" onclick="openQuizModal()"></a>
+          </div>
         </div>
 
         <button class="gen-btn" id="genBtn" disabled data-i18n="genBtnUpload">Загрузите фото для начала</button>
@@ -1202,7 +1208,9 @@ const translations = {
     'form.color': `Цветовая гамма`,
     'form.budget': `Бюджет ремонта`,
     'form.comment': `Комментарий`,
-    'form.usePreferredStyle': `Учитывать ваш выбранный стиль`,
+    'form.usePreferredStyle': `Учитывать выбранный стиль`,
+    'form.preferredStyleLinkPrefix': `Ваш стиль:`,
+    'form.retakeQuizShort': `пройти тест заново`,
     'commentPlaceholder': `Пожелания: больше света, место для детей, открытые полки...`,
     'mic.title': `Голосовой ввод`,
     'quiz.eyebrow': `Тест стиля`,
@@ -1421,7 +1429,9 @@ const translations = {
     'form.color': `Color palette`,
     'form.budget': `Renovation budget`,
     'form.comment': `Comment`,
-    'form.usePreferredStyle': `Use your saved style preference`,
+    'form.usePreferredStyle': `Use your saved style`,
+    'form.preferredStyleLinkPrefix': `Your style:`,
+    'form.retakeQuizShort': `retake the quiz`,
     'commentPlaceholder': `Wishes: more light, space for kids, open shelving...`,
     'mic.title': `Voice input`,
     'quiz.eyebrow': `Style quiz`,
@@ -1607,19 +1617,79 @@ function refreshColorNames() {
 }
 
 const styleInfoImgs = {
-  scandinavian: 'https://i.imgur.com/QpdFRQ1.jpg',
-  minimalism: 'https://i.imgur.com/CrzZ6of.jpg',
-  loft: 'https://i.imgur.com/m44HmWk.jpg',
-  classic: 'https://i.imgur.com/CjswDfr.jpg',
-  japandi: 'https://i.imgur.com/f5dOSSq.jpg',
-  boho: 'https://i.imgur.com/zCQCn4n.jpg',
-  artdeco: 'https://images.unsplash.com/photo-1563219125-1db796e20ff2?w=700&q=75&auto=format&fit=crop',
-  provence: 'https://images.unsplash.com/photo-1659114340599-089aca79fe2d?w=700&q=75&auto=format&fit=crop',
-  hightech: 'https://images.unsplash.com/photo-1725042893312-5ec0dea9e369?w=700&q=75&auto=format&fit=crop',
-  eco: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=75&auto=format&fit=crop'
+  scandinavian: [
+    'https://i.imgur.com/QpdFRQ1.jpg',
+    'https://images.unsplash.com/photo-1772797583328-f83bc3f94f80?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1610307540583-7472788642d6?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1606910566954-0f11b1522c69?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1786107727673-dfb789a4e5c8?w=700&q=75&auto=format&fit=crop'
+  ],
+  minimalism: [
+    'https://i.imgur.com/CrzZ6of.jpg',
+    'https://images.unsplash.com/photo-1605774337664-7a846e9cdf17?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1585128792020-803d29415281?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1609081144289-eacc3108cd03?w=700&q=75&auto=format&fit=crop'
+  ],
+  loft: [
+    'https://i.imgur.com/m44HmWk.jpg',
+    'https://images.unsplash.com/photo-1773069459487-3d2d7bb4532e?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1759264244827-1dde5bee00a5?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1783990349147-906f62b882c1?w=700&q=75&auto=format&fit=crop'
+  ],
+  classic: [
+    'https://i.imgur.com/CjswDfr.jpg',
+    'https://images.unsplash.com/photo-1784653548743-496e53468a5d?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1781795449353-233da5e767b6?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1648881806148-e5c51179c826?w=700&q=75&auto=format&fit=crop'
+  ],
+  japandi: [
+    'https://i.imgur.com/f5dOSSq.jpg',
+    'https://images.unsplash.com/photo-1512972972907-6d71529c5e92?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1752407828488-1c6fafa47c50?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1731780027137-0b808038a87f?w=700&q=75&auto=format&fit=crop'
+  ],
+  boho: [
+    'https://i.imgur.com/zCQCn4n.jpg',
+    'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1650138278103-1f8a3d208cb3?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1632119580908-ae947d4c7691?w=700&q=75&auto=format&fit=crop'
+  ],
+  artdeco: [
+    'https://images.unsplash.com/photo-1563219125-1db796e20ff2?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1784805598587-c0a92a669f7b?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1764411504782-bb0f2dc4bd86?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1778049995815-04091b798bdc?w=700&q=75&auto=format&fit=crop'
+  ],
+  provence: [
+    'https://images.unsplash.com/photo-1659114340599-089aca79fe2d?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1598895719216-c3ec6eb625ab?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1765000884377-5134d3dc9d15?w=700&q=75&auto=format&fit=crop'
+  ],
+  hightech: [
+    'https://images.unsplash.com/photo-1725042893312-5ec0dea9e369?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1719561975005-d2c2b08c6ed8?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1720970230359-7d75432f5688?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1725610036468-ee58fab023ef?w=700&q=75&auto=format&fit=crop'
+  ],
+  eco: [
+    'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1612543322525-f021384dc6a4?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1632323091845-f636f89749fa?w=700&q=75&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1767559811434-97dd0b1bb128?w=700&q=75&auto=format&fit=crop'
+  ]
 };
+function primaryStyleImg(key) {
+  const imgs = styleInfoImgs[key];
+  return Array.isArray(imgs) ? imgs[0] : imgs;
+}
+function randomStyleImg(key) {
+  const imgs = styleInfoImgs[key];
+  if (!Array.isArray(imgs)) return imgs;
+  return imgs[Math.floor(Math.random() * imgs.length)];
+}
 function showStyleInfo(key) {
-  showPopup(t('style.' + key), t('styleDesc.' + key), styleInfoImgs[key]);
+  showPopup(t('style.' + key), t('styleDesc.' + key), primaryStyleImg(key));
 }
 
 const quizStyleKeys = ['scandinavian', 'minimalism', 'loft', 'classic', 'japandi', 'boho', 'artdeco', 'provence', 'hightech', 'eco'];
@@ -1661,7 +1731,7 @@ function renderQuizRound() {
   const pair = document.getElementById('quizPair');
   pair.innerHTML = [a, b].map(key =>
     '<button type="button" class="quiz-option" data-key="' + key + '">' +
-      '<img src="' + styleInfoImgs[key] + '" alt="">' +
+      '<img src="' + randomStyleImg(key) + '" alt="">' +
       '<span>' + t('style.' + key) + '</span>' +
     '</button>'
   ).join('');
@@ -1748,6 +1818,8 @@ function applyTranslations() {
   if (document.getElementById('accountView').style.display !== 'none') {
     loadLibrary();
   }
+
+  updatePreferredStyleCheck(currentSession);
 }
 
 function setLang(lang) {
@@ -1860,7 +1932,11 @@ function updatePreferredStyleCheck(session) {
   const wrap = document.getElementById('preferredStyleCheckWrap');
   const pref = session && session.user && session.user.user_metadata && session.user.user_metadata.preferred_style;
   wrap.style.display = pref ? 'flex' : 'none';
-  if (!pref) document.getElementById('usePreferredStyle').checked = false;
+  if (!pref) {
+    document.getElementById('usePreferredStyle').checked = false;
+  } else {
+    document.getElementById('preferredStyleLink').textContent = t('form.preferredStyleLinkPrefix') + ' ' + t('style.' + pref) + ' · ' + t('form.retakeQuizShort');
+  }
 }
 
 sb.auth.onAuthStateChange((_event, session) => {
