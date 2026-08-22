@@ -719,7 +719,6 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             <button class="opt-btn" data-group="room" data-val="children room" data-i18n="room.children">Детская</button>
             <button class="opt-btn" data-group="room" data-val="home office" data-i18n="room.office">Кабинет</button>
             <button class="opt-btn" data-group="room" data-val="hallway" data-i18n="room.hallway">Прихожая</button>
-            <button class="opt-btn" data-group="room" data-val="dining room" data-i18n="room.dining">Столовая</button>
           </div>
         </div>
 
@@ -2458,8 +2457,7 @@ const roomKeywordsRu = {
   'bathroom': ['зеркал'],
   'children room': ['кровать', 'стол', 'стул', 'полк'],
   'home office': ['стол', 'кресло', 'стеллаж', 'полк'],
-  'hallway': ['вешалк', 'зеркал', 'обувниц'],
-  'dining room': ['обеденн', 'стул', 'стол', 'буфет', 'сервант']
+  'hallway': ['вешалк', 'зеркал', 'обувниц']
 };
 function pickFurnitureHint(storeKey, styleKey, roomKey) {
   let items = (storeCatalogs[storeKey] && storeCatalogs[storeKey][styleKey]) || [];
@@ -2698,7 +2696,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
   const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
 
-  const roomLabelsRu = { 'living room':'Гостиная','bedroom':'Спальня','kitchen':'Кухня','bathroom':'Ванная','children room':'Детская','home office':'Кабинет','hallway':'Прихожая','dining room':'Столовая' };
+  const roomLabelsRu = { 'living room':'Гостиная','bedroom':'Спальня','kitchen':'Кухня','bathroom':'Ванная','children room':'Детская','home office':'Кабинет','hallway':'Прихожая' };
   const roomLabelRu = roomLabelsRu[sel.room] || sel.roomLabel;
   const colorLabelRu = colorPromptRu[sel.color] || (colorNames[sel.color] && colorNames[sel.color].ru) || sel.color;
   const styleLabelRu = translations.ru['style.' + sel.styleKey] || sel.styleLabel;
