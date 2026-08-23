@@ -170,6 +170,11 @@ a.auth-link:hover, .auth-link a:hover { color: #b48c5a; }
 .upload-icon { font-size: 32px; margin-bottom: 12px; display: block; opacity: 0.3; }
 .upload-text { font-size: 13px; color: #8a7a66; margin-bottom: 4px; }
 .upload-hint { font-size: 11px; color: #b4a898; }
+.apartment-banner { background: rgba(180,140,90,0.1); border: 1px solid rgba(180,140,90,0.3); padding: 14px 16px; margin-bottom: 20px; }
+.apartment-banner p { font-size: 12px; color: #5a4d3d; line-height: 1.6; margin: 0 0 8px; }
+.apartment-banner a { color: #b48c5a; font-size: 11px; letter-spacing: 0.5px; text-decoration: none; cursor: pointer; }
+.apartment-banner a:hover { color: #8a6a3f; }
+.apartment-files-list { font-size: 11px; color: #8a7a66; margin-top: 8px; line-height: 1.6; }
 #fileInput { display: none; }
 
 .form-section { margin-bottom: 32px; }
@@ -374,31 +379,8 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 .account-logout-btn:hover { border-color: #c05050; color: #c05050; }
 @media (max-width: 600px) { .account-page { padding: 120px 24px 80px; } .profile-grid { grid-template-columns: minmax(0,1fr); } }
 
-.tour-page { padding: 140px 48px 100px; max-width: 1100px; margin: 0 auto; }
-.tour-sub { font-size: 14px; color: #8a7a66; line-height: 1.7; margin-bottom: 40px; max-width: 600px; }
-.tour-rooms { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
-.tour-room-card { background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 20px; display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,0.7fr) minmax(0,0.7fr) minmax(0,0.7fr) minmax(0,1.1fr) auto; gap: 14px; align-items: end; }
-.tour-refimg-wrap { margin-bottom: 32px; }
-.tour-refimg-zone { border: 1px dashed rgba(42,34,24,0.25); padding: 24px; text-align: center; cursor: pointer; background: #faf7f2; transition: all 0.2s; }
-.tour-refimg-zone:hover { border-color: #b48c5a; }
-.tour-refimg-zone img { max-width: 100%; max-height: 320px; display: block; margin: 0 auto; }
-.tour-refimg-hint { font-size: 12px; color: #8a7a66; }
-.tour-room-card label { font-size: 10px; letter-spacing: 1px; color: #8a7a66; margin-bottom: 6px; display: block; }
-.tour-room-card select, .tour-room-card input[type=number] { width: 100%; background: white; border: 1px solid rgba(42,34,24,0.15); padding: 10px; font-family: 'Inter', sans-serif; font-size: 13px; color: #1a1208; }
-.tour-room-remove { background: none; border: none; color: #c05050; font-size: 18px; cursor: pointer; padding: 8px; }
-.tour-room-door label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8a7a66; margin-bottom: 0; }
 .tour-add-btn { background: transparent; border: 1px dashed rgba(42,34,24,0.3); color: #8a7a66; padding: 14px; width: 100%; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; margin-bottom: 32px; }
 .tour-add-btn:hover { border-color: #b48c5a; color: #b48c5a; }
-.tour-build-btn { background: #b48c5a; color: white; border: none; padding: 16px 40px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
-.tour-build-btn:hover { background: #c9a06a; }
-.tour-hint { font-size: 12px; color: #8a7a66; margin-top: 16px; }
-.tour-canvas-wrap { position: relative; width: 100%; height: 60vh; min-height: 400px; margin-top: 40px; background: #1a1208; border: 1px solid rgba(42,34,24,0.15); display: none; overflow: hidden; touch-action: none; }
-.tour-canvas-wrap.visible { display: block; }
-.tour-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
-.tour-move-btns { position: absolute; bottom: 20px; left: 20px; display: grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(2, 44px); gap: 4px; z-index: 2; }
-.tour-move-btn { background: rgba(245,242,237,0.15); border: 1px solid rgba(245,242,237,0.3); color: #f5f2ed; font-size: 16px; cursor: pointer; user-select: none; backdrop-filter: blur(4px); }
-.tour-move-btn:active { background: rgba(180,140,90,0.5); }
-@media (max-width: 700px) { .tour-room-card { grid-template-columns: minmax(0,1fr); } .tour-page { padding: 120px 24px 80px; } }
 
 @media (max-width: 768px) {
   nav { padding: 20px 24px; }
@@ -526,8 +508,8 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   <a href="#examples" onclick="showHome();closeSidebar()" data-i18n="sidebar.examples">Примеры</a>
   <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()" data-i18n="sidebar.how">Как это работает</a>
   <a href="#generator" onclick="showHome();closeSidebar()">Room Factory</a>
-  <a href="javascript:void(0)" onclick="showTour();closeSidebar()" data-i18n="sidebar.tour">3D-тур</a>
   <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()" data-i18n="sidebar.about">О проекте</a>
+  <a href="javascript:void(0)" onclick="enterApartmentMode();closeSidebar()" data-i18n="sidebar.apartment">Стиль квартиры</a>
   <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()" data-i18n="sidebar.try">Попробовать</a>
   <div class="sidebar-lang">
     <button type="button" class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
@@ -701,26 +683,6 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
         </div>
       </div>
     </div>
-    <div class="example-card">
-      <div class="example-img-wrap">
-        <img class="example-img" src="https://i.imgur.com/CwT0phz.jpg" alt="До">
-        <div class="example-overlay"></div>
-        <div class="example-info">
-          <div class="example-badge" data-i18n="examples.before">До</div>
-          <div class="example-label" data-i18n="examples.cap5">Пустая комната</div>
-        </div>
-      </div>
-    </div>
-    <div class="example-card">
-      <div class="example-img-wrap">
-        <img class="example-img" src="https://i.imgur.com/jAiCPp7.jpg" alt="После">
-        <div class="example-overlay"></div>
-        <div class="example-info">
-          <div class="example-badge" style="color:#fff;border-color:#fff" data-i18n="examples.after">После</div>
-          <div class="example-label" data-i18n="examples.cap6">Минимализм</div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -737,12 +699,27 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     </div>
     <div class="gen-right">
       <div class="gen-form">
+        <div class="apartment-banner" id="apartmentBanner" style="display:none">
+          <p data-i18n="apartment.bannerText">Режим «Стиль квартиры»: стиль определится по остальным фото квартиры, вручную выбирать не нужно.</p>
+          <a href="javascript:void(0)" onclick="exitApartmentMode()" data-i18n="apartment.exit">← Обычный режим</a>
+        </div>
+
         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
           <span class="upload-icon">↑</span>
-          <p class="upload-text" data-i18n="upload.text">Загрузите фото комнаты</p>
+          <p class="upload-text" id="uploadZoneText" data-i18n="upload.text">Загрузите фото комнаты</p>
           <p class="upload-hint" data-i18n="upload.hint">JPG или PNG, до 10 МБ</p>
         </div>
         <input type="file" id="fileInput" accept="image/*">
+
+        <div class="form-section" id="apartmentPhotosSection" style="display:none">
+          <span class="form-label" data-i18n="apartment.photosLabel">Остальные фото квартиры (для стиля)</span>
+          <div class="upload-zone" id="apartmentUploadZone" onclick="document.getElementById('apartmentFileInput').click()">
+            <span class="upload-icon">↑</span>
+            <p class="upload-text" id="apartmentUploadText" data-i18n="apartment.uploadText">Загрузите 2–5 фото других комнат</p>
+            <p class="upload-hint" data-i18n="apartment.uploadHint">JPG или PNG, до 10 МБ каждое</p>
+          </div>
+          <input type="file" id="apartmentFileInput" accept="image/*" multiple style="display:none">
+        </div>
 
         <div class="form-section">
           <span class="form-label" data-i18n="form.store">Магазин мебели</span>
@@ -753,9 +730,9 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
           </div>
         </div>
 
-        <hr class="form-divider">
+        <hr class="form-divider" id="styleDivider">
 
-        <div class="form-section">
+        <div class="form-section" id="styleSection">
           <span class="form-label" data-i18n="form.style">Стиль интерьера</span>
           <div class="opts-grid opts-3">
             <div class="style-row"><button class="opt-btn active" style="flex:1" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures" data-i18n="style.scandinavian">Скандинавский</button><button class="info-btn" onclick="showStyleInfo('scandinavian')">ⓘ</button></div>
@@ -942,37 +919,6 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   </div>
 </div>
 
-<div id="tourView" style="display:none">
-  <div class="tour-page">
-    <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
-    <h1 class="account-title" data-i18n="tour.title">3D-тур</h1>
-    <p class="tour-sub" data-i18n="tour.sub">Укажи размеры комнат квартиры — построим 3D-модель, по которой можно пройтись.</p>
-
-    <div class="tour-refimg-wrap">
-      <div class="tour-refimg-zone" id="tourRefImgZone" onclick="document.getElementById('tourRefImgInput').click()">
-        <p class="tour-refimg-hint" id="tourRefImgHint" data-i18n="tour.refImgHint">Загрузи фото планировки для справки (необязательно) — картинка останется только у тебя на экране, никуда не отправляется</p>
-      </div>
-      <input type="file" id="tourRefImgInput" accept="image/*" style="display:none">
-    </div>
-
-    <div class="tour-rooms" id="tourRoomsList"></div>
-    <button type="button" class="tour-add-btn" onclick="addTourRoom()" data-i18n="tour.addRoom">+ Добавить комнату</button>
-
-    <button type="button" class="tour-build-btn" id="tourBuildBtn" onclick="buildTour()" data-i18n="tour.build">Построить 3D-тур</button>
-    <p class="tour-hint" data-i18n="tour.hint">Управление: тяни мышкой/пальцем по картинке — осмотреться, WASD или стрелки — идти. На телефоне — кнопки внизу справа.</p>
-
-    <div class="tour-canvas-wrap" id="tourCanvasWrap">
-      <div class="tour-move-btns">
-        <span></span>
-        <button type="button" class="tour-move-btn" id="tourBtnF">▲</button>
-        <span></span>
-        <button type="button" class="tour-move-btn" id="tourBtnL">◄</button>
-        <button type="button" class="tour-move-btn" id="tourBtnB">▼</button>
-        <button type="button" class="tour-move-btn" id="tourBtnR">►</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div id="privacyView" style="display:none">
   <div class="account-page">
@@ -1131,8 +1077,6 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     <button type="submit" id="supportChatSend">→</button>
   </form>
 </div>
-
-<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://puqwlxrdihxmrhgfnnpa.supabase.co';
@@ -1143,20 +1087,9 @@ const translations = {
   ru: {
     'sidebar.examples': `Примеры`,
     'sidebar.how': `Как это работает`,
-    'sidebar.tour': `3D-тур`,
     'sidebar.about': `О проекте`,
+    'sidebar.apartment': `Стиль квартиры`,
     'sidebar.try': `Попробовать`,
-    'tour.title': `3D-тур`,
-    'tour.sub': `Укажи размеры комнат квартиры — построим 3D-модель, по которой можно пройтись.`,
-    'tour.addRoom': `+ Добавить комнату`,
-    'tour.build': `Построить 3D-тур`,
-    'tour.hint': `Управление: тяни мышкой/пальцем по картинке — осмотреться, WASD или стрелки — идти. На телефоне — кнопки внизу справа.`,
-    'tour.roomType': `Тип комнаты`,
-    'tour.area': `Площадь, м²`,
-    'tour.width': `Ширина, м`,
-    'tour.length': `Длина, м`,
-    'tour.doorway': `Дверной проём`,
-    'tour.refImgHint': `Загрузи фото планировки для справки (необязательно) — картинка останется только у тебя на экране, никуда не отправляется`,
     'hero.eyebrow': `AI дизайн интерьера`,
     'hero.title': `Дизайн<br>вашей<span class="line2">комнаты</span>`,
     'hero.sub': `Загрузите фото — ИИ создаст профессиональный дизайн в любом стиле за 30 секунд`,
@@ -1191,8 +1124,6 @@ const translations = {
     'examples.cap2': `Скандинавский стиль`,
     'examples.cap3': `Старая гостиная`,
     'examples.cap4': `Лофт`,
-    'examples.cap5': `Пустая комната`,
-    'examples.cap6': `Минимализм`,
     'how.eyebrow': `Процесс`,
     'how.title': `Как это работает`,
     'how.step1Title': `Загрузите фото`,
@@ -1221,6 +1152,13 @@ const translations = {
     'stat.styles': `Стилей`,
     'upload.text': `Загрузите фото комнаты`,
     'upload.hint': `JPG или PNG, до 10 МБ`,
+    'apartment.bannerText': `Режим «Стиль квартиры»: стиль определится по остальным фото квартиры, вручную выбирать не нужно.`,
+    'apartment.exit': `← Обычный режим`,
+    'apartment.photosLabel': `Остальные фото квартиры (для стиля)`,
+    'apartment.uploadText': `Загрузите 2–5 фото других комнат`,
+    'apartment.uploadHint': `JPG или PNG, до 10 МБ каждое`,
+    'apartment.uploadTextTarget': `Загрузите фото комнаты для переделки`,
+    'apartment.filesChosen': `Выбрано файлов:`,
     'form.store': `Магазин мебели`,
     'form.style': `Стиль интерьера`,
     'form.room': `Тип комнаты`,
@@ -1260,6 +1198,7 @@ const translations = {
     'genBtnLoading': `Создаём...`,
     'loadingText': `Создаём ваш дизайн...`,
     'genError': `Не удалось создать дизайн. Попробуйте ещё раз.`,
+    'apartment.needPhotos': `Загрузите хотя бы одно фото другой комнаты квартиры.`,
     'resultLabel': `Ваш новый интерьер`,
     'downloadBtn': `Скачать изображение`,
     'similarFurniturePrefix': `Похожая мебель в`,
@@ -1364,20 +1303,9 @@ const translations = {
   en: {
     'sidebar.examples': `Examples`,
     'sidebar.how': `How it works`,
-    'sidebar.tour': `3D Tour`,
     'sidebar.about': `About`,
+    'sidebar.apartment': `Apartment style`,
     'sidebar.try': `Try it`,
-    'tour.title': `3D Tour`,
-    'tour.sub': `Enter the room dimensions of your apartment — we'll build a 3D model you can walk through.`,
-    'tour.addRoom': `+ Add room`,
-    'tour.build': `Build 3D tour`,
-    'tour.hint': `Controls: drag with mouse/finger to look around, WASD or arrow keys to move. On mobile — buttons in the bottom right.`,
-    'tour.roomType': `Room type`,
-    'tour.area': `Area, m²`,
-    'tour.width': `Width, m`,
-    'tour.length': `Length, m`,
-    'tour.doorway': `Doorway`,
-    'tour.refImgHint': `Upload a floor plan photo for reference (optional) — it stays on your screen only, nothing is sent anywhere`,
     'hero.eyebrow': `AI Interior Design`,
     'hero.title': `Design<br>your<span class="line2">room</span>`,
     'hero.sub': `Upload a photo — AI creates a professional design in any style in 30 seconds`,
@@ -1412,8 +1340,6 @@ const translations = {
     'examples.cap2': `Scandinavian style`,
     'examples.cap3': `Old living room`,
     'examples.cap4': `Loft`,
-    'examples.cap5': `Empty room`,
-    'examples.cap6': `Minimalism`,
     'how.eyebrow': `Process`,
     'how.title': `How it works`,
     'how.step1Title': `Upload a photo`,
@@ -1442,6 +1368,13 @@ const translations = {
     'stat.styles': `Styles`,
     'upload.text': `Upload a photo of your room`,
     'upload.hint': `JPG or PNG, up to 10MB`,
+    'apartment.bannerText': `"Apartment style" mode: the style is inferred from the other apartment photos, no need to pick one manually.`,
+    'apartment.exit': `← Normal mode`,
+    'apartment.photosLabel': `Other apartment photos (for style)`,
+    'apartment.uploadText': `Upload 2–5 photos of other rooms`,
+    'apartment.uploadHint': `JPG or PNG, up to 10MB each`,
+    'apartment.uploadTextTarget': `Upload a photo of the room to redesign`,
+    'apartment.filesChosen': `Files selected:`,
     'form.store': `Furniture store`,
     'form.style': `Interior style`,
     'form.room': `Room type`,
@@ -1481,6 +1414,7 @@ const translations = {
     'genBtnLoading': `Creating...`,
     'loadingText': `Creating your design...`,
     'genError': `Failed to create the design. Please try again.`,
+    'apartment.needPhotos': `Upload at least one photo of another room in the apartment.`,
     'resultLabel': `Your new interior`,
     'downloadBtn': `Download image`,
     'similarFurniturePrefix': `Similar furniture at`,
@@ -1639,9 +1573,7 @@ const styleInfoImgs = {
   scandinavian: [
     'https://i.imgur.com/QpdFRQ1.jpg',
     'https://images.unsplash.com/photo-1772797583328-f83bc3f94f80?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1610307540583-7472788642d6?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1606910566954-0f11b1522c69?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1786107727673-dfb789a4e5c8?w=700&q=75&auto=format&fit=crop'
+    'https://images.unsplash.com/photo-1610307540583-7472788642d6?w=700&q=75&auto=format&fit=crop'
   ],
   minimalism: [
     'https://i.imgur.com/CrzZ6of.jpg',
@@ -1665,37 +1597,31 @@ const styleInfoImgs = {
     'https://i.imgur.com/f5dOSSq.jpg',
     'https://images.unsplash.com/photo-1512972972907-6d71529c5e92?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1752407828488-1c6fafa47c50?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1731780027137-0b808038a87f?w=700&q=75&auto=format&fit=crop'
   ],
   boho: [
     'https://i.imgur.com/zCQCn4n.jpg',
     'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1650138278103-1f8a3d208cb3?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1632119580908-ae947d4c7691?w=700&q=75&auto=format&fit=crop'
   ],
   artdeco: [
     'https://images.unsplash.com/photo-1563219125-1db796e20ff2?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1784805598587-c0a92a669f7b?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1764411504782-bb0f2dc4bd86?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1778049995815-04091b798bdc?w=700&q=75&auto=format&fit=crop'
+    'https://images.unsplash.com/photo-1764411504782-bb0f2dc4bd86?w=700&q=75&auto=format&fit=crop'
   ],
   provence: [
     'https://images.unsplash.com/photo-1659114340599-089aca79fe2d?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1598895719216-c3ec6eb625ab?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1765000884377-5134d3dc9d15?w=700&q=75&auto=format&fit=crop'
+    'https://images.unsplash.com/photo-1598895719216-c3ec6eb625ab?w=700&q=75&auto=format&fit=crop'
   ],
   hightech: [
     'https://images.unsplash.com/photo-1725042893312-5ec0dea9e369?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1719561975005-d2c2b08c6ed8?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1720970230359-7d75432f5688?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1725610036468-ee58fab023ef?w=700&q=75&auto=format&fit=crop'
   ],
   eco: [
     'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1612543322525-f021384dc6a4?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1632323091845-f636f89749fa?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1767559811434-97dd0b1bb128?w=700&q=75&auto=format&fit=crop'
+    'https://images.unsplash.com/photo-1632323091845-f636f89749fa?w=700&q=75&auto=format&fit=crop'
   ]
 };
 function primaryStyleImg(key) {
@@ -1995,7 +1921,7 @@ function closeModal(id) {
   });
 });
 
-const LEGAL_VIEW_IDS = ['accountView', 'tourView', 'privacyView', 'offerView', 'consentView'];
+const LEGAL_VIEW_IDS = ['accountView', 'privacyView', 'offerView', 'consentView'];
 function showHome() {
   LEGAL_VIEW_IDS.forEach(id => document.getElementById(id).style.display = 'none');
   document.getElementById('homeView').style.display = '';
@@ -2013,285 +1939,7 @@ function showAccount() {
   loadProfile();
   loadLibrary();
 }
-function showTour() {
-  showLegalView('tourView');
-  if (!document.querySelector('#tourRoomsList .tour-room-card')) {
-    addTourRoom();
-  }
-}
 
-document.getElementById('tourRefImgInput').addEventListener('change', e => {
-  const f = e.target.files[0];
-  if (!f) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const zone = document.getElementById('tourRefImgZone');
-    zone.innerHTML = '<img src="' + ev.target.result + '" alt="">';
-  };
-  reader.readAsDataURL(f);
-});
-
-let tourRoomSeq = 0;
-function addTourRoom() {
-  const id = 'room' + (tourRoomSeq++);
-  const list = document.getElementById('tourRoomsList');
-  const isFirst = list.children.length === 0;
-  const roomKeys = ['living','bedroom','kitchen','bathroom','children','office','hallway','dining'];
-  const div = document.createElement('div');
-  div.className = 'tour-room-card';
-  div.dataset.id = id;
-  div.innerHTML =
-    '<div><label>' + t('tour.roomType') + '</label><select class="tour-type">' +
-      roomKeys.map(k => '<option value="' + k + '">' + t('room.' + k) + '</option>').join('') +
-    '</select></div>' +
-    '<div><label>' + t('tour.area') + '</label><input type="number" class="tour-area" min="0" step="0.01" placeholder="—"></div>' +
-    '<div><label>' + t('tour.width') + '</label><input type="number" class="tour-width" min="0.5" step="0.1" placeholder="3"></div>' +
-    '<div><label>' + t('tour.length') + '</label><input type="number" class="tour-length" min="0.5" step="0.1" placeholder="3"></div>' +
-    '<div class="tour-room-door" style="' + (isFirst ? 'visibility:hidden' : '') + '"><label><input type="checkbox" class="tour-door" checked> ' + t('tour.doorway') + '</label></div>' +
-    '<button type="button" class="tour-room-remove" onclick="removeTourRoom(this)">✕</button>';
-  list.appendChild(div);
-}
-function removeTourRoom(btn) {
-  btn.closest('.tour-room-card').remove();
-  const cards = document.querySelectorAll('#tourRoomsList .tour-room-card');
-  cards.forEach((c, i) => {
-    c.querySelector('.tour-room-door').style.visibility = i === 0 ? 'hidden' : 'visible';
-  });
-}
-
-function resolveRoomDims(c) {
-  const area = parseFloat(c.querySelector('.tour-area').value);
-  const w = parseFloat(c.querySelector('.tour-width').value);
-  const l = parseFloat(c.querySelector('.tour-length').value);
-  let width, length;
-  if (w > 0 && l > 0) {
-    width = w; length = l;
-  } else if (area > 0 && w > 0) {
-    width = w; length = area / w;
-  } else if (area > 0 && l > 0) {
-    length = l; width = area / l;
-  } else if (area > 0) {
-    width = Math.sqrt(area * 1.3);
-    length = area / width;
-  } else {
-    width = w > 0 ? w : 3;
-    length = l > 0 ? l : 3;
-  }
-  return { width: Math.max(0.5, width), length: Math.max(0.5, length) };
-}
-
-function buildTour() {
-  const cards = document.querySelectorAll('#tourRoomsList .tour-room-card');
-  if (!cards.length) return;
-  const rooms = Array.from(cards).map((c, i) => {
-    const dims = resolveRoomDims(c);
-    return {
-      width: dims.width,
-      length: dims.length,
-      door: i === 0 ? false : c.querySelector('.tour-door').checked
-    };
-  });
-  document.getElementById('tourCanvasWrap').classList.add('visible');
-  initTourScene(rooms);
-}
-
-let tourRenderer, tourScene, tourCamera, tourAnimId, tourControlsBound = false;
-let tourYaw = Math.PI, tourPitch = 0;
-let tourKeys = {};
-let tourDragging = false, tourLastX = 0, tourLastY = 0;
-
-function initTourScene(rooms) {
-  const wrap = document.getElementById('tourCanvasWrap');
-  if (tourAnimId) cancelAnimationFrame(tourAnimId);
-  const oldCanvas = wrap.querySelector('canvas');
-  if (oldCanvas) oldCanvas.remove();
-  if (tourRenderer) tourRenderer.dispose();
-
-  const WALL_H = 2.7, WALL_T = 0.1, DOOR_H = 2.05, BASE_H = 0.09;
-  tourScene = new THREE.Scene();
-  tourScene.background = new THREE.Color(0x1a1208);
-
-  tourScene.add(new THREE.AmbientLight(0xfff6ea, 0.75));
-  const dirLight = new THREE.DirectionalLight(0xfff2e0, 0.7);
-  dirLight.position.set(5, 10, 5);
-  tourScene.add(dirLight);
-  const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
-  dirLight2.position.set(-5, 8, -5);
-  tourScene.add(dirLight2);
-
-  const floorMat = new THREE.MeshStandardMaterial({ color: 0xb99668, roughness: 0.55 });
-  const wallMat = new THREE.MeshStandardMaterial({ color: 0xf7f3ec, roughness: 0.9 });
-  const ceilMat = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide, roughness: 0.9 });
-  const baseMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
-  const doorFrameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
-  const doorLeafMat = new THREE.MeshStandardMaterial({ color: 0xb48c5a, roughness: 0.5 });
-  const handleMat = new THREE.MeshStandardMaterial({ color: 0x2d2318, metalness: 0.6, roughness: 0.3 });
-
-  let x = 0;
-  const bounds = [];
-  rooms.forEach(r => {
-    bounds.push({ x0: x, x1: x + r.width, z0: 0, z1: r.length, door: r.door });
-    x += r.width;
-  });
-  const totalW = x;
-  const maxL = Math.max.apply(null, bounds.map(b => b.z1));
-
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(totalW, maxL), floorMat);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.set(totalW / 2, 0, maxL / 2);
-  tourScene.add(floor);
-
-  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(totalW, maxL), ceilMat);
-  ceil.rotation.x = Math.PI / 2;
-  ceil.position.set(totalW / 2, WALL_H, maxL / 2);
-  tourScene.add(ceil);
-
-  function addWallSeg(x0, x1, z0, z1, yBottom, yTop, mat) {
-    yBottom = yBottom === undefined ? 0 : yBottom;
-    yTop = yTop === undefined ? WALL_H : yTop;
-    mat = mat || wallMat;
-    const w = Math.max(0.01, x1 - x0);
-    const d = Math.max(0.01, z1 - z0);
-    const h = Math.max(0.01, yTop - yBottom);
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-    mesh.position.set((x0 + x1) / 2, yBottom + h / 2, (z0 + z1) / 2);
-    tourScene.add(mesh);
-  }
-
-  function addFullWall(x0, x1, z0, z1) {
-    addWallSeg(x0, x1, z0, z1, 0, WALL_H, wallMat);
-    const bw = Math.max(0.01, (x1 - x0) + 0.02);
-    const bd = Math.max(0.01, (z1 - z0) + 0.02);
-    const base = new THREE.Mesh(new THREE.BoxGeometry(bw, BASE_H, bd), baseMat);
-    base.position.set((x0 + x1) / 2, BASE_H / 2, (z0 + z1) / 2);
-    tourScene.add(base);
-  }
-
-  function addDoor(xPos, z0, z1) {
-    addWallSeg(xPos - WALL_T / 2, xPos + WALL_T / 2, z0, z1, DOOR_H, WALL_H, doorFrameMat);
-    const inset = 0.05;
-    const lz0 = z0 + inset, lz1 = z1 - inset;
-    const leaf = new THREE.Mesh(new THREE.BoxGeometry(0.05, DOOR_H - 0.03, Math.max(0.01, lz1 - lz0)), doorLeafMat);
-    leaf.position.set(xPos, (DOOR_H - 0.03) / 2, (lz0 + lz1) / 2);
-    tourScene.add(leaf);
-    const handle = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.03, 0.03), handleMat);
-    handle.position.set(xPos + 0.035, 1.0, lz1 - 0.12);
-    tourScene.add(handle);
-  }
-
-  bounds.forEach((b, i) => {
-    addFullWall(b.x0, b.x1, b.z0 - WALL_T / 2, b.z0 + WALL_T / 2);
-    addFullWall(b.x0, b.x1, b.z1 - WALL_T / 2, b.z1 + WALL_T / 2);
-    if (i === 0) addFullWall(b.x0 - WALL_T / 2, b.x0 + WALL_T / 2, b.z0, b.z1);
-    if (i === bounds.length - 1) addFullWall(b.x1 - WALL_T / 2, b.x1 + WALL_T / 2, b.z0, b.z1);
-    if (i > 0) {
-      const prev = bounds[i - 1];
-      const shared = b.x0;
-      const zTop = Math.min(prev.z1, b.z1);
-      if (b.door) {
-        const gap = Math.min(1.0, zTop * 0.5);
-        const mid = zTop / 2;
-        if (mid - gap / 2 > 0.05) addFullWall(shared - WALL_T / 2, shared + WALL_T / 2, 0, mid - gap / 2);
-        if (zTop - (mid + gap / 2) > 0.05) addFullWall(shared - WALL_T / 2, shared + WALL_T / 2, mid + gap / 2, zTop);
-        addDoor(shared, mid - gap / 2, mid + gap / 2);
-      } else {
-        addFullWall(shared - WALL_T / 2, shared + WALL_T / 2, 0, zTop);
-      }
-    }
-  });
-
-  const rect = wrap.getBoundingClientRect();
-  tourCamera = new THREE.PerspectiveCamera(70, rect.width / rect.height, 0.1, 200);
-  const startRoom = bounds[0];
-  tourCamera.position.set(startRoom.x0 + Math.min(0.8, startRoom.x1 - startRoom.x0 - 0.3), 1.6, startRoom.z1 / 2);
-  tourYaw = -Math.PI / 2;
-  tourPitch = 0;
-
-  tourRenderer = new THREE.WebGLRenderer({ antialias: true });
-  tourRenderer.setSize(rect.width, rect.height);
-  tourRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  if (THREE.sRGBEncoding !== undefined) tourRenderer.outputEncoding = THREE.sRGBEncoding;
-  wrap.appendChild(tourRenderer.domElement);
-
-  setupTourControls(wrap, totalW, maxL);
-
-  let last = performance.now();
-  function animate(now) {
-    tourAnimId = requestAnimationFrame(animate);
-    const dt = Math.min(0.05, (now - last) / 1000);
-    last = now;
-    tourCamera.rotation.order = 'YXZ';
-    tourCamera.rotation.y = tourYaw;
-    tourCamera.rotation.x = tourPitch;
-
-    const speed = 2.2 * dt;
-    const forward = new THREE.Vector3(-Math.sin(tourYaw), 0, -Math.cos(tourYaw));
-    const right = new THREE.Vector3(-forward.z, 0, forward.x);
-    if (tourKeys['w'] || tourKeys['arrowup']) tourCamera.position.addScaledVector(forward, speed);
-    if (tourKeys['s'] || tourKeys['arrowdown']) tourCamera.position.addScaledVector(forward, -speed);
-    if (tourKeys['a'] || tourKeys['arrowleft']) tourCamera.position.addScaledVector(right, -speed);
-    if (tourKeys['d'] || tourKeys['arrowright']) tourCamera.position.addScaledVector(right, speed);
-    tourCamera.position.x = Math.max(0.3, Math.min(totalW - 0.3, tourCamera.position.x));
-    tourCamera.position.z = Math.max(0.3, Math.min(maxL - 0.3, tourCamera.position.z));
-
-    tourRenderer.render(tourScene, tourCamera);
-  }
-  requestAnimationFrame(animate);
-
-  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function setupTourControls(wrap) {
-  tourKeys = {};
-
-  const onDown = e => { tourDragging = true; const p = e.touches ? e.touches[0] : e; tourLastX = p.clientX; tourLastY = p.clientY; };
-  const onMove = e => {
-    if (!tourDragging) return;
-    const p = e.touches ? e.touches[0] : e;
-    const dx = p.clientX - tourLastX, dy = p.clientY - tourLastY;
-    tourLastX = p.clientX; tourLastY = p.clientY;
-    tourYaw -= dx * 0.005;
-    tourPitch -= dy * 0.005;
-    tourPitch = Math.max(-1.3, Math.min(1.3, tourPitch));
-    e.preventDefault();
-  };
-  const onUp = () => { tourDragging = false; };
-  wrap.addEventListener('mousedown', onDown);
-  wrap.addEventListener('mousemove', onMove);
-  wrap.addEventListener('touchstart', onDown, { passive: true });
-  wrap.addEventListener('touchmove', onMove, { passive: false });
-  wrap.addEventListener('touchend', onUp);
-
-  const bind = (id, key) => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    const set = v => e => { tourKeys[key] = v; e.preventDefault(); };
-    btn.addEventListener('mousedown', set(true));
-    btn.addEventListener('mouseup', set(false));
-    btn.addEventListener('mouseleave', set(false));
-    btn.addEventListener('touchstart', set(true), { passive: false });
-    btn.addEventListener('touchend', set(false));
-  };
-  bind('tourBtnF', 'w');
-  bind('tourBtnB', 's');
-  bind('tourBtnL', 'a');
-  bind('tourBtnR', 'd');
-
-  if (!tourControlsBound) {
-    tourControlsBound = true;
-    window.addEventListener('keydown', e => { tourKeys[e.key.toLowerCase()] = true; });
-    window.addEventListener('keyup', e => { tourKeys[e.key.toLowerCase()] = false; });
-    window.addEventListener('mouseup', onUp);
-    window.addEventListener('resize', () => {
-      if (!tourRenderer) return;
-      const r = wrap.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      tourRenderer.setSize(r.width, r.height);
-      tourCamera.aspect = r.width / r.height;
-      tourCamera.updateProjectionMatrix();
-    });
-  }
-}
 
 function loadProfile() {
   if (!currentSession) return;
@@ -2405,11 +2053,50 @@ async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel)
 }
 
 const WORKER_URL = 'https://roomfactory-gigachat.onrender.com/generate';
+const APARTMENT_URL = 'https://roomfactory-gigachat.onrender.com/generate-apartment';
 const SUPPORT_CHAT_URL = 'https://roomfactory-gigachat.onrender.com/support-chat';
 const budgetPrompts = ['budget economy interior, affordable furniture','affordable interior, IKEA style','mid-range interior, quality furniture','premium interior, high-end furniture','ultra luxury bespoke interior'];
 
 let file = null;
 let generating = false;
+let apartmentMode = false;
+let apartmentFiles = [];
+
+function enterApartmentMode() {
+  apartmentMode = true;
+  showHome();
+  document.getElementById('apartmentBanner').style.display = 'block';
+  document.getElementById('apartmentPhotosSection').style.display = 'block';
+  document.getElementById('styleSection').style.display = 'none';
+  document.getElementById('styleDivider').style.display = 'none';
+  document.getElementById('uploadZoneText').textContent = t('apartment.uploadTextTarget');
+  document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
+}
+function exitApartmentMode() {
+  apartmentMode = false;
+  apartmentFiles = [];
+  document.getElementById('apartmentBanner').style.display = 'none';
+  document.getElementById('apartmentPhotosSection').style.display = 'none';
+  document.getElementById('styleSection').style.display = '';
+  document.getElementById('styleDivider').style.display = '';
+  document.getElementById('uploadZoneText').textContent = t('upload.text');
+  document.getElementById('apartmentFileInput').value = '';
+  const zone = document.getElementById('apartmentUploadZone');
+  zone.classList.remove('has-image');
+  const list = zone.querySelector('.apartment-files-list');
+  if (list) list.remove();
+}
+document.getElementById('apartmentFileInput').addEventListener('change', e => {
+  apartmentFiles = Array.from(e.target.files);
+  const zone = document.getElementById('apartmentUploadZone');
+  let list = zone.querySelector('.apartment-files-list');
+  if (!list) {
+    list = document.createElement('p');
+    list.className = 'apartment-files-list';
+    zone.appendChild(list);
+  }
+  list.textContent = t('apartment.filesChosen') + ' ' + apartmentFiles.length;
+});
 let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
 
 const styleCatalogFallback = { artdeco: 'classic', provence: 'scandinavian', hightech: 'minimalism', eco: 'japandi' };
@@ -2930,6 +2617,12 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const btn = document.getElementById('genBtn');
   const comment = document.getElementById('comment').value.trim();
 
+  if (apartmentMode && apartmentFiles.length < 1) {
+    err.textContent = t('apartment.needPhotos');
+    err.classList.add('visible');
+    return;
+  }
+
   generating = true;
   loading.classList.add('visible');
   result.classList.remove('visible');
@@ -2937,30 +2630,46 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = t('genBtnLoading');
 
-  const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
-  const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
-
   const roomLabelsRu = { 'living room':'Гостиная','bedroom':'Спальня','kitchen':'Кухня','bathroom':'Ванная','children room':'Детская','home office':'Кабинет','hallway':'Прихожая' };
   const roomLabelRu = roomLabelsRu[sel.room] || sel.roomLabel;
   const colorLabelRu = colorPromptRu[sel.color] || (colorNames[sel.color] && colorNames[sel.color].ru) || sel.color;
-  const styleLabelRu = translations.ru['style.' + sel.styleKey] || sel.styleLabel;
 
   try {
     const fd = new FormData();
     fd.append('image', file);
-    fd.append('prompt', prompt);
     fd.append('comment', comment);
     fd.append('roomLabel', roomLabelRu);
     fd.append('colorLabel', colorLabelRu);
-    fd.append('styleLabel', styleLabelRu);
     fd.append('output_format', 'jpeg');
 
-    const res = await fetch(WORKER_URL, { method: 'POST', body: fd });
+    let res;
+    if (apartmentMode) {
+      apartmentFiles.forEach(f => fd.append('apartmentPhotos', f));
+      fd.append('room', sel.room);
+      fd.append('color', sel.color);
+      fd.append('budgetPrompt', budgetPrompts[sel.budget]);
+      res = await fetch(APARTMENT_URL, { method: 'POST', body: fd });
+    } else {
+      const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
+      const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
+      fd.append('prompt', prompt);
+      fd.append('styleLabel', translations.ru['style.' + sel.styleKey] || sel.styleLabel);
+      res = await fetch(WORKER_URL, { method: 'POST', body: fd });
+    }
     if (!res.ok) throw new Error(res.status);
     let detectedFurniture = [];
     const furnitureHeader = res.headers.get('X-Furniture-List');
     if (furnitureHeader) {
       try { detectedFurniture = JSON.parse(decodeURIComponent(furnitureHeader)); } catch(e) {}
+    }
+    let effectiveStyleKey = sel.styleKey;
+    let effectiveStyleLabel = sel.styleLabel;
+    if (apartmentMode) {
+      const styleKeyHeader = res.headers.get('X-Style-Key');
+      if (styleKeyHeader && quizStyleKeys.includes(styleKeyHeader)) {
+        effectiveStyleKey = styleKeyHeader;
+        effectiveStyleLabel = translations.ru['style.' + styleKeyHeader] || styleKeyHeader;
+      }
     }
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
@@ -2968,12 +2677,12 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     document.getElementById('dlBtn').href = url;
     result.classList.add('visible');
 
-    const q = encodeURIComponent(sel.style.split(',')[0]+' '+sel.room);
+    const q = encodeURIComponent(t('style.' + effectiveStyleKey) + ' ' + sel.room);
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
-    renderMatchedFurniture(sel.storeKey, sel.styleKey, sel.room, detectedFurniture);
-    trackEvent('design_generated', { style: sel.styleKey, room: sel.room, store: sel.storeKey, budget: sel.budget });
-    if (currentSession) saveGeneration(blob, sel.styleKey, sel.styleLabel, sel.roomLabel, sel.storeLabel);
+    renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture);
+    trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey, budget: sel.budget, apartmentMode });
+    if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
     err.textContent = t('genError');
     err.classList.add('visible');
