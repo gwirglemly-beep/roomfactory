@@ -285,7 +285,7 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 
 .about { padding: 120px 48px; border-top: 1px solid rgba(42,34,24,0.1); background: #2d2318; }
 .about-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 80px; align-items: center; }
-.about-title { font-family: 'Unbounded', sans-serif; font-size: clamp(22px, 3vw, 36px); font-weight: 900; line-height: 1.05; letter-spacing: -0.5px; margin-bottom: 32px; color: #f5f2ed; overflow-wrap: break-word; word-break: break-word; }
+.about-title { font-family: 'Unbounded', sans-serif; font-size: clamp(22px, 3vw, 36px); font-weight: 900; line-height: 1.05; letter-spacing: -0.5px; margin-bottom: 32px; color: #f5f2ed; overflow-wrap: normal; word-break: keep-all; }
 .about-title em { font-style: normal; color: #b48c5a; }
 .about-text { font-size: 14px; color: rgba(245,242,237,0.55); line-height: 1.8; margin-bottom: 16px; }
 .about-features { display: flex; flex-direction: column; }
@@ -683,7 +683,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     </div>
     <div class="example-card">
       <div class="example-img-wrap">
-        <img class="example-img" src="https://i.imgur.com/1dc8go5.jpg" alt="До">
+        <img class="example-img" src="https://i.imgur.com/3bJbyOE.jpg" alt="До">
         <div class="example-overlay"></div>
         <div class="example-info">
           <div class="example-badge" data-i18n="examples.before">До</div>
@@ -693,11 +693,31 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     </div>
     <div class="example-card">
       <div class="example-img-wrap">
-        <img class="example-img" src="https://i.imgur.com/eLRbV7n.jpg" alt="После">
+        <img class="example-img" src="https://i.imgur.com/kRff8MA.jpg" alt="После">
         <div class="example-overlay"></div>
         <div class="example-info">
           <div class="example-badge" style="color:#fff;border-color:#fff" data-i18n="examples.after">После</div>
           <div class="example-label" data-i18n="examples.cap4">Лофт</div>
+        </div>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="example-img-wrap">
+        <img class="example-img" src="https://i.imgur.com/CwT0phz.jpg" alt="До">
+        <div class="example-overlay"></div>
+        <div class="example-info">
+          <div class="example-badge" data-i18n="examples.before">До</div>
+          <div class="example-label" data-i18n="examples.cap5">Пустая комната</div>
+        </div>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="example-img-wrap">
+        <img class="example-img" src="https://i.imgur.com/jAiCPp7.jpg" alt="После">
+        <div class="example-overlay"></div>
+        <div class="example-info">
+          <div class="example-badge" style="color:#fff;border-color:#fff" data-i18n="examples.after">После</div>
+          <div class="example-label" data-i18n="examples.cap6">Минимализм</div>
         </div>
       </div>
     </div>
@@ -712,8 +732,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
       <p class="gen-sub" data-i18n="generator.sub">Загрузите фото и получите готовый дизайн вашей комнаты.</p>
       <div class="gen-stats">
         <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.time">Время</span><span class="gen-stat-val" data-i18n="stat.timeVal">~30 сек</span></div>
-        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.styles">Стилей</span><span class="gen-stat-val">6</span></div>
-        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.cost">Стоимость</span><span class="gen-stat-val" data-i18n="stat.costVal">Бесплатно</span></div>
+        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.styles">Стилей</span><span class="gen-stat-val">10</span></div>
       </div>
     </div>
     <div class="gen-right">
@@ -1172,6 +1191,8 @@ const translations = {
     'examples.cap2': `Скандинавский стиль`,
     'examples.cap3': `Старая гостиная`,
     'examples.cap4': `Лофт`,
+    'examples.cap5': `Пустая комната`,
+    'examples.cap6': `Минимализм`,
     'how.eyebrow': `Процесс`,
     'how.title': `Как это работает`,
     'how.step1Title': `Загрузите фото`,
@@ -1198,8 +1219,6 @@ const translations = {
     'stat.time': `Время`,
     'stat.timeVal': `~30 сек`,
     'stat.styles': `Стилей`,
-    'stat.cost': `Стоимость`,
-    'stat.costVal': `Бесплатно`,
     'upload.text': `Загрузите фото комнаты`,
     'upload.hint': `JPG или PNG, до 10 МБ`,
     'form.store': `Магазин мебели`,
@@ -1393,6 +1412,8 @@ const translations = {
     'examples.cap2': `Scandinavian style`,
     'examples.cap3': `Old living room`,
     'examples.cap4': `Loft`,
+    'examples.cap5': `Empty room`,
+    'examples.cap6': `Minimalism`,
     'how.eyebrow': `Process`,
     'how.title': `How it works`,
     'how.step1Title': `Upload a photo`,
@@ -1419,8 +1440,6 @@ const translations = {
     'stat.time': `Time`,
     'stat.timeVal': `~30 sec`,
     'stat.styles': `Styles`,
-    'stat.cost': `Cost`,
-    'stat.costVal': `Free`,
     'upload.text': `Upload a photo of your room`,
     'upload.hint': `JPG or PNG, up to 10MB`,
     'form.store': `Furniture store`,
