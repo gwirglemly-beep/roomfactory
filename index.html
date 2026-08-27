@@ -709,7 +709,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
       <p class="gen-sub" data-i18n="generator.sub">Загрузите фото и получите готовый дизайн вашей комнаты.</p>
       <div class="gen-stats">
         <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.time">Время</span><span class="gen-stat-val" data-i18n="stat.timeVal">~30 сек</span></div>
-        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.styles">Стилей</span><span class="gen-stat-val">10</span></div>
+        <div class="gen-stat"><span class="gen-stat-label" data-i18n="stat.styles">Стилей</span><span class="gen-stat-val">6</span></div>
       </div>
     </div>
     <div class="gen-right">
@@ -756,10 +756,6 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="classic" data-val="classic luxury interior, elegant furniture silhouettes, ornate details, symmetrical composition" data-i18n="style.classic">Классика</button><button class="info-btn" onclick="showStyleInfo('classic')">ⓘ</button></div>
             <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="japandi" data-val="japandi interior design, natural material textures, zen simplicity, low furniture silhouettes" data-i18n="style.japandi">Japandi</button><button class="info-btn" onclick="showStyleInfo('japandi')">ⓘ</button></div>
             <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="boho" data-val="bohemian eclectic interior, colorful, plants, vintage furniture" data-i18n="style.boho">Бохо</button><button class="info-btn" onclick="showStyleInfo('boho')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="artdeco" data-val="art deco interior design, bold geometric patterns, luxurious materials, brass and marble accents, symmetrical glamorous composition" data-i18n="style.artdeco">Ар-деко</button><button class="info-btn" onclick="showStyleInfo('artdeco')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="provence" data-val="provence french country interior design, pastel colors, floral patterns, rustic light wood furniture, vintage charm" data-i18n="style.provence">Прованс</button><button class="info-btn" onclick="showStyleInfo('provence')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="hightech" data-val="high-tech interior design, glossy white and metallic surfaces, futuristic minimalist forms, glass and chrome accents" data-i18n="style.hightech">Хай-тек</button><button class="info-btn" onclick="showStyleInfo('hightech')">ⓘ</button></div>
-            <div class="style-row"><button class="opt-btn" style="flex:1" data-group="style" data-key="eco" data-val="eco natural interior design, organic wood textures, indoor plants, natural linen textiles, earthy tones" data-i18n="style.eco">Эко-стиль</button><button class="info-btn" onclick="showStyleInfo('eco')">ⓘ</button></div>
           </div>
         </div>
 
@@ -1115,10 +1111,6 @@ const translations = {
     'hero.btnExamples': `Смотреть примеры`,
     'style.scandinavian': `Скандинавский`,
     'style.minimalism': `Минимализм`,
-    'style.artdeco': `Ар-деко`,
-    'style.provence': `Прованс`,
-    'style.hightech': `Хай-тек`,
-    'style.eco': `Эко-стиль`,
     'style.loft': `Лофт`,
     'style.classic': `Классика`,
     'style.japandi': `Japandi`,
@@ -1129,10 +1121,6 @@ const translations = {
     'styleDesc.classic': `Богатые материалы, симметрия, изящные детали.`,
     'styleDesc.japandi': `Японская философия встречает скандинавский уют.`,
     'styleDesc.boho': `Яркие цвета, растения, текстиль. Свободный стиль.`,
-    'styleDesc.artdeco': `Геометрия, роскошь, латунь и мрамор, симметрия.`,
-    'styleDesc.provence': `Пастельные тона, цветочные принты, деревенский уют.`,
-    'styleDesc.hightech': `Глянцевые поверхности, металл и стекло, футуризм.`,
-    'styleDesc.eco': `Натуральное дерево, растения, природные оттенки.`,
     'examples.eyebrow': `Примеры работ`,
     'examples.title': `До<br>и после`,
     'examples.sub': `ИИ преображает реальные комнаты — обновляем старый интерьер и создаём новый`,
@@ -1334,10 +1322,6 @@ const translations = {
     'hero.btnExamples': `View examples`,
     'style.scandinavian': `Scandinavian`,
     'style.minimalism': `Minimalism`,
-    'style.artdeco': `Art Deco`,
-    'style.provence': `Provence`,
-    'style.hightech': `High-tech`,
-    'style.eco': `Eco style`,
     'style.loft': `Loft`,
     'style.classic': `Classic`,
     'style.japandi': `Japandi`,
@@ -1348,10 +1332,6 @@ const translations = {
     'styleDesc.classic': `Rich materials, symmetry, elegant details.`,
     'styleDesc.japandi': `Japanese philosophy meets Scandinavian coziness.`,
     'styleDesc.boho': `Bright colors, plants, textiles. A free-spirited style.`,
-    'styleDesc.artdeco': `Geometry, luxury, brass and marble, symmetry.`,
-    'styleDesc.provence': `Pastel tones, floral prints, rustic coziness.`,
-    'styleDesc.hightech': `Glossy surfaces, metal and glass, futurism.`,
-    'styleDesc.eco': `Natural wood, plants, organic earthy tones.`,
     'examples.eyebrow': `Featured Work`,
     'examples.title': `Before<br>and After`,
     'examples.sub': `AI transforms real rooms — refreshing old interiors and creating new ones`,
@@ -1628,25 +1608,6 @@ const styleInfoImgs = {
     'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=700&q=75&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1632119580908-ae947d4c7691?w=700&q=75&auto=format&fit=crop'
   ],
-  artdeco: [
-    'https://images.unsplash.com/photo-1563219125-1db796e20ff2?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1784805598587-c0a92a669f7b?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1764411504782-bb0f2dc4bd86?w=700&q=75&auto=format&fit=crop'
-  ],
-  provence: [
-    'https://images.unsplash.com/photo-1659114340599-089aca79fe2d?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1598895719216-c3ec6eb625ab?w=700&q=75&auto=format&fit=crop'
-  ],
-  hightech: [
-    'https://images.unsplash.com/photo-1725042893312-5ec0dea9e369?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1719561975005-d2c2b08c6ed8?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1725610036468-ee58fab023ef?w=700&q=75&auto=format&fit=crop'
-  ],
-  eco: [
-    'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1612543322525-f021384dc6a4?w=700&q=75&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1632323091845-f636f89749fa?w=700&q=75&auto=format&fit=crop'
-  ]
 };
 function primaryStyleImg(key) {
   const imgs = styleInfoImgs[key];
@@ -1661,7 +1622,7 @@ function showStyleInfo(key) {
   showPopup(t('style.' + key), t('styleDesc.' + key), primaryStyleImg(key));
 }
 
-const quizStyleKeys = ['scandinavian', 'minimalism', 'loft', 'classic', 'japandi', 'boho', 'artdeco', 'provence', 'hightech', 'eco'];
+const quizStyleKeys = ['scandinavian', 'minimalism', 'loft', 'classic', 'japandi', 'boho'];
 let quizRounds = [];
 let quizIndex = 0;
 let quizScores = {};
@@ -1682,7 +1643,7 @@ function buildQuizRounds(pool, count) {
 
 function openQuizModal() {
   quizExcluded = [];
-  quizRounds = buildQuizRounds(quizStyleKeys, 7);
+  quizRounds = buildQuizRounds(quizStyleKeys, 5);
   quizIndex = 0;
   quizScores = {};
   document.getElementById('quizResult').style.display = 'none';
@@ -2133,11 +2094,10 @@ document.getElementById('apartmentFileInput').addEventListener('change', e => {
 });
 let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
 
-const styleCatalogFallback = { artdeco: 'classic', provence: 'scandinavian', hightech: 'minimalism', eco: 'japandi' };
 function resolveCatalogItems(storeKey, styleKey) {
   const store = storeCatalogs[storeKey];
   if (!store) return [];
-  return store[styleKey] || store[styleCatalogFallback[styleKey]] || [];
+  return store[styleKey] || [];
 }
 const storeCatalogs = {
 hoff: {
@@ -2441,6 +2401,22 @@ function pickFurnitureHint(storeKey, styleKey, roomKey) {
   }
   return descriptions.join(', ');
 }
+function pickFurnitureImages(storeKey, styleKey, roomKey) {
+  let items = resolveCatalogItems(storeKey, styleKey);
+  if (!items.length) return [];
+  const keywords = roomKeywordsRu[roomKey];
+  if (keywords && keywords.length) {
+    const matches = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
+    if (matches.length) items = matches;
+  }
+  const shuffled = items.slice().sort(() => Math.random() - 0.5);
+  const urls = [];
+  for (const p of shuffled) {
+    if (p.img && !urls.includes(p.img)) urls.push(p.img);
+    if (urls.length >= 3) break;
+  }
+  return urls;
+}
 const furnitureTypeSearch = {
   'диван': ['диван'],
   'кресло': ['кресло'],
@@ -2688,6 +2664,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
       fd.append('prompt', prompt);
       fd.append('styleLabel', translations.ru['style.' + sel.styleKey] || sel.styleLabel);
+      const referenceImageUrls = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
+      if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
       res = await fetch(WORKER_URL, { method: 'POST', body: fd });
     }
     if (!res.ok) throw new Error(res.status);
