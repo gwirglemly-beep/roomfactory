@@ -2411,9 +2411,15 @@ function pickFurnitureImages(storeKey, styleKey, roomKey) {
   }
   const shuffled = items.slice().sort(() => Math.random() - 0.5);
   const urls = [];
+  const usedTypes = new Set();
   for (const p of shuffled) {
-    if (p.img && !urls.includes(p.img)) urls.push(p.img);
-    if (urls.length >= 3) break;
+    if (!p.img || urls.includes(p.img)) continue;
+    const nameLower = p.name.toLowerCase();
+    const type = Object.keys(furnitureTypeSearch).find(t => furnitureTypeSearch[t].some(k => nameLower.includes(k)));
+    if (type && usedTypes.has(type)) continue;
+    if (type) usedTypes.add(type);
+    urls.push(p.img);
+    if (urls.length >= 8) break;
   }
   return urls;
 }
