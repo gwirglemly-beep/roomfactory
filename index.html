@@ -2377,21 +2377,32 @@ function describeProductEn(name) {
 
 const roomKeywordsRu = {
   'living room': ['диван', 'кресло', 'журнальный стол', 'тумба', 'стеллаж'],
-  'bedroom': ['кровать', 'тумб', 'комод'],
+  'bedroom': ['кровать', 'тумб', 'комод', 'шкаф'],
   'kitchen': ['кухон', 'обеденн', 'стул'],
   'bathroom': ['зеркал'],
-  'children room': ['кровать', 'стол', 'стул', 'полк'],
+  'children room': ['кровать', 'стол', 'стул', 'полк', 'шкаф'],
   'home office': ['стол', 'кресло', 'стеллаж', 'полк'],
-  'hallway': ['вешалк', 'зеркал', 'обувниц']
+  'hallway': ['вешалк', 'зеркал', 'обувниц', 'шкаф']
 };
+const universalFurnitureKeywords = ['зеркал', 'ковер', 'ковёр', 'светильник', 'лампа', 'люстра', 'пуф', 'картин', 'ваза', 'растен'];
+function roomFilteredItems(items, roomKey) {
+  const keywords = roomKeywordsRu[roomKey];
+  if (keywords && keywords.length) {
+    let matches = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
+    if ((roomKey === 'bedroom' || roomKey === 'children room') && keywords.includes('кровать')) {
+      const realBeds = matches.filter(p => p.name.toLowerCase().includes('кровать') && !p.name.toLowerCase().includes('диван'));
+      const rest = matches.filter(p => !p.name.toLowerCase().includes('кровать') || p.name.toLowerCase().includes('диван'));
+      matches = realBeds.length ? realBeds.concat(rest.filter(p => !p.name.toLowerCase().includes('диван-кровать'))) : matches;
+    }
+    if (matches.length) return matches;
+  }
+  const universal = items.filter(p => universalFurnitureKeywords.some(k => p.name.toLowerCase().includes(k)));
+  return universal.length ? universal : items;
+}
 function pickFurnitureHint(storeKey, styleKey, roomKey) {
   let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) return '';
-  const keywords = roomKeywordsRu[roomKey];
-  if (keywords && keywords.length) {
-    const matches = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
-    if (matches.length) items = matches;
-  }
+  items = roomFilteredItems(items, roomKey);
   const shuffled = items.slice().sort(() => Math.random() - 0.5);
   const descriptions = [];
   for (const p of shuffled) {
@@ -2404,11 +2415,7 @@ function pickFurnitureHint(storeKey, styleKey, roomKey) {
 function pickFurnitureImages(storeKey, styleKey, roomKey) {
   let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) return [];
-  const keywords = roomKeywordsRu[roomKey];
-  if (keywords && keywords.length) {
-    const matches = items.filter(p => keywords.some(k => p.name.toLowerCase().includes(k)));
-    if (matches.length) items = matches;
-  }
+  items = roomFilteredItems(items, roomKey);
   const shuffled = items.slice().sort(() => Math.random() - 0.5);
   const urls = [];
   const usedTypes = new Set();
