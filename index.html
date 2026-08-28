@@ -1698,6 +1698,7 @@ function quizDisagree() {
   renderQuizRound();
 }
 async function finishQuiz(topKey) {
+  try { localStorage.setItem('rf_quiz_prompted', '1'); } catch (e) {}
   document.getElementById('quizPair').style.display = 'none';
   document.getElementById('quizConfirm').style.display = 'none';
   document.getElementById('quizResultText').textContent = t('quiz.resultPrefix') + ' ' + t('style.' + topKey) + '.';
@@ -1887,7 +1888,10 @@ sb.auth.onAuthStateChange((_event, session) => {
     openAuthModal();
     switchAuthTab('recovery');
   }
-  if (_event === 'SIGNED_IN' && session && session.user && !(session.user.user_metadata && session.user.user_metadata.preferred_style)) {
+  let quizAlreadyPrompted = false;
+  try { quizAlreadyPrompted = localStorage.getItem('rf_quiz_prompted') === '1'; } catch (e) {}
+  if (_event === 'SIGNED_IN' && session && session.user && !quizAlreadyPrompted && !(session.user.user_metadata && session.user.user_metadata.preferred_style)) {
+    try { localStorage.setItem('rf_quiz_prompted', '1'); } catch (e) {}
     setTimeout(openQuizModal, 400);
   }
 });
@@ -2570,18 +2574,32 @@ function pickFurnitureImages(storeKey, styleKey, roomKey) {
   if (!items.length) return [];
   items = roomFilteredItems(items, roomKey);
   const shuffled = items.slice().sort(() => Math.random() - 0.5);
-  const urls = [];
+  const picked = [];
   const usedTypes = new Set();
   for (const p of shuffled) {
-    if (!p.img || urls.includes(p.img)) continue;
+    if (!p.img || picked.some(x => x.img === p.img)) continue;
     const nameLower = p.name.toLowerCase();
     const type = Object.keys(furnitureTypeSearch).find(t => furnitureTypeSearch[t].some(k => nameLower.includes(k)));
     if (type && usedTypes.has(type)) continue;
     if (type) usedTypes.add(type);
-    urls.push(p.img);
-    if (urls.length >= 8) break;
+    picked.push(p);
+    if (picked.length >= 8) break;
   }
-  return urls;
+  return picked;
+}
+function renderKnownFurniture(items) {
+  if (!items || !items.length) return false;
+  const grid = document.getElementById('hoffProductsGrid');
+  grid.innerHTML = items.map(p =>
+    '<a class="hoff-product-card" href="' + p.url + '" target="_blank" rel="noopener">' +
+      '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+      '<div class="hoff-product-info">' +
+        '<div class="hoff-product-name">' + p.name + '</div>' +
+        '<div class="hoff-product-price">' + p.price + '</div>' +
+      '</div>' +
+    '</a>'
+  ).join('');
+  return true;
 }
 const furnitureTypeSearch = {
   'диван': ['диван'],
@@ -2820,6 +2838,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     fd.append('output_format', 'jpeg');
 
     let res;
+    let selectedFurnitureItems = [];
     if (apartmentMode) {
       apartmentFiles.forEach(f => fd.append('apartmentPhotos', f));
       fd.append('room', sel.room);
@@ -2831,7 +2850,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
       fd.append('prompt', prompt);
       fd.append('styleLabel', translations.ru['style.' + sel.styleKey] || sel.styleLabel);
-      const referenceImageUrls = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
+      selectedFurnitureItems = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
+      const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
       res = await fetch(WORKER_URL, { method: 'POST', body: fd });
     }
@@ -2859,7 +2879,11 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     const q = encodeURIComponent(t('style.' + effectiveStyleKey) + ' ' + sel.room);
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
-    renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture);
+    if (!apartmentMode && renderKnownFurniture(selectedFurnitureItems)) {
+      // exact reference furniture rendered
+    } else {
+      renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture);
+    }
     trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey, budget: sel.budget, apartmentMode });
     if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
