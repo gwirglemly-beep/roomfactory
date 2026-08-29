@@ -774,9 +774,9 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
           </div>
         </div>
 
-        <hr class="form-divider">
+        <hr class="form-divider" id="colorDivider">
 
-        <div class="form-section">
+        <div class="form-section" id="colorSection">
           <span class="form-label" data-i18n="form.color">Цветовая гамма</span>
           <div class="colors-row">
             <button class="color-dot active" data-val="neutral beige and white" data-name="Нейтральный" style="background:#e8ddd0"></button>
@@ -834,7 +834,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
           <span class="result-label" data-i18n="resultLabel">Ваш новый интерьер</span>
           <img id="resultImg" src="" alt="Результат">
           <a class="download-btn" id="dlBtn" download="roomfactory.jpg" data-i18n="downloadBtn">Скачать изображение</a>
-          <div style="margin-top:20px">
+          <div style="margin-top:20px" id="similarFurnitureBlock">
             <div class="form-label" style="margin-bottom:8px"><span data-i18n="similarFurniturePrefix">Похожая мебель в</span> <span id="storeProductsLabel">Hoff</span></div>
             <div class="hoff-products-grid" id="hoffProductsGrid"></div>
           </div>
@@ -2068,6 +2068,8 @@ function enterApartmentMode() {
   document.getElementById('apartmentPhotosSection').style.display = 'block';
   document.getElementById('styleSection').style.display = 'none';
   document.getElementById('styleDivider').style.display = 'none';
+  document.getElementById('colorSection').style.display = 'none';
+  document.getElementById('colorDivider').style.display = 'none';
   document.getElementById('uploadZoneText').textContent = t('apartment.uploadTextTarget');
   document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
 }
@@ -2078,6 +2080,8 @@ function exitApartmentMode() {
   document.getElementById('apartmentPhotosSection').style.display = 'none';
   document.getElementById('styleSection').style.display = '';
   document.getElementById('styleDivider').style.display = '';
+  document.getElementById('colorSection').style.display = '';
+  document.getElementById('colorDivider').style.display = '';
   document.getElementById('uploadZoneText').textContent = t('upload.text');
   document.getElementById('apartmentFileInput').value = '';
   const zone = document.getElementById('apartmentUploadZone');
@@ -2846,7 +2850,6 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     if (apartmentMode) {
       apartmentFiles.forEach(f => fd.append('apartmentPhotos', f));
       fd.append('room', sel.room);
-      fd.append('color', sel.color);
       fd.append('budgetPrompt', budgetPrompts[sel.budget]);
       res = await fetch(APARTMENT_URL, { method: 'POST', body: fd });
     } else {
@@ -2883,10 +2886,14 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     const q = encodeURIComponent(t('style.' + effectiveStyleKey) + ' ' + sel.room);
     document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
     document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
-    if (!apartmentMode && renderKnownFurniture(selectedFurnitureItems)) {
-      // exact reference furniture rendered
+    const similarBlock = document.getElementById('similarFurnitureBlock');
+    if (apartmentMode) {
+      similarBlock.style.display = 'none';
     } else {
-      renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture);
+      similarBlock.style.display = '';
+      if (!renderKnownFurniture(selectedFurnitureItems)) {
+        renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture);
+      }
     }
     trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey, budget: sel.budget, apartmentMode });
     if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel);
