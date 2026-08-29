@@ -2046,6 +2046,7 @@ async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel)
 
 const WORKER_URL = 'https://roomfactory-gigachat.onrender.com/generate';
 const APARTMENT_URL = 'https://roomfactory-gigachat.onrender.com/generate-apartment';
+const CLASSIFY_URL = 'https://roomfactory-gigachat.onrender.com/classify-style';
 const SUPPORT_CHAT_URL = 'https://roomfactory-gigachat.onrender.com/support-chat';
 const budgetPrompts = ['budget economy interior, affordable furniture','affordable interior, IKEA style','mid-range interior, quality furniture','premium interior, high-end furniture','ultra luxury bespoke interior'];
 
@@ -2842,10 +2843,28 @@ document.getElementById('genBtn').addEventListener('click', async () => {
 
     let res;
     let selectedFurnitureItems = [];
+    let effectiveStyleKey = sel.styleKey;
+    let effectiveStyleLabel = sel.styleLabel;
     if (apartmentMode) {
+      const classifyFd = new FormData();
+      classifyFd.append('image', file);
+      try {
+        const classifyRes = await fetch(CLASSIFY_URL, { method: 'POST', body: classifyFd });
+        if (classifyRes.ok) {
+          const classifyData = await classifyRes.json();
+          if (classifyData.styleKey && quizStyleKeys.includes(classifyData.styleKey)) {
+            effectiveStyleKey = classifyData.styleKey;
+            effectiveStyleLabel = translations.ru['style.' + classifyData.styleKey] || classifyData.styleKey;
+          }
+        }
+      } catch (e) {}
+
       apartmentFiles.forEach(f => fd.append('apartmentPhotos', f));
       fd.append('room', sel.room);
       fd.append('budgetPrompt', budgetPrompts[sel.budget]);
+      selectedFurnitureItems = pickFurnitureImages(sel.storeKey, effectiveStyleKey, sel.room);
+      const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
+      if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
       res = await fetch(APARTMENT_URL, { method: 'POST', body: fd });
     } else {
       const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
@@ -2858,20 +2877,6 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       res = await fetch(WORKER_URL, { method: 'POST', body: fd });
     }
     if (!res.ok) throw new Error(res.status);
-    let detectedFurniture = [];
-    const furnitureHeader = res.headers.get('X-Furniture-List');
-    if (furnitureHeader) {
-      try { detectedFurniture = JSON.parse(decodeURIComponent(furnitureHeader)); } catch(e) {}
-    }
-    let effectiveStyleKey = sel.styleKey;
-    let effectiveStyleLabel = sel.styleLabel;
-    if (apartmentMode) {
-      const styleKeyHeader = res.headers.get('X-Style-Key');
-      if (styleKeyHeader && quizStyleKeys.includes(styleKeyHeader)) {
-        effectiveStyleKey = styleKeyHeader;
-        effectiveStyleLabel = translations.ru['style.' + styleKeyHeader] || styleKeyHeader;
-      }
-    }
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
     document.getElementById('resultImg').src = url;
@@ -2879,14 +2884,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     result.classList.add('visible');
 
     const similarBlock = document.getElementById('similarFurnitureBlock');
-    if (apartmentMode) {
-      similarBlock.style.display = renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture) ? '' : 'none';
-    } else {
-      similarBlock.style.display = '';
-      if (!renderKnownFurniture(selectedFurnitureItems)) {
-        renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture);
-      }
-    }
+    similarBlock.style.display = renderKnownFurniture(selectedFurnitureItems) ? '' : 'none';
     trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey, budget: sel.budget, apartmentMode });
     if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel);
   } catch(e) {
