@@ -838,13 +838,6 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             <div class="form-label" style="margin-bottom:8px"><span data-i18n="similarFurniturePrefix">Похожая мебель в</span> <span id="storeProductsLabel">Hoff</span></div>
             <div class="hoff-products-grid" id="hoffProductsGrid"></div>
           </div>
-          <div style="margin-top:16px">
-            <div class="form-label" style="margin-bottom:8px" data-i18n="searchMorePrefix">Ещё поискать</div>
-            <div class="shops-row" style="grid-template-columns:repeat(2,1fr)">
-              <a id="roomerBtn" target="_blank" class="shop-btn">Roomer</a>
-              <a id="baumitBtn" target="_blank" class="shop-btn">Baumit</a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -2646,27 +2639,29 @@ function findCatalogMatch(items, typeWord, colorWord) {
 }
 function renderMatchedFurniture(storeKey, styleKey, roomKey, detected) {
   const items = resolveCatalogItems(storeKey, styleKey);
-  if (!detected || !detected.length || !items.length) { renderStoreProducts(storeKey, styleKey, roomKey); return; }
+  if (!detected || !detected.length || !items.length) return false;
   const used = new Set();
   const cards = [];
   detected.forEach(d => {
     const match = findCatalogMatch(items, d.type, d.color);
-    if (match && !used.has(match.product.name)) {
+    if (match && match.exact && !used.has(match.product.name)) {
       used.add(match.product.name);
       cards.push(match);
     }
+    if (cards.length >= 8) return;
   });
-  if (!cards.length) { renderStoreProducts(storeKey, styleKey, roomKey); return; }
+  if (!cards.length) return false;
   const grid = document.getElementById('hoffProductsGrid');
   grid.innerHTML = cards.map(c =>
     '<a class="hoff-product-card" href="' + c.product.url + '" target="_blank" rel="noopener">' +
       '<img src="' + c.product.img + '" alt="' + c.product.name + '" loading="lazy">' +
       '<div class="hoff-product-info">' +
-        '<div class="hoff-product-name">' + c.product.name + (c.exact ? '' : ' <span style="opacity:.6;font-size:.85em">— похожий вариант</span>') + '</div>' +
+        '<div class="hoff-product-name">' + c.product.name + '</div>' +
         '<div class="hoff-product-price">' + c.product.price + '</div>' +
       '</div>' +
     '</a>'
   ).join('');
+  return true;
 }
 function renderStoreProducts(storeKey, styleKey, roomKey) {
   const grid = document.getElementById('hoffProductsGrid');
@@ -2883,12 +2878,9 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     document.getElementById('dlBtn').href = url;
     result.classList.add('visible');
 
-    const q = encodeURIComponent(t('style.' + effectiveStyleKey) + ' ' + sel.room);
-    document.getElementById('roomerBtn').href = 'https://roomer.ru/search/?q='+q;
-    document.getElementById('baumitBtn').href = 'https://baumitshop.ru/search/?q='+q;
     const similarBlock = document.getElementById('similarFurnitureBlock');
     if (apartmentMode) {
-      similarBlock.style.display = 'none';
+      similarBlock.style.display = renderMatchedFurniture(sel.storeKey, effectiveStyleKey, sel.room, detectedFurniture) ? '' : 'none';
     } else {
       similarBlock.style.display = '';
       if (!renderKnownFurniture(selectedFurnitureItems)) {
