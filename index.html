@@ -201,9 +201,10 @@ a.auth-link:hover, .auth-link a:hover { color: #b48c5a; }
 
 .colors-row { display: flex; gap: 34px; overflow-x: auto; padding: 0 24px 20px; margin: 0 -24px; flex-wrap: nowrap; scrollbar-width: none; }
 .colors-row::-webkit-scrollbar { display: none; }
-.color-dot { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; position: relative; flex-shrink: 0; }
-.color-dot.active { border-color: #b48c5a; transform: scale(1.2); }
-.color-dot::after { content: attr(data-name); position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 8px; color: #8a7a66; white-space: nowrap; font-family: 'Inter', sans-serif; }
+.color-dot { width: 44px; height: 44px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; position: relative; flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; overflow: hidden; padding: 0; background: none; box-shadow: 0 1px 3px rgba(42,34,24,0.12); }
+.color-dot span { display: block; width: 100%; height: 100%; }
+.color-dot.active { border-color: #b48c5a; transform: scale(1.12); }
+.color-dot::after { content: attr(data-name); position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 8px; color: #8a7a66; white-space: nowrap; font-family: 'Inter', sans-serif; }
 
 .budget-wrap { padding-bottom: 8px; }
 input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; cursor: pointer; }
@@ -779,23 +780,30 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
         <div class="form-section" id="colorSection">
           <span class="form-label" data-i18n="form.color">Цветовая гамма</span>
           <div class="colors-row">
-            <button class="color-dot active" data-val="neutral beige and white" data-name="Нейтральный" style="background:#e8ddd0"></button>
-            <button class="color-dot" data-val="dark moody deep tones" data-name="Тёмный" style="background:#1a1510"></button>
-            <button class="color-dot" data-val="warm brown chocolate" data-name="Коричневый" style="background:#7a4e2a"></button>
-            <button class="color-dot" data-val="cool blue grey" data-name="Синий" style="background:#4a6890"></button>
-            <button class="color-dot" data-val="sage green natural" data-name="Зелёный" style="background:#5a8050"></button>
-            <button class="color-dot" data-val="blush pink soft" data-name="Розовый" style="background:#c07070"></button>
-            <button class="color-dot" data-val="pure white bright interior" data-name="Белый" style="background:#f0f0f0; border: 2px solid #cccccc !important;"></button>
-            <button class="color-dot" data-val="pure black dark interior" data-name="Чёрный" style="background:#111111"></button>
-            <button class="color-dot" data-val="golden luxury warm" data-name="Золотой" style="background:#c9a030"></button>
-            <button class="color-dot" data-val="lavender purple violet tones" data-name="Сиреневый" style="background:#9b7bb8"></button>
-            <button class="color-dot" data-val="deep burgundy wine red tones" data-name="Бордовый" style="background:#8b2a3a"></button>
-            <button class="color-dot" data-val="warm terracotta orange tones" data-name="Терракота" style="background:#c4622a"></button>
-            <button class="color-dot" data-val="navy dark blue indigo tones" data-name="Тёмно-синий" style="background:#1e3a5f"></button>
-            <button class="color-dot" data-val="warm olive khaki tones" data-name="Оливковый" style="background:#6b7a3a"></button>
-            <button class="color-dot" data-val="soft grey silver tones" data-name="Серый" style="background:#8a8a8a"></button>
-            <button class="color-dot" data-val="dusty rose mauve tones" data-name="Пыльная роза" style="background:#b07a8a"></button>
-            <button class="color-dot" data-val="mint aqua fresh tones" data-name="Мятный" style="background:#5aaa90"></button>
+            <button class="color-dot active" data-val="warm neutral palette: beige, cream, taupe and soft white tones together" data-name="Нейтральная">
+              <span style="background:#e8ddd0"></span><span style="background:#f5f0e8"></span><span style="background:#c9b8a0"></span><span style="background:#a89078"></span>
+            </button>
+            <button class="color-dot" data-val="warm earthy palette: terracotta, chocolate brown, olive and warm cream tones together" data-name="Земляная">
+              <span style="background:#c4622a"></span><span style="background:#7a4e2a"></span><span style="background:#6b7a3a"></span><span style="background:#e8d5b8"></span>
+            </button>
+            <button class="color-dot" data-val="cool monochrome palette: black, charcoal grey, soft grey and white tones together" data-name="Монохром">
+              <span style="background:#111111"></span><span style="background:#4a4a4a"></span><span style="background:#8a8a8a"></span><span style="background:#f0f0f0"></span>
+            </button>
+            <button class="color-dot" data-val="cool blue palette: navy, dusty blue, grey and white tones together" data-name="Синяя">
+              <span style="background:#1e3a5f"></span><span style="background:#4a6890"></span><span style="background:#8a8a8a"></span><span style="background:#f0f0f0"></span>
+            </button>
+            <button class="color-dot" data-val="soft pink palette: blush, burgundy, dusty rose and cream tones together" data-name="Розовая">
+              <span style="background:#c07070"></span><span style="background:#8b2a3a"></span><span style="background:#b07a8a"></span><span style="background:#f5e8e0"></span>
+            </button>
+            <button class="color-dot" data-val="natural green palette: sage, olive, mint and cream tones together" data-name="Зелёная">
+              <span style="background:#5a8050"></span><span style="background:#6b7a3a"></span><span style="background:#5aaa90"></span><span style="background:#eef0e0"></span>
+            </button>
+            <button class="color-dot" data-val="dark luxury palette: black, gold, deep burgundy and charcoal tones together" data-name="Тёмная роскошь">
+              <span style="background:#111111"></span><span style="background:#c9a030"></span><span style="background:#8b2a3a"></span><span style="background:#2a2520"></span>
+            </button>
+            <button class="color-dot" data-val="lavender palette: lavender purple, mauve, grey and white tones together" data-name="Сиреневая">
+              <span style="background:#9b7bb8"></span><span style="background:#b07a8a"></span><span style="background:#8a8a8a"></span><span style="background:#f0f0f0"></span>
+            </button>
           </div>
         </div>
 
@@ -1522,42 +1530,24 @@ function t(key) {
 }
 
 const colorNames = {
-  'neutral beige and white': { ru: 'Нейтральный', en: 'Neutral' },
-  'dark moody deep tones': { ru: 'Тёмный', en: 'Dark' },
-  'warm brown chocolate': { ru: 'Коричневый', en: 'Brown' },
-  'cool blue grey': { ru: 'Синий', en: 'Blue' },
-  'sage green natural': { ru: 'Зелёный', en: 'Green' },
-  'blush pink soft': { ru: 'Розовый', en: 'Pink' },
-  'pure white bright interior': { ru: 'Белый', en: 'White' },
-  'pure black dark interior': { ru: 'Чёрный', en: 'Black' },
-  'golden luxury warm': { ru: 'Золотой', en: 'Gold' },
-  'lavender purple violet tones': { ru: 'Сиреневый', en: 'Lavender' },
-  'deep burgundy wine red tones': { ru: 'Бордовый', en: 'Burgundy' },
-  'warm terracotta orange tones': { ru: 'Терракота', en: 'Terracotta' },
-  'navy dark blue indigo tones': { ru: 'Тёмно-синий', en: 'Navy' },
-  'warm olive khaki tones': { ru: 'Оливковый', en: 'Olive' },
-  'soft grey silver tones': { ru: 'Серый', en: 'Grey' },
-  'dusty rose mauve tones': { ru: 'Пыльная роза', en: 'Dusty Rose' },
-  'mint aqua fresh tones': { ru: 'Мятный', en: 'Mint' }
+  'warm neutral palette: beige, cream, taupe and soft white tones together': { ru: 'Нейтральная', en: 'Neutral' },
+  'warm earthy palette: terracotta, chocolate brown, olive and warm cream tones together': { ru: 'Земляная', en: 'Earthy' },
+  'cool monochrome palette: black, charcoal grey, soft grey and white tones together': { ru: 'Монохром', en: 'Monochrome' },
+  'cool blue palette: navy, dusty blue, grey and white tones together': { ru: 'Синяя', en: 'Blue' },
+  'soft pink palette: blush, burgundy, dusty rose and cream tones together': { ru: 'Розовая', en: 'Pink' },
+  'natural green palette: sage, olive, mint and cream tones together': { ru: 'Зелёная', en: 'Green' },
+  'dark luxury palette: black, gold, deep burgundy and charcoal tones together': { ru: 'Тёмная роскошь', en: 'Dark Luxury' },
+  'lavender palette: lavender purple, mauve, grey and white tones together': { ru: 'Сиреневая', en: 'Lavender' }
 };
 const colorPromptRu = {
-  'neutral beige and white': 'нейтральный бежево-белый',
-  'dark moody deep tones': 'тёмный, глубокие приглушённые тона',
-  'warm brown chocolate': 'тёплый шоколадно-коричневый',
-  'cool blue grey': 'холодный сине-серый',
-  'sage green natural': 'приглушённый зелёный шалфей, зелёный цвет должен быть хорошо заметен на стенах и крупной мебели',
-  'blush pink soft': 'мягкий пудрово-розовый',
-  'pure white bright interior': 'чистый белый, светлый интерьер',
-  'pure black dark interior': 'глубокий чёрный, тёмный интерьер',
-  'golden luxury warm': 'тёплый золотистый',
-  'lavender purple violet tones': 'сиреневый, лавандовый',
-  'deep burgundy wine red tones': 'глубокий бордовый, винный красный',
-  'warm terracotta orange tones': 'тёплая терракота, оранжевые тона',
-  'navy dark blue indigo tones': 'тёмно-синий, индиго',
-  'warm olive khaki tones': 'тёплый оливково-хаки',
-  'soft grey silver tones': 'мягкий серебристо-серый',
-  'dusty rose mauve tones': 'пыльная роза, мов',
-  'mint aqua fresh tones': 'мятный, свежий бирюзовый'
+  'warm neutral palette: beige, cream, taupe and soft white tones together': 'нейтральная гамма — бежевый, кремовый, тёплый серо-коричневый и мягкий белый вместе',
+  'warm earthy palette: terracotta, chocolate brown, olive and warm cream tones together': 'земляная гамма — терракота, шоколадно-коричневый, оливковый и тёплый кремовый вместе',
+  'cool monochrome palette: black, charcoal grey, soft grey and white tones together': 'монохромная гамма — чёрный, графитовый, мягкий серый и белый вместе',
+  'cool blue palette: navy, dusty blue, grey and white tones together': 'синяя гамма — тёмно-синий, пыльно-голубой, серый и белый вместе',
+  'soft pink palette: blush, burgundy, dusty rose and cream tones together': 'розовая гамма — пудровый розовый, бордовый, пыльная роза и кремовый вместе',
+  'natural green palette: sage, olive, mint and cream tones together': 'зелёная гамма — шалфейный, оливковый, мятный и кремовый вместе',
+  'dark luxury palette: black, gold, deep burgundy and charcoal tones together': 'тёмная роскошная гамма — чёрный, золотой, глубокий бордовый и графитовый вместе',
+  'lavender palette: lavender purple, mauve, grey and white tones together': 'сиреневая гамма — лавандовый, мов, серый и белый вместе'
 };
 function refreshColorNames() {
   document.querySelectorAll('.color-dot').forEach(el => {
@@ -2094,7 +2084,7 @@ document.getElementById('apartmentFileInput').addEventListener('change', e => {
   }
   list.textContent = t('apartment.filesChosen') + ' ' + apartmentFiles.length;
 });
-let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'neutral beige and white', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
+let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'warm neutral palette: beige, cream, taupe and soft white tones together', budget:2, storeKey:'hoff', storeLabel:'Hoff' };
 
 function resolveCatalogItems(storeKey, styleKey) {
   const store = storeCatalogs[storeKey];
@@ -2571,7 +2561,8 @@ function pickFurnitureHint(storeKey, styleKey, roomKey) {
   }
   return descriptions.join(', ');
 }
-function pickFurnitureImages(storeKey, styleKey, roomKey) {
+function pickFurnitureImages(storeKey, styleKey, roomKey, maxCount) {
+  maxCount = maxCount || 8;
   let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) return [];
   items = roomFilteredItems(items, roomKey);
@@ -2585,7 +2576,7 @@ function pickFurnitureImages(storeKey, styleKey, roomKey) {
     if (type && usedTypes.has(type)) continue;
     if (type) usedTypes.add(type);
     picked.push(p);
-    if (picked.length >= 8) break;
+    if (picked.length >= maxCount) break;
   }
   return picked;
 }
@@ -2862,7 +2853,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       apartmentFiles.forEach(f => fd.append('apartmentPhotos', f));
       fd.append('room', sel.room);
       fd.append('budgetPrompt', budgetPrompts[sel.budget]);
-      selectedFurnitureItems = pickFurnitureImages(sel.storeKey, effectiveStyleKey, sel.room);
+      const hoffMax = Math.max(2, Math.min(6, 12 - apartmentFiles.length));
+      selectedFurnitureItems = pickFurnitureImages(sel.storeKey, effectiveStyleKey, sel.room, hoffMax);
       const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
       res = await fetch(APARTMENT_URL, { method: 'POST', body: fd });
