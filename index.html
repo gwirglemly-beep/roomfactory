@@ -19,6 +19,36 @@
 <meta name="twitter:title" content="Room Factory — AI дизайн интерьера по фото">
 <meta name="twitter:description" content="Загрузите фото своей комнаты — ИИ создаст профессиональный дизайн интерьера за 30 секунд.">
 <meta name="twitter:image" content="https://i.imgur.com/4jgsqhI.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://gwirglemly-beep.github.io/roomfactory/#website",
+      "url": "https://gwirglemly-beep.github.io/roomfactory/",
+      "name": "Room Factory",
+      "inLanguage": "ru-RU"
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://gwirglemly-beep.github.io/roomfactory/#webapp",
+      "name": "Room Factory",
+      "url": "https://gwirglemly-beep.github.io/roomfactory/",
+      "description": "Загрузите фото своей комнаты — ИИ создаст профессиональный дизайн интерьера в выбранном стиле за 30 секунд. Скандинавский, минимализм, лофт, классика и другие стили, подбор мебели из каталогов Hoff, Askona, Divan.ru.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Any (Web)",
+      "inLanguage": "ru-RU",
+      "image": "https://i.imgur.com/4jgsqhI.jpg",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "RUB",
+        "price": "0"
+      }
+    }
+  ]
+}
+</script>
 <script>
   !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
   const POSTHOG_KEY = 'phc_rKuvZd3MmCJjdEKQ7vGe6MjrU5CkjDdMeghThXZa3cPs';
@@ -866,7 +896,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 <div id="accountView" style="display:none">
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
-    <h1 class="account-title" data-i18n="account.title">Личный кабинет</h1>
+    <h2 class="account-title" data-i18n="account.title">Личный кабинет</h2>
 
     <div class="account-section">
       <span class="account-section-label" data-i18n="account.emailLabel">Почта</span>
@@ -918,7 +948,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 <div id="privacyView" style="display:none">
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
-    <h1 class="account-title" data-i18n="privacy.title">Политика конфиденциальности</h1>
+    <h2 class="account-title" data-i18n="privacy.title">Политика конфиденциальности</h2>
 
     <div class="account-section">
       <span class="account-section-label" data-i18n="privacy.s1Label">Общие положения</span>
@@ -960,7 +990,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 <div id="offerView" style="display:none">
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
-    <h1 class="account-title" data-i18n="offer.title">Публичная оферта</h1>
+    <h2 class="account-title" data-i18n="offer.title">Публичная оферта</h2>
     <p class="legal-meta" data-i18n="offer.meta">Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]</p>
 
     <div class="account-section">
@@ -1008,7 +1038,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 <div id="consentView" style="display:none">
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
-    <h1 class="account-title" data-i18n="consent.title">Согласие на обработку персональных данных</h1>
+    <h2 class="account-title" data-i18n="consent.title">Согласие на обработку персональных данных</h2>
     <p class="legal-meta" data-i18n="offer.meta">Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]</p>
 
     <p class="legal-text" data-i18n="consent.intro">Оставляя свои персональные данные на сайте Room Factory (далее — «Сайт»), Пользователь предоставляет своё согласие Оператору Сайта на обработку указанных данных на изложенных ниже условиях.</p>
