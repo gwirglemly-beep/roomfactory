@@ -593,6 +593,40 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   </div>
 </div>
 
+<div class="popup-overlay" id="faqModal">
+  <div class="popup-box wide">
+    <button class="popup-close" onclick="closeModal('faqModal')">✕</button>
+    <span class="modal-eyebrow" data-i18n="faq.eyebrow">Вопросы</span>
+    <h2 class="modal-title" data-i18n="faq.title">Частые вопросы</h2>
+    <div class="faq-list" style="margin-top:32px">
+      <details class="faq-item">
+        <summary data-i18n="faq.q1">Room Factory — это бесплатно?</summary>
+        <p class="faq-answer" data-i18n="faq.a1">Да, создание дизайна интерьера по фото бесплатно. Если появятся платные функции, мы объявим об этом отдельно на сайте.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.q2">Как загрузить фото комнаты?</summary>
+        <p class="faq-answer" data-i18n="faq.a2">Нажмите «Создать дизайн», сфотографируйте комнату или загрузите готовое фото — подходит снимок в любом состоянии, без специальной подготовки.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.q3">Какие стили интерьера доступны?</summary>
+        <p class="faq-answer" data-i18n="faq.a3">Скандинавский, минимализм, лофт, классика, japandi, бохо — и другие варианты на выбор.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.q4">ИИ сохраняет реальную планировку комнаты?</summary>
+        <p class="faq-answer" data-i18n="faq.a4">Да, генерация следует структуре вашей комнаты — расположению окон, дверей и пропорциям помещения.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.q5">Можно ли сразу купить похожую мебель?</summary>
+        <p class="faq-answer" data-i18n="faq.a5">После генерации дизайна сервис подбирает похожую мебель из каталогов Hoff, Askona и Divan.ru.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.q6">Сколько времени занимает генерация дизайна?</summary>
+        <p class="faq-answer" data-i18n="faq.a6">Обычно около 30 секунд с момента загрузки фото до готового результата.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
 <div class="popup-overlay" id="quizModal">
   <div class="popup-box wide">
     <button class="popup-close" onclick="closeQuizModal()">✕</button>
@@ -622,6 +656,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   <a href="javascript:void(0)" onclick="openModal('howModal');closeSidebar()" data-i18n="sidebar.how">Как это работает</a>
   <a href="#generator" onclick="showHome();closeSidebar()">Room Factory</a>
   <a href="javascript:void(0)" onclick="openModal('aboutModal');closeSidebar()" data-i18n="sidebar.about">О проекте</a>
+  <a href="javascript:void(0)" onclick="openModal('faqModal');closeSidebar()" data-i18n="sidebar.faq">Вопросы</a>
   <a href="javascript:void(0)" onclick="enterApartmentMode();closeSidebar()" data-i18n="sidebar.apartment">Стиль квартиры</a>
   <a href="#generator" class="sidebar-btn" onclick="showHome();closeSidebar()" data-i18n="sidebar.try">Попробовать</a>
   <div class="sidebar-lang">
@@ -933,39 +968,6 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   </div>
 </section>
 
-<section class="faq" id="faq">
-  <div class="faq-inner reveal-zoom">
-    <span class="section-eyebrow" data-i18n="faq.eyebrow">Вопросы</span>
-    <h2 class="section-title" data-i18n="faq.title">Частые вопросы</h2>
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary data-i18n="faq.q1">Room Factory — это бесплатно?</summary>
-        <p class="faq-answer" data-i18n="faq.a1">Да, создание дизайна интерьера по фото бесплатно. Если появятся платные функции, мы объявим об этом отдельно на сайте.</p>
-      </details>
-      <details class="faq-item">
-        <summary data-i18n="faq.q2">Как загрузить фото комнаты?</summary>
-        <p class="faq-answer" data-i18n="faq.a2">Нажмите «Создать дизайн», сфотографируйте комнату или загрузите готовое фото — подходит снимок в любом состоянии, без специальной подготовки.</p>
-      </details>
-      <details class="faq-item">
-        <summary data-i18n="faq.q3">Какие стили интерьера доступны?</summary>
-        <p class="faq-answer" data-i18n="faq.a3">Скандинавский, минимализм, лофт, классика, japandi, бохо — и другие варианты на выбор.</p>
-      </details>
-      <details class="faq-item">
-        <summary data-i18n="faq.q4">ИИ сохраняет реальную планировку комнаты?</summary>
-        <p class="faq-answer" data-i18n="faq.a4">Да, генерация следует структуре вашей комнаты — расположению окон, дверей и пропорциям помещения.</p>
-      </details>
-      <details class="faq-item">
-        <summary data-i18n="faq.q5">Можно ли сразу купить похожую мебель?</summary>
-        <p class="faq-answer" data-i18n="faq.a5">После генерации дизайна сервис подбирает похожую мебель из каталогов Hoff, Askona и Divan.ru.</p>
-      </details>
-      <details class="faq-item">
-        <summary data-i18n="faq.q6">Сколько времени занимает генерация дизайна?</summary>
-        <p class="faq-answer" data-i18n="faq.a6">Обычно около 30 секунд с момента загрузки фото до готового результата.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="footer-top">
     <div class="footer-logo">Room<span>.</span>Factory</div>
@@ -1217,6 +1219,7 @@ const translations = {
     'sidebar.examples': `Примеры`,
     'sidebar.how': `Как это работает`,
     'sidebar.about': `О проекте`,
+    'sidebar.faq': `Вопросы`,
     'sidebar.apartment': `Стиль квартиры`,
     'sidebar.try': `Попробовать`,
     'hero.eyebrow': `AI дизайн интерьера`,
@@ -1442,6 +1445,7 @@ const translations = {
     'sidebar.examples': `Examples`,
     'sidebar.how': `How it works`,
     'sidebar.about': `About`,
+    'sidebar.faq': `FAQ`,
     'sidebar.apartment': `Apartment style`,
     'sidebar.try': `Try it`,
     'hero.eyebrow': `AI Interior Design`,
@@ -2039,7 +2043,7 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.remove('visible');
 }
-['howModal', 'aboutModal', 'quizModal'].forEach(id => {
+['howModal', 'aboutModal', 'quizModal', 'faqModal'].forEach(id => {
   document.getElementById(id).addEventListener('click', e => {
     if (e.target === document.getElementById(id)) closeModal(id);
   });
