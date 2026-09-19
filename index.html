@@ -512,6 +512,16 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   footer { padding: 32px 24px; flex-direction: column; gap: 16px; text-align: center; }
   .sidebar { width: min(340px, 82vw); padding: 90px 28px 32px; }
 }
+
+#onboardingOverlay { position: fixed; inset: 0; z-index: 600; display: none; }
+.onboarding-spotlight { position: fixed; border-radius: 14px; box-shadow: 0 0 0 9999px rgba(20,15,8,0.72); transition: top 0.35s ease, left 0.35s ease, width 0.35s ease, height 0.35s ease; pointer-events: none; }
+.onboarding-tooltip { position: fixed; max-width: 260px; background: #faf9f5; border-radius: 12px; padding: 18px 20px; box-shadow: 0 12px 30px rgba(20,15,8,0.3); transition: top 0.35s ease, left 0.35s ease; }
+.onboarding-step-label { font-family: 'Unbounded', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #b48c5a; margin-bottom: 8px; }
+.onboarding-tooltip-text { font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.55; color: #1a1208; margin-bottom: 16px; }
+.onboarding-tooltip-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.onboarding-skip { font-family: 'Inter', sans-serif; font-size: 11px; color: #8a7a66; background: none; border: none; cursor: pointer; letter-spacing: 0.5px; }
+.onboarding-next { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: #fff; background: #b48c5a; border: none; border-radius: 6px; padding: 9px 18px; cursor: pointer; }
+.onboarding-next:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -662,6 +672,18 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   <div class="sidebar-lang">
     <button type="button" class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
     <button type="button" class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div id="onboardingOverlay">
+  <div class="onboarding-spotlight" id="onboardingSpotlight"></div>
+  <div class="onboarding-tooltip" id="onboardingTooltip">
+    <div class="onboarding-step-label" id="onboardingStepLabel"></div>
+    <div class="onboarding-tooltip-text" id="onboardingText"></div>
+    <div class="onboarding-tooltip-actions">
+      <button type="button" class="onboarding-skip" onclick="skipOnboarding()">Пропустить</button>
+      <button type="button" class="onboarding-next" id="onboardingNextBtn" onclick="nextOnboardingStep()">Далее</button>
+    </div>
   </div>
 </div>
 
@@ -894,7 +916,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 
         <hr class="form-divider">
 
-        <div class="form-section">
+        <div class="form-section" id="roomSection">
           <span class="form-label" data-i18n="form.room">Тип комнаты</span>
           <div class="opts-grid opts-4">
             <button class="opt-btn active" data-group="room" data-val="living room" data-i18n="room.living">Гостиная</button>
@@ -991,7 +1013,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
         <a href="javascript:void(0)" onclick="showConsent()" data-i18n="footer.consentLink">Согласие</a>
       </div>
     </div>
-    <div class="footer-requisites" data-i18n="footer.requisites">[ФИО] · ИНН [_______] — заполняется после регистрации самозанятости/ИП</div>
+    <div class="footer-requisites" data-i18n="footer.requisites">ИП Вавилов Всеволод Кириллович · ИНН 502983414059 · ОГРНИП 326774600676259 · г. Москва</div>
   </div>
 </footer>
 </div>
@@ -1055,7 +1077,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 
     <div class="account-section">
       <span class="account-section-label" data-i18n="privacy.s1Label">Общие положения</span>
-      <p class="legal-text" data-i18n="privacy.s1Text">Room Factory (далее — «Сервис») обрабатывает персональные данные пользователей в соответствии с Федеральным законом № 152-ФЗ «О персональных данных». Используя Сервис, вы соглашаетесь с условиями этой политики.</p>
+      <p class="legal-text" data-i18n="privacy.s1Text">Room Factory (далее — «Сервис») обрабатывает персональные данные пользователей в соответствии с Федеральным законом № 152-ФЗ «О персональных данных». Оператор персональных данных — ИП Вавилов Всеволод Кириллович (ИНН 502983414059, ОГРНИП 326774600676259), контакт: roomfactory_help@mail.ru. Используя Сервис, вы соглашаетесь с условиями этой политики.</p>
     </div>
 
     <div class="account-section">
@@ -1094,7 +1116,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
     <h2 class="account-title" data-i18n="offer.title">Публичная оферта</h2>
-    <p class="legal-meta" data-i18n="offer.meta">Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]</p>
+    <p class="legal-meta" data-i18n="offer.meta">Оператор: ИП Вавилов Всеволод Кириллович, ИНН 502983414059, ОГРНИП 326774600676259</p>
 
     <div class="account-section">
       <span class="account-section-label" data-i18n="offer.s1Label">1. Общие положения</span>
@@ -1133,7 +1155,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 
     <div class="account-section">
       <span class="account-section-label" data-i18n="offer.s8Label">Реквизиты Оператора</span>
-      <p class="legal-text" data-i18n="offer.s8Text">[ФИО] · [статус: самозанятый/ИП] · ИНН [_______] · roomfactory_help@mail.ru</p>
+      <p class="legal-text" data-i18n="offer.s8Text">ИП Вавилов Всеволод Кириллович · ИНН 502983414059 · ОГРНИП 326774600676259 · г. Москва · roomfactory_help@mail.ru</p>
     </div>
   </div>
 </div>
@@ -1142,7 +1164,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
     <h2 class="account-title" data-i18n="consent.title">Согласие на обработку персональных данных</h2>
-    <p class="legal-meta" data-i18n="offer.meta">Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]</p>
+    <p class="legal-meta" data-i18n="offer.meta">Оператор: ИП Вавилов Всеволод Кириллович, ИНН 502983414059, ОГРНИП 326774600676259</p>
 
     <p class="legal-text" data-i18n="consent.intro">Оставляя свои персональные данные на сайте Room Factory (далее — «Сайт»), Пользователь предоставляет своё согласие Оператору Сайта на обработку указанных данных на изложенных ниже условиях.</p>
 
@@ -1183,7 +1205,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 
     <div class="account-section">
       <span class="account-section-label" data-i18n="offer.s8Label">Реквизиты Оператора</span>
-      <p class="legal-text" data-i18n="offer.s8Text">[ФИО] · [статус: самозанятый/ИП] · ИНН [_______] · roomfactory_help@mail.ru</p>
+      <p class="legal-text" data-i18n="offer.s8Text">ИП Вавилов Всеволод Кириллович · ИНН 502983414059 · ОГРНИП 326774600676259 · г. Москва · roomfactory_help@mail.ru</p>
     </div>
   </div>
 </div>
@@ -1348,7 +1370,7 @@ const translations = {
     'footer.privacyLink': `Политика`,
     'footer.offerLink': `Оферта`,
     'footer.consentLink': `Согласие`,
-    'footer.requisites': `[ФИО] · ИНН [_______] — заполняется после регистрации самозанятости/ИП`,
+    'footer.requisites': `ИП Вавилов Всеволод Кириллович · ИНН 502983414059 · ОГРНИП 326774600676259 · г. Москва`,
     'cookie.text': `Мы используем локальное хранилище браузера для входа в аккаунт и запоминания языка, а с вашего согласия — анонимную аналитику посещений, чтобы улучшать сайт. Рекламные cookie не используем. Подробнее в <a href="javascript:void(0)" onclick="showPrivacy()">политике конфиденциальности</a>.`,
     'cookie.accept': `Хорошо`,
     'cookie.decline': `Отклонить`,
@@ -1360,7 +1382,7 @@ const translations = {
     'supportChat.error': `Не получилось получить ответ. Попробуйте ещё раз или напишите на roomfactory_help@mail.ru.`,
     'privacy.title': `Политика конфиденциальности`,
     'privacy.s1Label': `Общие положения`,
-    'privacy.s1Text': `Room Factory (далее — «Сервис») обрабатывает персональные данные пользователей в соответствии с Федеральным законом № 152-ФЗ «О персональных данных». Используя Сервис, вы соглашаетесь с условиями этой политики.`,
+    'privacy.s1Text': `Room Factory (далее — «Сервис») обрабатывает персональные данные пользователей в соответствии с Федеральным законом № 152-ФЗ «О персональных данных». Оператор персональных данных — ИП Вавилов Всеволод Кириллович (ИНН 502983414059, ОГРНИП 326774600676259), контакт: roomfactory_help@mail.ru. Используя Сервис, вы соглашаетесь с условиями этой политики.`,
     'privacy.s2Label': `Какие данные мы собираем`,
     'privacy.s2Text': `Адрес электронной почты, имя и фамилия, номер телефона (если вы его указали), загруженные вами фотографии помещений и сгенерированные на их основе изображения, а также выбранный язык интерфейса.`,
     'privacy.s3Label': `Цели обработки`,
@@ -1374,7 +1396,7 @@ const translations = {
     'privacy.s7Label': `Изменения политики`,
     'privacy.s7Text': `Мы можем обновлять эту политику. Актуальная версия всегда доступна на этой странице.`,
     'offer.title': `Публичная оферта`,
-    'offer.meta': `Оператор: [ФИО — заполняется после регистрации самозанятости/ИП]`,
+    'offer.meta': `Оператор: ИП Вавилов Всеволод Кириллович, ИНН 502983414059, ОГРНИП 326774600676259`,
     'offer.s1Label': `1. Общие положения`,
     'offer.s1Text': `Настоящая оферта — предложение Оператора сайта Room Factory (далее — «Сервис») заключить договор на условиях, изложенных ниже. Начиная использовать Сервис, Пользователь принимает условия оферты в полном объёме.`,
     'offer.s2Label': `2. Предмет договора`,
@@ -1390,7 +1412,7 @@ const translations = {
     'offer.s7Label': `7. Разрешение споров`,
     'offer.s7Text': `До обращения в суд обязательно предъявление письменной претензии. Ответ на претензию направляется в течение 30 дней. При недостижении согласия спор передаётся в суд по месту нахождения Оператора в соответствии с законодательством РФ.`,
     'offer.s8Label': `Реквизиты Оператора`,
-    'offer.s8Text': `[ФИО] · [статус: самозанятый/ИП] · ИНН [_______] · roomfactory_help@mail.ru`,
+    'offer.s8Text': `ИП Вавилов Всеволод Кириллович · ИНН 502983414059 · ОГРНИП 326774600676259 · г. Москва · roomfactory_help@mail.ru`,
     'consent.title': `Согласие на обработку персональных данных`,
     'consent.intro': `Оставляя свои персональные данные на сайте Room Factory (далее — «Сайт»), Пользователь предоставляет своё согласие Оператору Сайта на обработку указанных данных на изложенных ниже условиях.`,
     'consent.s1Label': `1. Перечень персональных данных`,
@@ -1574,7 +1596,7 @@ const translations = {
     'footer.privacyLink': `Privacy`,
     'footer.offerLink': `Offer`,
     'footer.consentLink': `Consent`,
-    'footer.requisites': `[Full name] · Tax ID [_______] — to be filled in after registering as a sole proprietor`,
+    'footer.requisites': `Sole proprietor Vavilov Vsevolod Kirillovich · INN 502983414059 · OGRNIP 326774600676259 · Moscow`,
     'cookie.text': `We use browser local storage to keep you signed in and remember your language, and — with your consent — anonymous visit analytics to improve the site. We don't use advertising cookies. More in the <a href="javascript:void(0)" onclick="showPrivacy()">Privacy Policy</a>.`,
     'cookie.accept': `Got it`,
     'cookie.decline': `Decline`,
@@ -1586,7 +1608,7 @@ const translations = {
     'supportChat.error': `Couldn't get a response. Try again, or email roomfactory_help@mail.ru.`,
     'privacy.title': `Privacy Policy`,
     'privacy.s1Label': `General`,
-    'privacy.s1Text': `Room Factory (the "Service") processes users' personal data in accordance with Federal Law No. 152-FZ "On Personal Data" of the Russian Federation. By using the Service, you agree to this policy.`,
+    'privacy.s1Text': `Room Factory (the "Service") processes users' personal data in accordance with Federal Law No. 152-FZ "On Personal Data" of the Russian Federation. The personal data operator is Sole proprietor Vavilov Vsevolod Kirillovich (INN 502983414059, OGRNIP 326774600676259), contact: roomfactory_help@mail.ru. By using the Service, you agree to this policy.`,
     'privacy.s2Label': `What data we collect`,
     'privacy.s2Text': `Your email address, first and last name, phone number (if you provide one), the room photos you upload and the images generated from them, and your selected interface language.`,
     'privacy.s3Label': `Purpose of processing`,
@@ -1600,7 +1622,7 @@ const translations = {
     'privacy.s7Label': `Changes to this policy`,
     'privacy.s7Text': `We may update this policy. The current version is always available on this page.`,
     'offer.title': `Public Offer`,
-    'offer.meta': `Operator: [Full name — to be filled in after registering as self-employed/sole proprietor]`,
+    'offer.meta': `Operator: Sole proprietor Vavilov Vsevolod Kirillovich, INN 502983414059, OGRNIP 326774600676259`,
     'offer.s1Label': `1. General provisions`,
     'offer.s1Text': `This offer is a proposal by the Operator of the Room Factory website (the "Service") to enter into an agreement on the terms below. By starting to use the Service, the User fully accepts the terms of this offer.`,
     'offer.s2Label': `2. Subject of the agreement`,
@@ -1616,7 +1638,7 @@ const translations = {
     'offer.s7Label': `7. Dispute resolution`,
     'offer.s7Text': `Before going to court, a written claim must be submitted. A response to the claim is sent within 30 days. If no agreement is reached, the dispute is referred to a court under Russian law, at the Operator's place of registration.`,
     'offer.s8Label': `Operator details`,
-    'offer.s8Text': `[Full name] · [status: self-employed/sole proprietor] · Tax ID [_______] · roomfactory_help@mail.ru`,
+    'offer.s8Text': `Sole proprietor Vavilov Vsevolod Kirillovich · INN 502983414059 · OGRNIP 326774600676259 · Moscow · roomfactory_help@mail.ru`,
     'consent.title': `Consent to Personal Data Processing`,
     'consent.intro': `By providing personal data on the Room Factory website (the "Site"), the User gives consent to the Site's Operator to process that data on the terms below.`,
     'consent.s1Label': `1. Personal data collected`,
@@ -1783,6 +1805,68 @@ function openQuizModal() {
 }
 function closeQuizModal() {
   document.getElementById('quizModal').classList.remove('visible');
+  if (pendingOnboarding) {
+    pendingOnboarding = false;
+    setTimeout(startOnboarding, 300);
+  }
+}
+
+const onboardingSteps = [
+  { id: 'uploadZone', label: 'Шаг 1', text: 'Загрузите фото своей комнаты — нажмите сюда или перетащите файл.' },
+  { id: 'styleSection', label: 'Шаг 2', text: 'Выберите стиль интерьера — один из вариантов.' },
+  { id: 'roomSection', label: 'Шаг 3', text: 'Укажите тип комнаты, которую переделываем.' },
+  { id: 'colorSection', label: 'Шаг 4', text: 'Выберите цветовую палитру для дизайна.' },
+  { id: 'genBtn', label: 'Шаг 5', text: 'Когда всё готово — нажмите «Создать дизайн». Результат появится примерно через 30 секунд, с подобранной мебелью и ссылками на неё.' }
+];
+let onboardingIndex = 0;
+let pendingOnboarding = false;
+
+function positionOnboardingStep(i) {
+  const step = onboardingSteps[i];
+  const el = document.getElementById(step.id);
+  if (!el) { nextOnboardingStep(); return; }
+  el.scrollIntoView({ behavior: 'instant', block: 'center' });
+  setTimeout(() => {
+    const r = el.getBoundingClientRect();
+    const spot = document.getElementById('onboardingSpotlight');
+    spot.style.left = (r.left - 8) + 'px';
+    spot.style.top = (r.top - 8) + 'px';
+    spot.style.width = (r.width + 16) + 'px';
+    spot.style.height = (r.height + 16) + 'px';
+
+    document.getElementById('onboardingStepLabel').textContent = step.label;
+    document.getElementById('onboardingText').textContent = step.text;
+    document.getElementById('onboardingNextBtn').textContent = i === onboardingSteps.length - 1 ? 'Понятно' : 'Далее';
+
+    const tip = document.getElementById('onboardingTooltip');
+    const tipWidth = 260;
+    let tipTop = r.bottom + 18;
+    if (tipTop + 140 > window.innerHeight) tipTop = Math.max(16, r.top - 150);
+    let tipLeft = r.left;
+    if (tipLeft + tipWidth + 20 > window.innerWidth) tipLeft = window.innerWidth - tipWidth - 20;
+    tipLeft = Math.max(16, tipLeft);
+    tip.style.top = tipTop + 'px';
+    tip.style.left = tipLeft + 'px';
+  }, 60);
+}
+function nextOnboardingStep() {
+  onboardingIndex++;
+  if (onboardingIndex >= onboardingSteps.length) { endOnboarding(); return; }
+  positionOnboardingStep(onboardingIndex);
+}
+function skipOnboarding() { endOnboarding(); }
+function endOnboarding() {
+  document.getElementById('onboardingOverlay').style.display = 'none';
+  try { localStorage.setItem('rf_onboarding_done', '1'); } catch (e) {}
+}
+function startOnboarding() {
+  let done = false;
+  try { done = localStorage.getItem('rf_onboarding_done') === '1'; } catch (e) {}
+  if (done) return;
+  showHome();
+  onboardingIndex = 0;
+  document.getElementById('onboardingOverlay').style.display = 'block';
+  positionOnboardingStep(0);
 }
 function renderQuizRound() {
   document.getElementById('quizProgress').textContent = (quizIndex + 1) + ' / ' + quizRounds.length;
@@ -2021,6 +2105,7 @@ sb.auth.onAuthStateChange((_event, session) => {
   try { quizAlreadyPrompted = localStorage.getItem('rf_quiz_prompted') === '1'; } catch (e) {}
   if (_event === 'SIGNED_IN' && session && session.user && !quizAlreadyPrompted && !(session.user.user_metadata && session.user.user_metadata.preferred_style)) {
     try { localStorage.setItem('rf_quiz_prompted', '1'); } catch (e) {}
+    pendingOnboarding = true;
     setTimeout(openQuizModal, 400);
   }
 });
