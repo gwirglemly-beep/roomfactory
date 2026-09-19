@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preload" href="fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<title>Room Factory — AI дизайн интерьера по фото</title>
-<meta name="description" content="Загрузите фото комнаты — ИИ создаст дизайн интерьера в выбранном стиле за 30 секунд бесплатно. Скандинавский, минимализм, лофт, классика — с подбором мебели.">
-<meta name="keywords" content="дизайн интерьера, дизайн комнаты онлайн бесплатно, ИИ дизайн интерьера, нейросеть дизайн квартиры, room factory">
-<link rel="canonical" href="https://gwirglemly-beep.github.io/roomfactory/">
+<title>Room Factory (Рум Фэктори) — ИИ дизайн интерьера по фото онлайн</title>
+<meta name="description" content="Room Factory (Рум Фэктори) — дизайн интерьера онлайн по фото. Загрузите фото комнаты, ИИ создаст дизайн в выбранном стиле за 30 секунд бесплатно: скандинавский, минимализм, лофт, классика, с подбором мебели и ссылками на магазины.">
+<meta name="keywords" content="дизайн интерьера, дизайн интерьера онлайн, дизайн комнаты онлайн бесплатно, ИИ дизайн интерьера, нейросеть дизайн квартиры, дизайн интерьера по фото, подбор мебели, рум фэктори, рум фекторы, room factory">
+<link rel="canonical" href="https://room-factory.ru/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWExMjA4Ii8+PHRleHQgeD0iNDIiIHk9IjcwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTgiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNmNWYyZWQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlI8L3RleHQ+PGNpcmNsZSBjeD0iNzYiIGN5PSI3NiIgcj0iOSIgZmlsbD0iI2I0OGM1YSIvPjwvc3ZnPg==">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Room Factory">
 <meta property="og:title" content="Room Factory — AI дизайн интерьера по фото">
 <meta property="og:description" content="Загрузите фото комнаты — ИИ создаст дизайн интерьера в выбранном стиле за 30 секунд бесплатно.">
 <meta property="og:image" content="https://i.imgur.com/4jgsqhI.jpg">
-<meta property="og:url" content="https://gwirglemly-beep.github.io/roomfactory/">
+<meta property="og:url" content="https://room-factory.ru/">
 <meta property="og:locale" content="ru_RU">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Room Factory — AI дизайн интерьера по фото">
@@ -27,16 +27,17 @@
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://gwirglemly-beep.github.io/roomfactory/#website",
-      "url": "https://gwirglemly-beep.github.io/roomfactory/",
+      "@id": "https://room-factory.ru/#website",
+      "url": "https://room-factory.ru/",
       "name": "Room Factory",
+      "alternateName": ["Рум Фэктори", "Рум Фекторы", "room-factory.ru"],
       "inLanguage": "ru-RU"
     },
     {
       "@type": "WebApplication",
-      "@id": "https://gwirglemly-beep.github.io/roomfactory/#webapp",
+      "@id": "https://room-factory.ru/#webapp",
       "name": "Room Factory",
-      "url": "https://gwirglemly-beep.github.io/roomfactory/",
+      "url": "https://room-factory.ru/",
       "description": "Загрузите фото комнаты — ИИ создаст дизайн интерьера в выбранном стиле за 30 секунд бесплатно. Скандинавский, минимализм, лофт, классика — с подбором мебели.",
       "applicationCategory": "DesignApplication",
       "operatingSystem": "Any (Web)",
@@ -50,7 +51,7 @@
     },
     {
       "@type": "FAQPage",
-      "@id": "https://gwirglemly-beep.github.io/roomfactory/#faq",
+      "@id": "https://room-factory.ru/#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -1358,6 +1359,7 @@ const translations = {
     'genBtnLoading': `Создаём...`,
     'loadingText': `Создаём ваш дизайн...`,
     'genError': `Не удалось создать дизайн. Попробуйте ещё раз.`,
+    'genLimit': `Вы использовали 3 бесплатные генерации на сегодня. Возвращайтесь завтра.`,
     'apartment.needPhotos': `Загрузите хотя бы одно фото другой комнаты квартиры.`,
     'resultLabel': `Ваш новый интерьер`,
     'downloadBtn': `Скачать изображение`,
@@ -1584,6 +1586,7 @@ const translations = {
     'genBtnLoading': `Creating...`,
     'loadingText': `Creating your design...`,
     'genError': `Failed to create the design. Please try again.`,
+    'genLimit': `You've used your 3 free generations for today. Come back tomorrow.`,
     'apartment.needPhotos': `Upload at least one photo of another room in the apartment.`,
     'resultLabel': `Your new interior`,
     'downloadBtn': `Download image`,
@@ -3030,6 +3033,18 @@ zone.addEventListener('drop', e => {
   }
 });
 
+const DAILY_GEN_LIMIT = 3;
+function dailyGenKey() {
+  const d = new Date();
+  return 'rf_gen_' + d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+}
+function getDailyGenCount() {
+  try { return parseInt(localStorage.getItem(dailyGenKey()) || '0', 10) || 0; } catch (e) { return 0; }
+}
+function bumpDailyGenCount() {
+  try { localStorage.setItem(dailyGenKey(), String(getDailyGenCount() + 1)); } catch (e) {}
+}
+
 document.getElementById('genBtn').addEventListener('click', async () => {
   if (!file) return;
   const loading = document.getElementById('loading');
@@ -3037,6 +3052,12 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const err = document.getElementById('errMsg');
   const btn = document.getElementById('genBtn');
   const comment = document.getElementById('comment').value.trim();
+
+  if (getDailyGenCount() >= DAILY_GEN_LIMIT) {
+    err.textContent = t('genLimit');
+    err.classList.add('visible');
+    return;
+  }
 
   if (apartmentMode && apartmentFiles.length < 1) {
     err.textContent = t('apartment.needPhotos');
@@ -3105,6 +3126,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     document.getElementById('resultImg').src = url;
     document.getElementById('dlBtn').href = url;
     result.classList.add('visible');
+    bumpDailyGenCount();
 
     const similarBlock = document.getElementById('similarFurnitureBlock');
     similarBlock.style.display = renderKnownFurniture(selectedFurnitureItems) ? '' : 'none';
