@@ -7,7 +7,7 @@
 <link rel="preload" href="fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <title>Room Factory (Рум Фэктори) — ИИ дизайн интерьера по фото онлайн</title>
 <meta name="description" content="Room Factory (Рум Фэктори) — дизайн интерьера онлайн по фото. Загрузите фото комнаты, ИИ создаст дизайн в выбранном стиле за 30 секунд бесплатно: скандинавский, минимализм, лофт, классика, с подбором мебели и ссылками на магазины.">
-<meta name="keywords" content="дизайн интерьера, дизайн интерьера онлайн, дизайн комнаты онлайн бесплатно, ИИ дизайн интерьера, нейросеть дизайн квартиры, дизайн интерьера по фото, подбор мебели, рум фэктори, рум фекторы, room factory">
+<meta name="keywords" content="дизайн интерьера, дизайн интерьера онлайн, дизайн комнаты онлайн бесплатно, ИИ дизайн интерьера, нейросеть дизайн квартиры, дизайн интерьера по фото, подбор мебели, рум фэктори, рум фектори, рум фекторы, рум фактори, рум фэкторы, румфэктори, румфектори, румфактори, румфекторы, румфктори, румфктроы, ромфактори, roomfactory, room-factory, room factory, room factori, room factorie, room facktory, room fektory, room factry, room facory, room fatory, rooom factory, rom factory, roomfactori, roomfactry, roomfacktory, rum factory, roomfactory ru, room-factory ru, ai interior design, ai room design, interior design online, interior design by photo">
 <link rel="canonical" href="https://room-factory.ru/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWExMjA4Ii8+PHRleHQgeD0iNDIiIHk9IjcwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTgiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNmNWYyZWQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlI8L3RleHQ+PGNpcmNsZSBjeD0iNzYiIGN5PSI3NiIgcj0iOSIgZmlsbD0iI2I0OGM1YSIvPjwvc3ZnPg==">
 <meta property="og:type" content="website">
@@ -30,7 +30,7 @@
       "@id": "https://room-factory.ru/#website",
       "url": "https://room-factory.ru/",
       "name": "Room Factory",
-      "alternateName": ["Рум Фэктори", "Рум Фекторы", "room-factory.ru"],
+      "alternateName": ["Рум Фэктори", "Рум Фектори", "Рум Фекторы", "Рум Фактори", "Румфектори", "Румфэктори", "Румфактори", "Румфекторы", "Румфктори", "Румфктроы", "RoomFactory", "Room-Factory", "Room Factori", "Room Facktory", "Room Fektory", "Room Factry", "Room Facory", "Rum Factory", "Rom Factory", "Roomfactri", "Roomfacktory", "room-factory.ru"],
       "inLanguage": "ru-RU"
     },
     {
@@ -300,7 +300,16 @@ input[type=range] { width: 100%; accent-color: #b48c5a; margin: 12px 0 6px; curs
 .comment-input::placeholder { color: #b4a898; }
 .comment-input:focus { outline: none; border-color: #b48c5a; }
 .comment-wrap { position: relative; }
-.comment-wrap .comment-input { padding-right: 52px; }
+.comment-wrap .comment-input { padding-right: 92px; }
+.attach-btn { position: absolute; right: 48px; bottom: 8px; width: 34px; height: 34px; border-radius: 50%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.15); color: #8a7a66; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+.attach-btn:hover { border-color: #b48c5a; color: #b48c5a; }
+.attach-btn svg { width: 16px; height: 16px; display: block; }
+.attach-preview { display: none; align-items: center; gap: 10px; margin-top: 10px; }
+.attach-preview.visible { display: flex; }
+.attach-preview img { width: 56px; height: 56px; object-fit: cover; border: 1px solid rgba(42,34,24,0.12); }
+.attach-preview button { background: none; border: 1px solid rgba(42,34,24,0.15); color: #8a7a66; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+.attach-preview button:hover { border-color: #b48c5a; color: #b48c5a; }
+.attach-hint { font-size: 11px; color: #8a7a66; margin-top: 8px; line-height: 1.5; }
 .mic-btn { position: absolute; right: 8px; bottom: 8px; width: 34px; height: 34px; border-radius: 50%; background: #faf7f2; border: 1px solid rgba(42,34,24,0.15); color: #8a7a66; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
 .mic-btn:hover { border-color: #b48c5a; color: #b48c5a; }
 .mic-btn svg { width: 16px; height: 16px; display: block; }
@@ -962,8 +971,12 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
           <span class="form-label" data-i18n="form.comment">Комментарий</span>
           <div class="comment-wrap">
             <textarea class="comment-input" id="comment" placeholder="Пожелания: больше света, место для детей, открытые полки..." data-i18n-placeholder="commentPlaceholder"></textarea>
+            <button type="button" class="attach-btn" id="attachBtn" title="Прикрепить фото" data-i18n-title="attach.title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+            <input type="file" id="attachInput" accept="image/*" style="display:none">
             <button type="button" class="mic-btn" id="micBtn" title="Голосовой ввод" data-i18n-title="mic.title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"></path><path d="M19 11a7 7 0 0 1-14 0"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg></button>
           </div>
+          <div class="attach-preview" id="attachPreview"><img id="attachThumb" alt=""><button type="button" id="attachRemove" data-i18n="attach.remove">Убрать фото</button></div>
+          <div class="attach-hint" data-i18n="attach.hint">Можно прикрепить фото мебели и написать в комментарии: «точно такой» или «нужен похожий».</div>
           <div class="preferred-style-row" id="preferredStyleCheckWrap" style="display:none">
             <label class="preferred-style-check">
               <input type="checkbox" id="usePreferredStyle">
@@ -1331,6 +1344,9 @@ const translations = {
     'form.retakeQuizShort': `пройти тест заново`,
     'commentPlaceholder': `Пожелания: больше света, место для детей, открытые полки...`,
     'mic.title': `Голосовой ввод`,
+    'attach.title': `Прикрепить фото`,
+    'attach.remove': `Убрать фото`,
+    'attach.hint': `Можно прикрепить фото мебели и написать в комментарии: «точно такой» или «нужен похожий».`,
     'quiz.eyebrow': `Тест стиля`,
     'quiz.title': `Что тебе больше нравится?`,
     'quiz.resultPrefix': `Тебе подходит стиль:`,
@@ -1558,6 +1574,9 @@ const translations = {
     'form.retakeQuizShort': `retake the quiz`,
     'commentPlaceholder': `Wishes: more light, space for kids, open shelving...`,
     'mic.title': `Voice input`,
+    'attach.title': `Attach photo`,
+    'attach.remove': `Remove photo`,
+    'attach.hint': `You can attach a photo of a furniture item and write in the comment: "exactly this one" or "something similar".`,
     'quiz.eyebrow': `Style quiz`,
     'quiz.title': `Which do you like more?`,
     'quiz.resultPrefix': `Your style:`,
@@ -3033,6 +3052,35 @@ zone.addEventListener('drop', e => {
   }
 });
 
+let userRefDataUrl = '';
+const attachInput = document.getElementById('attachInput');
+document.getElementById('attachBtn').addEventListener('click', () => attachInput.click());
+attachInput.addEventListener('change', () => {
+  const f = attachInput.files[0];
+  if (!f || !f.type.startsWith('image/')) { attachInput.value = ''; return; }
+  const img = new Image();
+  const objUrl = URL.createObjectURL(f);
+  img.onload = () => {
+    const max = 1024;
+    const k = Math.min(1, max / Math.max(img.width, img.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.width * k);
+    c.height = Math.round(img.height * k);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    userRefDataUrl = c.toDataURL('image/jpeg', 0.8);
+    document.getElementById('attachThumb').src = userRefDataUrl;
+    document.getElementById('attachPreview').classList.add('visible');
+    URL.revokeObjectURL(objUrl);
+  };
+  img.onerror = () => { URL.revokeObjectURL(objUrl); attachInput.value = ''; };
+  img.src = objUrl;
+});
+document.getElementById('attachRemove').addEventListener('click', () => {
+  userRefDataUrl = '';
+  attachInput.value = '';
+  document.getElementById('attachPreview').classList.remove('visible');
+});
+
 const DAILY_GEN_LIMIT = 3;
 function dailyGenKey() {
   const d = new Date();
@@ -3052,6 +3100,8 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const err = document.getElementById('errMsg');
   const btn = document.getElementById('genBtn');
   const comment = document.getElementById('comment').value.trim();
+  const userRefNote = userRefDataUrl ? " [Note: the first reference image is the user's own photo of a furniture item or inspiration. Follow the user's comment: if they ask for exactly this item, reproduce it exactly in the room; if they ask for a similar one, or say nothing, place a similar item. This photo takes priority over catalog references for that type of item.]" : '';
+  const commentForAi = comment + userRefNote;
 
   if (getDailyGenCount() >= DAILY_GEN_LIMIT) {
     err.textContent = t('genLimit');
@@ -3079,7 +3129,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   try {
     const fd = new FormData();
     fd.append('image', file);
-    fd.append('comment', comment);
+    fd.append('comment', commentForAi);
     fd.append('roomLabel', roomLabelRu);
     fd.append('colorLabel', colorLabelRu);
     fd.append('output_format', 'jpeg');
@@ -3107,16 +3157,16 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       fd.append('budgetPrompt', budgetPrompts[sel.budget]);
       const hoffMax = Math.max(2, Math.min(6, 12 - apartmentFiles.length));
       selectedFurnitureItems = pickFurnitureImages(sel.storeKey, effectiveStyleKey, sel.room, hoffMax);
-      const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
+      const referenceImageUrls = (userRefDataUrl ? [userRefDataUrl] : []).concat(selectedFurnitureItems.map(p => p.img));
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
       res = await fetch(APARTMENT_URL, { method: 'POST', body: fd });
     } else {
       const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
-      const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
+      const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], commentForAi, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
       fd.append('prompt', prompt);
       fd.append('styleLabel', translations.ru['style.' + sel.styleKey] || sel.styleLabel);
       selectedFurnitureItems = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
-      const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
+      const referenceImageUrls = (userRefDataUrl ? [userRefDataUrl] : []).concat(selectedFurnitureItems.map(p => p.img));
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
       res = await fetch(WORKER_URL, { method: 'POST', body: fd });
     }
