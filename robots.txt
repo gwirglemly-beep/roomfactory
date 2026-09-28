@@ -16,4 +16,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://gwirglemly-beep.github.io/roomfactory/sitemap.xml
+Sitemap: https://room-factory.ru/sitemap.xml
