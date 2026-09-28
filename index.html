@@ -1303,7 +1303,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     <button type="submit" id="supportChatSend">→</button>
   </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <script>
 const SUPABASE_URL = 'https://puqwlxrdihxmrhgfnnpa.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_OxUbcWIt07x_jXVa8fRW5w_h7L8Nqst';
@@ -1549,7 +1549,8 @@ const translations = {
     'profile.saveError': `Не удалось сохранить.`,
     'library.loading': `Загрузка...`,
     'library.emptyHint': `Пока нет сохранённых дизайнов. Создайте дизайн — он появится здесь.`,
-    'library.emptyShort': `Пока нет сохранённых дизайнов.`
+    'library.emptyShort': `Пока нет сохранённых дизайнов.`,
+    'library.deleteError': `Не удалось удалить, попробуйте ещё раз`
   },
   en: {
     'sidebar.examples': `Examples`,
@@ -1790,7 +1791,8 @@ const translations = {
     'profile.saveError': `Failed to save.`,
     'library.loading': `Loading...`,
     'library.emptyHint': `No saved designs yet. Create a design and it will appear here.`,
-    'library.emptyShort': `No saved designs yet.`
+    'library.emptyShort': `No saved designs yet.`,
+    'library.deleteError': `Couldn't delete, please try again`
   }
 };
 
@@ -2302,26 +2304,70 @@ document.getElementById('accountLogoutBtn').addEventListener('click', async () =
   showHome();
 });
 
+function isSafeImageUrl(url) {
+  try {
+    const u = new URL(url, window.location.href);
+    return u.protocol === 'https:' || u.protocol === 'http:';
+  } catch (e) {
+    return false;
+  }
+}
+
 async function loadLibrary() {
   const grid = document.getElementById('libraryGrid');
-  grid.innerHTML = '<div class="library-empty">' + t('library.loading') + '</div>';
+  grid.textContent = '';
+  const loadingDiv = document.createElement('div');
+  loadingDiv.className = 'library-empty';
+  loadingDiv.textContent = t('library.loading');
+  grid.appendChild(loadingDiv);
+
   const { data, error } = await sb.from('generations').select('*').order('created_at', { ascending: false });
+  grid.textContent = '';
   if (error || !data || !data.length) {
-    grid.innerHTML = '<div class="library-empty">' + t('library.emptyHint') + '</div>';
+    const emptyDiv = document.createElement('div');
+    emptyDiv.className = 'library-empty';
+    emptyDiv.textContent = t('library.emptyHint');
+    grid.appendChild(emptyDiv);
     return;
   }
-  grid.innerHTML = data.map(g => {
+
+  data.forEach(g => {
     const date = new Date(g.created_at).toLocaleDateString(LANG === 'ru' ? 'ru-RU' : 'en-US');
     const label = [g.store_label, g.style_label, g.room_label].filter(Boolean).join(' · ');
-    return '<div class="library-card" data-id="' + g.id + '" data-url="' + g.image_url + '">' +
-      '<button class="library-delete" type="button" title="Удалить">✕</button>' +
-      '<img src="' + g.image_url + '" alt="">' +
-      '<div class="library-card-info">' +
-        '<div class="library-card-style">' + label + '</div>' +
-        '<div class="library-card-date">' + date + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+
+    const card = document.createElement('div');
+    card.className = 'library-card';
+    card.dataset.id = g.id;
+    card.dataset.url = g.image_url;
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'library-delete';
+    delBtn.type = 'button';
+    delBtn.title = 'Удалить';
+    delBtn.textContent = '✕';
+    card.appendChild(delBtn);
+
+    if (isSafeImageUrl(g.image_url)) {
+      const img = document.createElement('img');
+      img.src = g.image_url;
+      img.alt = '';
+      card.appendChild(img);
+    }
+
+    const info = document.createElement('div');
+    info.className = 'library-card-info';
+    const styleDiv = document.createElement('div');
+    styleDiv.className = 'library-card-style';
+    styleDiv.textContent = label;
+    const dateDiv = document.createElement('div');
+    dateDiv.className = 'library-card-date';
+    dateDiv.textContent = date;
+    info.appendChild(styleDiv);
+    info.appendChild(dateDiv);
+    card.appendChild(info);
+
+    grid.appendChild(card);
+  });
 }
 
 document.getElementById('libraryGrid').addEventListener('click', async e => {
@@ -2332,18 +2378,31 @@ document.getElementById('libraryGrid').addEventListener('click', async e => {
   const imageUrl = card.dataset.url;
   card.style.opacity = '0.4';
   delBtn.disabled = true;
-  await sb.from('generations').delete().eq('id', id);
+
+  const { error: deleteError } = await sb.from('generations').delete().eq('id', id);
+  if (deleteError) {
+    card.style.opacity = '1';
+    delBtn.disabled = false;
+    delBtn.title = t('library.deleteError') || 'Не удалось удалить, попробуйте ещё раз';
+    return;
+  }
+
   try {
     const marker = '/designs/';
     const idx = imageUrl.indexOf(marker);
     if (idx !== -1) {
       const path = decodeURIComponent(imageUrl.slice(idx + marker.length));
-      await sb.storage.from('designs').remove([path]);
+      const { error: storageError } = await sb.storage.from('designs').remove([path]);
+      if (storageError) console.error('Не удалось удалить файл из хранилища:', storageError);
     }
-  } catch (e2) {}
+  } catch (e2) { console.error('Не удалось удалить файл из хранилища:', e2); }
+
   card.remove();
   if (!document.getElementById('libraryGrid').children.length) {
-    document.getElementById('libraryGrid').innerHTML = '<div class="library-empty">' + t('library.emptyShort') + '</div>';
+    const emptyDiv = document.createElement('div');
+    emptyDiv.className = 'library-empty';
+    emptyDiv.textContent = t('library.emptyShort');
+    document.getElementById('libraryGrid').appendChild(emptyDiv);
   }
 });
 
