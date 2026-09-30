@@ -592,10 +592,11 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
       <button class="auth-tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')" data-i18n="auth.tabLogin">Вход</button>
       <button class="auth-tab" id="tabSignup" type="button" onclick="switchAuthTab('signup')" data-i18n="auth.tabSignup">Регистрация</button>
     </div>
-    <p class="auth-hint" id="authRecoveryHint" style="display:none" data-i18n="auth.recoveryHint">Придумайте новый пароль для входа.</p>
+    <p class="auth-hint" id="authRecoveryHint" style="display:none"></p>
     <form id="authForm">
       <input type="email" id="authEmail" placeholder="Email" required class="auth-input" autocomplete="email">
-      <input type="password" id="authPassword" placeholder="Пароль" required class="auth-input" minlength="6" autocomplete="current-password" data-i18n-placeholder="authPasswordPlaceholder">
+      <input type="password" id="authPassword" placeholder="Пароль" required class="auth-input" minlength="6" autocomplete="current-password">
+      <input type="text" id="authCode" placeholder="Код из письма" class="auth-input" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" style="display:none" data-i18n-placeholder="auth.codePlaceholder">
       <a href="javascript:void(0)" class="auth-link" id="authForgotLink" onclick="switchAuthTab('reset')" data-i18n="auth.forgotPassword">Забыли пароль?</a>
       <label class="auth-consent" id="authConsentWrap" style="display:none">
         <input type="checkbox" id="authConsent">
@@ -604,6 +605,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
       <button type="submit" class="auth-submit" id="authSubmitBtn" data-i18n="authSubmitLogin">Войти</button>
     </form>
     <p class="auth-link auth-back" id="authBackLink" style="display:none"><a href="javascript:void(0)" onclick="switchAuthTab('login')" data-i18n="auth.backToLogin">← Назад ко входу</a></p>
+    <p class="auth-link" id="authResendLink" style="display:none"><a href="javascript:void(0)" onclick="resendAuthCode()" data-i18n="auth.resendCode">Отправить код ещё раз</a></p>
     <p class="auth-msg" id="authMsg"></p>
   </div>
 </div>
@@ -1303,11 +1305,32 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     <button type="submit" id="supportChatSend">→</button>
   </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <script>
-const SUPABASE_URL = 'https://puqwlxrdihxmrhgfnnpa.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_OxUbcWIt07x_jXVa8fRW5w_h7L8Nqst';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const AUTH_BASE = 'https://roomfactory-gigachat.onrender.com';
+
+function getAuthToken() {
+  try { return localStorage.getItem('rf_token') || null; } catch (e) { return null; }
+}
+function setAuthToken(token) {
+  try {
+    if (token) localStorage.setItem('rf_token', token);
+    else localStorage.removeItem('rf_token');
+  } catch (e) {}
+}
+async function authFetch(path, options) {
+  options = options || {};
+  const headers = Object.assign({}, options.headers || {});
+  const token = getAuthToken();
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  let resp, data = {};
+  try {
+    resp = await fetch(AUTH_BASE + path, Object.assign({}, options, { headers }));
+    try { data = await resp.json(); } catch (e) {}
+  } catch (e) {
+    return { ok: false, status: 0, data: {} };
+  }
+  return { ok: resp.ok, status: resp.status, data: data || {} };
+}
 
 const translations = {
   ru: {
@@ -1528,13 +1551,22 @@ const translations = {
     'auth.consentText': `Согласен(на) с <a href="javascript:void(0)" onclick="showPrivacy()">политикой конфиденциальности</a> и <a href="javascript:void(0)" onclick="showConsent()">согласием на обработку персональных данных</a>`,
     'auth.consentRequired': `Нужно принять условия обработки персональных данных`,
     'auth.backToLogin': `← Назад ко входу`,
-    'auth.recoveryHint': `Придумайте новый пароль для входа.`,
+    'auth.recoveryHint': `Введите код из письма и новый пароль.`,
     'auth.newPasswordPlaceholder': `Новый пароль`,
     'auth.sendResetLink': `Отправить ссылку`,
     'auth.savePassword': `Сохранить пароль`,
     'auth.alreadyExists': `Аккаунт с такой почтой уже существует. Попробуйте войти или восстановить пароль.`,
     'auth.resetLinkSent': `Если такой аккаунт существует, на почту отправлена ссылка для сброса пароля.`,
-    'auth.passwordSaved': `Пароль сохранён. Выполняется вход...`,
+    'auth.passwordSaved': `Пароль сохранён. Теперь можно войти.`,
+    'auth.verifyCode': `Подтвердить`,
+    'auth.codePlaceholder': `Код из письма`,
+    'auth.codeSent': `Мы отправили код на почту. Введите его ниже.`,
+    'auth.codeResent': `Код отправлен повторно.`,
+    'auth.resendCode': `Отправить код ещё раз`,
+    'auth.invalidCode': `Неверный или истёкший код. Попробуйте ещё раз.`,
+    'auth.invalidCredentials': `Неверная почта или пароль.`,
+    'auth.weakPassword': `Пароль должен быть не короче 8 символов.`,
+    'auth.verifyHint': `Введите код, который мы отправили на вашу почту.`,
     'account.back': `← На главную`,
     'account.title': `Личный кабинет`,
     'account.emailLabel': `Почта`,
@@ -1770,13 +1802,22 @@ const translations = {
     'auth.consentText': `I agree to the <a href="javascript:void(0)" onclick="showPrivacy()">privacy policy</a> and <a href="javascript:void(0)" onclick="showConsent()">consent to personal data processing</a>`,
     'auth.consentRequired': `You need to accept the personal data processing terms`,
     'auth.backToLogin': `← Back to login`,
-    'auth.recoveryHint': `Choose a new password to sign in with.`,
+    'auth.recoveryHint': `Enter the code from the email and a new password.`,
     'auth.newPasswordPlaceholder': `New password`,
     'auth.sendResetLink': `Send link`,
     'auth.savePassword': `Save password`,
     'auth.alreadyExists': `An account with this email already exists. Try logging in or resetting your password.`,
     'auth.resetLinkSent': `If an account exists for this email, a password reset link has been sent.`,
-    'auth.passwordSaved': `Password saved. Signing you in...`,
+    'auth.passwordSaved': `Password saved. You can now log in.`,
+    'auth.verifyCode': `Confirm`,
+    'auth.codePlaceholder': `Code from email`,
+    'auth.codeSent': `We sent a code to your email. Enter it below.`,
+    'auth.codeResent': `Code resent.`,
+    'auth.resendCode': `Resend code`,
+    'auth.invalidCode': `Invalid or expired code. Please try again.`,
+    'auth.invalidCredentials': `Invalid email or password.`,
+    'auth.weakPassword': `Password must be at least 8 characters.`,
+    'auth.verifyHint': `Enter the code we sent to your email.`,
     'account.back': `← Back home`,
     'account.title': `My Account`,
     'account.emailLabel': `Email`,
@@ -2023,8 +2064,8 @@ async function finishQuiz(topKey) {
   document.getElementById('quizResult').style.display = 'block';
   if (currentSession) {
     try {
-      const { data } = await sb.auth.updateUser({ data: { preferred_style: topKey } });
-      if (data && data.user) currentSession.user = data.user;
+      const { ok, data } = await authFetch('/auth/me', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ preferred_style: topKey }) });
+      if (ok && data.user) currentSession.user = data.user;
     } catch (e) {}
   }
   applyPreferredStyle(topKey);
@@ -2059,7 +2100,11 @@ function applyTranslations() {
   if (budgetValEl) budgetValEl.textContent = t('budget.' + sel.budget);
 
   const authSubmitBtn = document.getElementById('authSubmitBtn');
-  if (authSubmitBtn) authSubmitBtn.textContent = authMode === 'login' ? t('authSubmitLogin') : t('authSubmitSignup');
+  if (authSubmitBtn) authSubmitBtn.textContent = t({ login: 'authSubmitLogin', signup: 'authSubmitSignup', reset: 'auth.sendResetLink', verify: 'auth.verifyCode', 'reset-confirm': 'auth.savePassword' }[authMode] || 'authSubmitLogin');
+  const authRecoveryHint = document.getElementById('authRecoveryHint');
+  if (authRecoveryHint) authRecoveryHint.textContent = authMode === 'verify' ? t('auth.verifyHint') : t('auth.recoveryHint');
+  const authPasswordField = document.getElementById('authPassword');
+  if (authPasswordField) authPasswordField.placeholder = authMode === 'reset-confirm' ? t('auth.newPasswordPlaceholder') : t('authPasswordPlaceholder');
 
   const genBtnEl = document.getElementById('genBtn');
   if (genBtnEl) genBtnEl.textContent = generating ? t('genBtnLoading') : (file ? t('genBtnReady') : t('genBtnUpload'));
@@ -2079,6 +2124,9 @@ function setLang(lang) {
 
 let authMode = 'login';
 let currentSession = null;
+let pendingAuthEmail = '';
+
+const AUTH_SUBMIT_LABELS = { login: 'authSubmitLogin', signup: 'authSubmitSignup', reset: 'auth.sendResetLink', verify: 'auth.verifyCode', 'reset-confirm': 'auth.savePassword' };
 
 function openAuthModal() {
   document.getElementById('authModal').classList.add('visible');
@@ -2088,6 +2136,7 @@ function closeAuthModal() {
   document.getElementById('authMsg').textContent = '';
   document.getElementById('authMsg').className = 'auth-msg';
   document.getElementById('authForm').reset();
+  switchAuthTab('login');
 }
 document.getElementById('authModal').addEventListener('click', e => {
   if (e.target === document.getElementById('authModal')) closeAuthModal();
@@ -2097,8 +2146,10 @@ function switchAuthTab(mode) {
   authMode = mode;
   const tabs = document.querySelector('.auth-tabs');
   const pwField = document.getElementById('authPassword');
+  const codeField = document.getElementById('authCode');
   const forgotLink = document.getElementById('authForgotLink');
   const backLink = document.getElementById('authBackLink');
+  const resendLink = document.getElementById('authResendLink');
   const recoveryHint = document.getElementById('authRecoveryHint');
   const emailField = document.getElementById('authEmail');
   const submitBtn = document.getElementById('authSubmitBtn');
@@ -2107,23 +2158,40 @@ function switchAuthTab(mode) {
   document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
 
   tabs.style.display = (mode === 'login' || mode === 'signup') ? '' : 'none';
-  pwField.style.display = (mode === 'reset') ? 'none' : '';
-  pwField.required = mode !== 'reset';
-  pwField.placeholder = mode === 'recovery' ? t('auth.newPasswordPlaceholder') : t('authPasswordPlaceholder');
-  emailField.style.display = mode === 'recovery' ? 'none' : '';
-  emailField.required = mode !== 'recovery';
+  pwField.style.display = (mode === 'reset' || mode === 'verify') ? 'none' : '';
+  pwField.required = (mode !== 'reset' && mode !== 'verify');
+  pwField.placeholder = mode === 'reset-confirm' ? t('auth.newPasswordPlaceholder') : t('authPasswordPlaceholder');
+  pwField.autocomplete = (mode === 'reset-confirm' || mode === 'signup') ? 'new-password' : 'current-password';
+
+  codeField.style.display = (mode === 'verify' || mode === 'reset-confirm') ? '' : 'none';
+  codeField.required = (mode === 'verify' || mode === 'reset-confirm');
+  codeField.value = '';
+
+  emailField.style.display = (mode === 'verify' || mode === 'reset-confirm') ? 'none' : '';
+  emailField.required = (mode !== 'verify' && mode !== 'reset-confirm');
+  if (mode === 'verify' || mode === 'reset-confirm') emailField.value = pendingAuthEmail;
+
   forgotLink.style.display = mode === 'login' ? '' : 'none';
-  backLink.style.display = (mode === 'reset') ? '' : 'none';
-  recoveryHint.style.display = mode === 'recovery' ? '' : 'none';
+  backLink.style.display = (mode === 'reset' || mode === 'verify' || mode === 'reset-confirm') ? '' : 'none';
+  resendLink.style.display = mode === 'verify' ? '' : 'none';
+  recoveryHint.style.display = (mode === 'verify' || mode === 'reset-confirm') ? '' : 'none';
+  recoveryHint.textContent = mode === 'verify' ? t('auth.verifyHint') : t('auth.recoveryHint');
+
   const consentWrap = document.getElementById('authConsentWrap');
   consentWrap.style.display = mode === 'signup' ? '' : 'none';
   document.getElementById('authConsent').checked = false;
 
-  const submitLabels = { login: 'authSubmitLogin', signup: 'authSubmitSignup', reset: 'auth.sendResetLink', recovery: 'auth.savePassword' };
-  submitBtn.textContent = t(submitLabels[mode]);
+  submitBtn.textContent = t(AUTH_SUBMIT_LABELS[mode]);
 
   document.getElementById('authMsg').textContent = '';
   document.getElementById('authMsg').className = 'auth-msg';
+}
+
+async function resendAuthCode() {
+  const msg = document.getElementById('authMsg');
+  await authFetch('/auth/resend-code', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: pendingAuthEmail }) });
+  msg.textContent = t('auth.codeResent');
+  msg.className = 'auth-msg success';
 }
 
 function renderAuthArea(session) {
@@ -2133,10 +2201,25 @@ function renderAuthArea(session) {
   btn.onclick = (session && session.user) ? showAccount : openAuthModal;
 }
 
+async function onSignedIn(token, user, isNewSignup) {
+  setAuthToken(token);
+  currentSession = { user };
+  renderAuthArea(currentSession);
+  updatePreferredStyleCheck(currentSession);
+  let quizAlreadyPrompted = false;
+  try { quizAlreadyPrompted = localStorage.getItem('rf_quiz_prompted') === '1'; } catch (e) {}
+  if (isNewSignup && !quizAlreadyPrompted && !(user && user.preferred_style)) {
+    try { localStorage.setItem('rf_quiz_prompted', '1'); } catch (e) {}
+    pendingOnboarding = true;
+    setTimeout(openQuizModal, 400);
+  }
+}
+
 document.getElementById('authForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const email = document.getElementById('authEmail').value.trim();
+  const email = document.getElementById('authEmail').value.trim() || pendingAuthEmail;
   const password = document.getElementById('authPassword').value;
+  const code = document.getElementById('authCode').value.trim();
   const msg = document.getElementById('authMsg');
   const btn = document.getElementById('authSubmitBtn');
   msg.textContent = '';
@@ -2152,35 +2235,65 @@ document.getElementById('authForm').addEventListener('submit', async e => {
 
   try {
     if (authMode === 'login') {
-      const { error } = await sb.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      trackEvent('login');
-      closeAuthModal();
+      const { ok, data } = await authFetch('/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+      if (!ok) {
+        if (data.error === 'email_not_verified') {
+          pendingAuthEmail = email;
+          await authFetch('/auth/resend-code', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+          switchAuthTab('verify');
+          msg.textContent = t('auth.codeSent');
+          msg.className = 'auth-msg success';
+        } else {
+          msg.textContent = t('auth.invalidCredentials');
+          msg.className = 'auth-msg error';
+        }
+      } else {
+        await onSignedIn(data.token, data.user, false);
+        trackEvent('login');
+        closeAuthModal();
+      }
     } else if (authMode === 'signup') {
-      const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' } });
-      if (error) throw error;
-      if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-        msg.textContent = t('auth.alreadyExists');
+      const { ok, data } = await authFetch('/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+      if (!ok) {
+        if (data.error === 'email_taken') msg.textContent = t('auth.alreadyExists');
+        else if (data.error === 'weak_password') msg.textContent = t('auth.weakPassword');
+        else msg.textContent = t('authErrorFallback');
         msg.className = 'auth-msg error';
       } else {
+        pendingAuthEmail = email;
         trackEvent('signup_completed');
+        switchAuthTab('verify');
         msg.textContent = t('authSuccess');
         msg.className = 'auth-msg success';
       }
+    } else if (authMode === 'verify') {
+      const { ok, data } = await authFetch('/auth/verify-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: pendingAuthEmail, code }) });
+      if (!ok) {
+        msg.textContent = t('auth.invalidCode');
+        msg.className = 'auth-msg error';
+      } else {
+        await onSignedIn(data.token, data.user, true);
+        closeAuthModal();
+      }
     } else if (authMode === 'reset') {
-      const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://gwirglemly-beep.github.io/roomfactory/' });
-      if (error) throw error;
+      await authFetch('/auth/request-password-reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+      pendingAuthEmail = email;
+      switchAuthTab('reset-confirm');
       msg.textContent = t('auth.resetLinkSent');
       msg.className = 'auth-msg success';
-    } else if (authMode === 'recovery') {
-      const { error } = await sb.auth.updateUser({ password });
-      if (error) throw error;
-      msg.textContent = t('auth.passwordSaved');
-      msg.className = 'auth-msg success';
-      setTimeout(() => { switchAuthTab('login'); closeAuthModal(); }, 1500);
+    } else if (authMode === 'reset-confirm') {
+      const { ok } = await authFetch('/auth/reset-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: pendingAuthEmail, code, newPassword: password }) });
+      if (!ok) {
+        msg.textContent = t('auth.invalidCode');
+        msg.className = 'auth-msg error';
+      } else {
+        msg.textContent = t('auth.passwordSaved');
+        msg.className = 'auth-msg success';
+        setTimeout(() => { switchAuthTab('login'); }, 1500);
+      }
     }
   } catch (err) {
-    msg.textContent = err.message || t('authErrorFallback');
+    msg.textContent = t('authErrorFallback');
     msg.className = 'auth-msg error';
   } finally {
     btn.disabled = false;
@@ -2189,7 +2302,7 @@ document.getElementById('authForm').addEventListener('submit', async e => {
 
 function updatePreferredStyleCheck(session) {
   const wrap = document.getElementById('preferredStyleCheckWrap');
-  const pref = session && session.user && session.user.user_metadata && session.user.user_metadata.preferred_style;
+  const pref = session && session.user && session.user.preferred_style;
   wrap.style.display = pref ? 'flex' : 'none';
   if (!pref) {
     document.getElementById('usePreferredStyle').checked = false;
@@ -2198,32 +2311,21 @@ function updatePreferredStyleCheck(session) {
   }
 }
 
-sb.auth.onAuthStateChange((_event, session) => {
-  currentSession = session;
-  renderAuthArea(session);
-  updatePreferredStyleCheck(session);
-  if (_event === 'PASSWORD_RECOVERY') {
-    openAuthModal();
-    switchAuthTab('recovery');
-  }
-  let quizAlreadyPrompted = false;
-  try { quizAlreadyPrompted = localStorage.getItem('rf_quiz_prompted') === '1'; } catch (e) {}
-  if (_event === 'SIGNED_IN' && session && session.user && !quizAlreadyPrompted && !(session.user.user_metadata && session.user.user_metadata.preferred_style)) {
-    try { localStorage.setItem('rf_quiz_prompted', '1'); } catch (e) {}
-    pendingOnboarding = true;
-    setTimeout(openQuizModal, 400);
-  }
-});
-sb.auth.getSession().then(({ data }) => {
-  currentSession = data.session;
-  renderAuthArea(data.session);
-  updatePreferredStyleCheck(data.session);
-  const pref = data.session && data.session.user && data.session.user.user_metadata && data.session.user.user_metadata.preferred_style;
-  if (pref) applyPreferredStyle(pref);
-});
+(async function restoreSession() {
+  renderAuthArea(null);
+  updatePreferredStyleCheck(null);
+  const token = getAuthToken();
+  if (!token) return;
+  const { ok, data } = await authFetch('/auth/me', { method: 'GET' });
+  if (!ok) { setAuthToken(null); return; }
+  currentSession = { user: data.user };
+  renderAuthArea(currentSession);
+  updatePreferredStyleCheck(currentSession);
+  if (data.user && data.user.preferred_style) applyPreferredStyle(data.user.preferred_style);
+})();
 
 document.getElementById('usePreferredStyle').addEventListener('change', e => {
-  const pref = currentSession && currentSession.user && currentSession.user.user_metadata && currentSession.user.user_metadata.preferred_style;
+  const pref = currentSession && currentSession.user && currentSession.user.preferred_style;
   if (e.target.checked && pref) applyPreferredStyle(pref);
 });
 
@@ -2261,14 +2363,14 @@ function showAccount() {
 
 function loadProfile() {
   if (!currentSession) return;
-  const meta = currentSession.user.user_metadata || {};
-  document.getElementById('accountEmailField').value = currentSession.user.email || '';
-  document.getElementById('profileFirstName').value = meta.first_name || '';
-  document.getElementById('profileLastName').value = meta.last_name || '';
-  document.getElementById('profilePhone').value = meta.phone || '';
+  const u = currentSession.user || {};
+  document.getElementById('accountEmailField').value = u.email || '';
+  document.getElementById('profileFirstName').value = u.first_name || '';
+  document.getElementById('profileLastName').value = u.last_name || '';
+  document.getElementById('profilePhone').value = u.phone || '';
   const styleText = document.getElementById('accountStyleText');
   if (styleText) {
-    styleText.textContent = meta.preferred_style ? (t('quiz.resultPrefix') + ' ' + t('style.' + meta.preferred_style)) : t('account.styleNone');
+    styleText.textContent = u.preferred_style ? (t('quiz.resultPrefix') + ' ' + t('style.' + u.preferred_style)) : t('account.styleNone');
   }
 }
 
@@ -2280,19 +2382,21 @@ document.getElementById('profileForm').addEventListener('submit', async e => {
   msg.textContent = '';
   msg.className = 'profile-msg';
   try {
-    const { data, error } = await sb.auth.updateUser({
-      data: {
+    const { ok, data } = await authFetch('/auth/me', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         first_name: document.getElementById('profileFirstName').value.trim(),
         last_name: document.getElementById('profileLastName').value.trim(),
         phone: document.getElementById('profilePhone').value.trim()
-      }
+      })
     });
-    if (error) throw error;
-    if (data && data.user) currentSession.user = data.user;
+    if (!ok) throw new Error('save failed');
+    currentSession.user = data.user;
     msg.textContent = t('profile.saved');
     msg.className = 'profile-msg success';
   } catch (err) {
-    msg.textContent = err.message || t('profile.saveError');
+    msg.textContent = t('profile.saveError');
     msg.className = 'profile-msg error';
   } finally {
     btn.disabled = false;
@@ -2300,7 +2404,11 @@ document.getElementById('profileForm').addEventListener('submit', async e => {
 });
 
 document.getElementById('accountLogoutBtn').addEventListener('click', async () => {
-  await sb.auth.signOut();
+  try { await authFetch('/auth/logout', { method: 'POST' }); } catch (e) {}
+  setAuthToken(null);
+  currentSession = null;
+  renderAuthArea(null);
+  updatePreferredStyleCheck(null);
   showHome();
 });
 
@@ -2321,9 +2429,10 @@ async function loadLibrary() {
   loadingDiv.textContent = t('library.loading');
   grid.appendChild(loadingDiv);
 
-  const { data, error } = await sb.from('generations').select('*').order('created_at', { ascending: false });
+  const { ok, data } = await authFetch('/generations', { method: 'GET' });
+  const items = (ok && data && data.generations) || [];
   grid.textContent = '';
-  if (error || !data || !data.length) {
+  if (!items.length) {
     const emptyDiv = document.createElement('div');
     emptyDiv.className = 'library-empty';
     emptyDiv.textContent = t('library.emptyHint');
@@ -2331,7 +2440,7 @@ async function loadLibrary() {
     return;
   }
 
-  data.forEach(g => {
+  items.forEach(g => {
     const date = new Date(g.created_at).toLocaleDateString(LANG === 'ru' ? 'ru-RU' : 'en-US');
     const label = [g.store_label, g.style_label, g.room_label].filter(Boolean).join(' · ');
 
@@ -2375,27 +2484,16 @@ document.getElementById('libraryGrid').addEventListener('click', async e => {
   if (!delBtn) return;
   const card = delBtn.closest('.library-card');
   const id = card.dataset.id;
-  const imageUrl = card.dataset.url;
   card.style.opacity = '0.4';
   delBtn.disabled = true;
 
-  const { error: deleteError } = await sb.from('generations').delete().eq('id', id);
-  if (deleteError) {
+  const { ok } = await authFetch('/generations/' + encodeURIComponent(id), { method: 'DELETE' });
+  if (!ok) {
     card.style.opacity = '1';
     delBtn.disabled = false;
     delBtn.title = t('library.deleteError') || 'Не удалось удалить, попробуйте ещё раз';
     return;
   }
-
-  try {
-    const marker = '/designs/';
-    const idx = imageUrl.indexOf(marker);
-    if (idx !== -1) {
-      const path = decodeURIComponent(imageUrl.slice(idx + marker.length));
-      const { error: storageError } = await sb.storage.from('designs').remove([path]);
-      if (storageError) console.error('Не удалось удалить файл из хранилища:', storageError);
-    }
-  } catch (e2) { console.error('Не удалось удалить файл из хранилища:', e2); }
 
   card.remove();
   if (!document.getElementById('libraryGrid').children.length) {
@@ -2409,19 +2507,14 @@ document.getElementById('libraryGrid').addEventListener('click', async e => {
 async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel) {
   if (!currentSession) return;
   try {
-    const userId = currentSession.user.id;
-    const path = userId + '/' + Date.now() + '.jpg';
-    const { error: uploadError } = await sb.storage.from('designs').upload(path, blob, { contentType: 'image/jpeg' });
-    if (uploadError) throw uploadError;
-    const { data: pub } = sb.storage.from('designs').getPublicUrl(path);
-    await sb.from('generations').insert({
-      user_id: userId,
-      image_url: pub.publicUrl,
-      style_key: styleKey,
-      style_label: styleLabel,
-      room_label: roomLabel,
-      store_label: storeLabel
-    });
+    const form = new FormData();
+    form.append('image', blob, 'design.jpg');
+    if (styleKey) form.append('styleKey', styleKey);
+    if (styleLabel) form.append('styleLabel', styleLabel);
+    if (roomLabel) form.append('roomLabel', roomLabel);
+    if (storeLabel) form.append('storeLabel', storeLabel);
+    const { ok } = await authFetch('/generations', { method: 'POST', body: form });
+    if (!ok) throw new Error('save failed');
   } catch (e) {
     console.error('Не удалось сохранить в историю:', e);
   }
