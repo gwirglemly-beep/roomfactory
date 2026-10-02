@@ -1566,6 +1566,7 @@ const translations = {
     'auth.invalidCode': `Неверный или истёкший код. Попробуйте ещё раз.`,
     'auth.invalidCredentials': `Неверная почта или пароль.`,
     'auth.weakPassword': `Пароль должен быть не короче 8 символов.`,
+    'auth.invalidEmail': `Такой почты не существует, проверьте адрес.`,
     'auth.verifyHint': `Введите код, который мы отправили на вашу почту.`,
     'account.back': `← На главную`,
     'account.title': `Личный кабинет`,
@@ -1817,6 +1818,7 @@ const translations = {
     'auth.invalidCode': `Invalid or expired code. Please try again.`,
     'auth.invalidCredentials': `Invalid email or password.`,
     'auth.weakPassword': `Password must be at least 8 characters.`,
+    'auth.invalidEmail': `This email address doesn't exist, please check it.`,
     'auth.verifyHint': `Enter the code we sent to your email.`,
     'account.back': `← Back home`,
     'account.title': `My Account`,
@@ -2257,8 +2259,13 @@ document.getElementById('authForm').addEventListener('submit', async e => {
       if (!ok) {
         if (data.error === 'email_taken') msg.textContent = t('auth.alreadyExists');
         else if (data.error === 'weak_password') msg.textContent = t('auth.weakPassword');
+        else if (data.error === 'invalid_email') msg.textContent = t('auth.invalidEmail');
         else msg.textContent = t('authErrorFallback');
         msg.className = 'auth-msg error';
+      } else if (data.token) {
+        trackEvent('signup_completed');
+        await onSignedIn(data.token, data.user, true);
+        closeAuthModal();
       } else {
         pendingAuthEmail = email;
         trackEvent('signup_completed');
