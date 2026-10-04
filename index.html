@@ -3480,6 +3480,11 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       throw limitErr;
     }
     if (!res.ok) throw new Error(res.status);
+    const matchedHeader = res.headers.get('X-Matched-Items');
+    if (matchedHeader !== null) {
+      const keepIdx = matchedHeader.split(',').filter(x => x !== '').map(Number);
+      selectedFurnitureItems = selectedFurnitureItems.filter((_, i) => keepIdx.includes(i));
+    }
     const blob = await res.blob();
     const displayBlob = await applyWatermark(blob);
     const url = URL.createObjectURL(displayBlob);
