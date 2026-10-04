@@ -1462,7 +1462,7 @@ const translations = {
     'genBtnLoading': `Создаём...`,
     'loadingText': `Создаём ваш дизайн...`,
     'genError': `Не удалось создать дизайн. Попробуйте ещё раз.`,
-    'genLimit': `Вы использовали 3 бесплатные генерации на сегодня. Возвращайтесь завтра.`,
+    'genLimit': `Вы использовали все 3 бесплатные генерации.`,
     'genBusy': `Сегодня сервис перегружен. Попробуйте, пожалуйста, завтра.`,
     'apartment.needPhotos': `Загрузите хотя бы одно фото другой комнаты квартиры.`,
     'resultLabel': `Ваш новый интерьер`,
@@ -1714,7 +1714,7 @@ const translations = {
     'genBtnLoading': `Creating...`,
     'loadingText': `Creating your design...`,
     'genError': `Failed to create the design. Please try again.`,
-    'genLimit': `You've used your 3 free generations for today. Come back tomorrow.`,
+    'genLimit': `You've used all 3 of your free generations.`,
     'genBusy': `The service is overloaded today. Please try again tomorrow.`,
     'apartment.needPhotos': `Upload at least one photo of another room in the apartment.`,
     'resultLabel': `Your new interior`,
@@ -3390,16 +3390,19 @@ document.getElementById('shareWhatsapp').addEventListener('click', () => {
   shareDropdownEl.classList.remove('open');
 });
 
-const DAILY_GEN_LIMIT = 3;
-function dailyGenKey() {
-  const d = new Date();
-  return 'rf_gen_' + d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+// Всего 3 бесплатные генерации (не в день). Для вошедших счёт ведёт сервер (на аккаунт),
+// здесь — только счётчик гостя в этом браузере.
+const TOTAL_GEN_LIMIT = 3;
+const TOTAL_GEN_KEY = 'rf_gen_total';
+function getTotalGenCount() {
+  try { return parseInt(localStorage.getItem(TOTAL_GEN_KEY) || '0', 10) || 0; } catch (e) { return 0; }
 }
-function getDailyGenCount() {
-  try { return parseInt(localStorage.getItem(dailyGenKey()) || '0', 10) || 0; } catch (e) { return 0; }
+function bumpTotalGenCount() {
+  try { localStorage.setItem(TOTAL_GEN_KEY, String(getTotalGenCount() + 1)); } catch (e) {}
 }
-function bumpDailyGenCount() {
-  try { localStorage.setItem(dailyGenKey(), String(getDailyGenCount() + 1)); } catch (e) {}
+function genAuthHeaders() {
+  const token = getAuthToken();
+  return token ? { 'Authorization': 'Bearer ' + token } : {};
 }
 
 document.getElementById('genBtn').addEventListener('click', async () => {
@@ -3410,7 +3413,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const btn = document.getElementById('genBtn');
   const comment = document.getElementById('comment').value.trim();
 
-  if (getDailyGenCount() >= DAILY_GEN_LIMIT) {
+  if (!currentSession && getTotalGenCount() >= TOTAL_GEN_LIMIT) {
     err.textContent = t('genLimit');
     err.classList.add('visible');
     return;
@@ -3467,7 +3470,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       selectedFurnitureItems = pickFurnitureImages(sel.storeKey, effectiveStyleKey, sel.room, hoffMax);
       const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
-      res = await fetch(APARTMENT_URL, { method: 'POST', body: fd });
+      res = await fetch(APARTMENT_URL, { method: 'POST', headers: genAuthHeaders(), body: fd });
     } else {
       const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
       const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
@@ -3476,7 +3479,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       selectedFurnitureItems = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
       const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
-      res = await fetch(WORKER_URL, { method: 'POST', body: fd });
+      res = await fetch(WORKER_URL, { method: 'POST', headers: genAuthHeaders(), body: fd });
     }
     if (res.status === 429) {
       let code = '';
@@ -3493,7 +3496,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     document.getElementById('dlBtn').href = url;
     lastResultBlob = displayBlob;
     result.classList.add('visible');
-    bumpDailyGenCount();
+    if (!currentSession) bumpTotalGenCount();
 
     const similarBlock = document.getElementById('similarFurnitureBlock');
     similarBlock.style.display = renderKnownFurniture(selectedFurnitureItems) ? '' : 'none';
