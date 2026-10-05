@@ -3054,7 +3054,35 @@ function pickFurnitureImages(storeKey, styleKey, roomKey, maxCount) {
   let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) return [];
   items = roomFilteredItems(items, roomKey);
+  // Не берём товары, в названии которых указан цвет вне выбранной гаммы (если после этого остаётся хотя бы 4 товара).
+  const paletteForbidden = [
+    ['monochrome', ['зелен', 'зелён', 'красн', 'розов', 'желт', 'жёлт', 'оранж', 'фиолет', 'син', 'голуб', 'бирюз', 'беж', 'коричнев', 'терракот', 'оливк', 'бордов', 'сирен', 'лаванд', 'золот', 'латун', 'орех', 'дуб']],
+    ['warm neutral', ['зелен', 'зелён', 'красн', 'розов', 'желт', 'жёлт', 'оранж', 'фиолет', 'син', 'голуб', 'бирюз', 'бордов', 'сирен']],
+    ['earthy', ['розов', 'сирен', 'голуб', 'фиолет', 'син', 'бирюз']],
+    ['blue', ['красн', 'розов', 'желт', 'жёлт', 'оранж', 'зелен', 'зелён', 'коричнев', 'беж', 'терракот', 'золот']],
+    ['pink', ['зелен', 'зелён', 'син', 'голуб', 'желт', 'жёлт', 'оранж', 'коричнев']],
+    ['green', ['красн', 'розов', 'син', 'голуб', 'желт', 'жёлт', 'оранж', 'фиолет']],
+    ['dark luxury', ['розов', 'голуб', 'зелен', 'зелён', 'желт', 'жёлт', 'оранж', 'сирен']],
+    ['lavender', ['зелен', 'зелён', 'желт', 'жёлт', 'оранж', 'красн', 'коричнев', 'терракот']]
+  ];
+  const forbiddenEntry = paletteForbidden.find(e => String(sel.color || '').includes(e[0]));
+  if (forbiddenEntry) {
+    const okItems = items.filter(p => !forbiddenEntry[1].some(k => p.name.toLowerCase().includes(k)));
+    if (okItems.length >= 4) items = okItems;
+  }
   const shuffled = items.slice().sort(() => Math.random() - 0.5);
+  // Главный предмет комнаты (кровать, диван, стол...) всегда берём из каталога первым, чтобы он был и на картинке, и в списке товаров.
+  const mustHaveByRoom = { 'bedroom': ['кровать'], 'children room': ['кровать'], 'living room': ['диван'], 'kitchen': ['обеденн', 'стол'], 'home office': ['стол'], 'hallway': ['шкаф', 'банкетк', 'вешалк'] };
+  const mustKeys = mustHaveByRoom[roomKey] || [];
+  if (mustKeys.length) {
+    const mustIdx = shuffled.findIndex(p => {
+      const nm = p.name.toLowerCase();
+      if (!p.img || !mustKeys.some(k => nm.includes(k))) return false;
+      if (mustKeys[0] === 'кровать' && nm.includes('диван')) return false;
+      return true;
+    });
+    if (mustIdx > 0) shuffled.unshift(shuffled.splice(mustIdx, 1)[0]);
+  }
   const picked = [];
   const usedTypes = new Set();
   for (const p of shuffled) {
@@ -3065,6 +3093,23 @@ function pickFurnitureImages(storeKey, styleKey, roomKey, maxCount) {
     if (type) usedTypes.add(type);
     picked.push(p);
     if (picked.length >= maxCount) break;
+  }
+  // Если для этого стиля и комнаты товаров мало (например, прихожая в japandi), добираем подходящие из других стилей того же магазина.
+  if (picked.length < 4) {
+    const storeAll = storeCatalogs[storeKey] || {};
+    let extra = [];
+    Object.keys(storeAll).forEach(k => { if (k !== styleKey) extra = extra.concat(roomFilteredItems(storeAll[k], roomKey)); });
+    if (forbiddenEntry) extra = extra.filter(p => !forbiddenEntry[1].some(k => p.name.toLowerCase().includes(k)));
+    extra.sort(() => Math.random() - 0.5);
+    for (const p of extra) {
+      if (!p.img || picked.some(x => x.img === p.img || x.name === p.name)) continue;
+      const nameLower = p.name.toLowerCase();
+      const type = Object.keys(furnitureTypeSearch).find(t => furnitureTypeSearch[t].some(k => nameLower.includes(k)));
+      if (type && usedTypes.has(type)) continue;
+      if (type) usedTypes.add(type);
+      picked.push(p);
+      if (picked.length >= 4) break;
+    }
   }
   return picked;
 }
@@ -3454,6 +3499,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     if (userRefDataUrl) fd.append('userReferenceImage', userRefDataUrl);
     fd.append('roomLabel', roomLabelRu);
     fd.append('colorLabel', colorLabelRu);
+    fd.append('palette', sel.color || '');
     fd.append('output_format', 'jpeg');
 
     let res;
