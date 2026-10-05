@@ -382,6 +382,8 @@ body.edit-mode-active #uploadZone, body.edit-mode-active #storeSection, body.edi
 .hoff-product-name { font-size: 10px; color: #1a1208; line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .hoff-product-price { font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700; color: #b48c5a; }
 .hoff-products-empty { font-size: 12px; color: #8a7a66; grid-column: 1 / -1; }
+.hoff-products-total { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; background: #2d2318; color: #f5f2ed; font-size: 14px; letter-spacing: 0.04em; }
+.hoff-products-total strong { font-size: 18px; color: #d4ad7a; font-weight: 600; letter-spacing: 0; }
 
 .library-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; max-height: 60vh; overflow-y: auto; }
 .library-card { position: relative; background: #faf7f2; border: 1px solid rgba(42,34,24,0.1); overflow: hidden; }
@@ -1056,7 +1058,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             </div>
           </div>
           <div style="margin-top:20px" id="similarFurnitureBlock">
-            <div class="form-label" style="margin-bottom:8px"><span data-i18n="similarFurniturePrefix">Похожая мебель в</span> <span id="storeProductsLabel">Hoff</span></div>
+            <div class="form-label" style="margin-bottom:8px"><span data-i18n="similarFurniturePrefix">Мебель из каталога</span> <span id="storeProductsLabel">Hoff</span></div>
             <div class="hoff-products-grid" id="hoffProductsGrid"></div>
           </div>
         </div>
@@ -1471,7 +1473,8 @@ const translations = {
     'share.vk': `Поделиться ВКонтакте`,
     'share.whatsapp': `Отправить в WhatsApp`,
     'shareText': `Смотрите, какой дизайн интерьера сделал для меня Room Factory!`,
-    'similarFurniturePrefix': `Похожая мебель в`,
+    'similarFurniturePrefix': `Мебель из каталога`,
+    'furnitureTotalLabel': `Смета покупки`,
     'searchMorePrefix': `Ещё поискать`,
     'storeEmpty': `Пока нет подборки под этот стиль в выбранном магазине — загляните в общий каталог.`,
     'footer.text': `© 2026 · AI дизайн интерьера`,
@@ -1722,7 +1725,8 @@ const translations = {
     'share.vk': `Share on VK`,
     'share.whatsapp': `Share on WhatsApp`,
     'shareText': `Look at the interior design Room Factory made for me!`,
-    'similarFurniturePrefix': `Similar furniture at`,
+    'similarFurniturePrefix': `Furniture from the catalog of`,
+    'furnitureTotalLabel': `Shopping estimate`,
     'searchMorePrefix': `Also try`,
     'storeEmpty': `No curated picks for this style in the selected store yet — check the full catalog.`,
     'footer.text': `© 2026 · AI Interior Design`,
@@ -3064,18 +3068,34 @@ function pickFurnitureImages(storeKey, styleKey, roomKey, maxCount) {
   }
   return picked;
 }
+function priceToNumber(priceStr) {
+  const n = parseInt(String(priceStr || '').replace(/[^\d]/g, ''), 10);
+  return isNaN(n) ? 0 : n;
+}
+function refreshFurnitureTotal() {
+  const grid = document.getElementById('hoffProductsGrid');
+  const totalEl = document.getElementById('furnitureTotal');
+  if (!grid || !totalEl) return;
+  const cards = grid.querySelectorAll('.hoff-product-card');
+  let sum = 0;
+  cards.forEach(c => { sum += parseInt(c.getAttribute('data-price') || '0', 10) || 0; });
+  if (!cards.length || !sum) { totalEl.style.display = 'none'; return; }
+  totalEl.style.display = '';
+  totalEl.querySelector('strong').textContent = sum.toLocaleString('ru-RU') + ' ₽';
+}
 function renderKnownFurniture(items) {
   if (!items || !items.length) return false;
   const grid = document.getElementById('hoffProductsGrid');
   grid.innerHTML = items.map(p =>
-    '<a class="hoff-product-card" href="' + p.url + '" target="_blank" rel="noopener">' +
-      '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" onerror="this.closest(\'a\').remove()">' +
+    '<a class="hoff-product-card" data-price="' + priceToNumber(p.price) + '" href="' + p.url + '" target="_blank" rel="noopener">' +
+      '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" onerror="this.closest(\'a\').remove();refreshFurnitureTotal()">' +
       '<div class="hoff-product-info">' +
         '<div class="hoff-product-name">' + p.name + '</div>' +
         '<div class="hoff-product-price">' + p.price + '</div>' +
       '</div>' +
     '</a>'
-  ).join('');
+  ).join('') + '<div class="hoff-products-total" id="furnitureTotal"><span>' + t('furnitureTotalLabel') + '</span><strong></strong></div>';
+  refreshFurnitureTotal();
   return true;
 }
 const furnitureTypeSearch = {
@@ -3461,6 +3481,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       selectedFurnitureItems = pickFurnitureImages(sel.storeKey, effectiveStyleKey, sel.room, hoffMax);
       const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
+      if (referenceImageUrls.length) fd.append('referenceNames', JSON.stringify(selectedFurnitureItems.map(p => p.name)));
       res = await fetch(APARTMENT_URL, { method: 'POST', headers: genAuthHeaders(), body: fd });
     } else {
       const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
@@ -3470,6 +3491,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       selectedFurnitureItems = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
       const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
+      if (referenceImageUrls.length) fd.append('referenceNames', JSON.stringify(selectedFurnitureItems.map(p => p.name)));
       res = await fetch(WORKER_URL, { method: 'POST', headers: genAuthHeaders(), body: fd });
     }
     if (res.status === 429) {
@@ -3482,8 +3504,12 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     if (!res.ok) throw new Error(res.status);
     const matchedHeader = res.headers.get('X-Matched-Items');
     if (matchedHeader !== null) {
+      // Товары, которые ИИ реально нарисовал, идут первыми; если их мало, добираем остальными из подборки, чтобы блок не был пустым.
       const keepIdx = matchedHeader.split(',').filter(x => x !== '').map(Number);
-      selectedFurnitureItems = selectedFurnitureItems.filter((_, i) => keepIdx.includes(i));
+      const matchedItems = selectedFurnitureItems.filter((_, i) => keepIdx.includes(i));
+      const otherItems = selectedFurnitureItems.filter((_, i) => !keepIdx.includes(i));
+      const MIN_SHOWN = 4;
+      selectedFurnitureItems = matchedItems.length >= MIN_SHOWN ? matchedItems : matchedItems.concat(otherItems).slice(0, Math.max(MIN_SHOWN, matchedItems.length));
     }
     const blob = await res.blob();
     const displayBlob = await applyWatermark(blob);
