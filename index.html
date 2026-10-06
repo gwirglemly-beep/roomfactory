@@ -2010,6 +2010,7 @@ function endOnboarding() {
   try { localStorage.setItem('rf_onboarding_done', '1'); } catch (e) {}
 }
 function startOnboarding() {
+  return; // пошаговый гайд («Шаг 1…5») отключён
   let done = false;
   try { done = localStorage.getItem('rf_onboarding_done') === '1'; } catch (e) {}
   if (done) return;
@@ -2214,7 +2215,6 @@ async function onSignedIn(token, user, isNewSignup) {
   try { quizAlreadyPrompted = localStorage.getItem('rf_quiz_prompted') === '1'; } catch (e) {}
   if (isNewSignup && !quizAlreadyPrompted && !(user && user.preferred_style)) {
     try { localStorage.setItem('rf_quiz_prompted', '1'); } catch (e) {}
-    pendingOnboarding = true;
     setTimeout(openQuizModal, 400);
   }
 }
@@ -3050,7 +3050,7 @@ function pickFurnitureHint(storeKey, styleKey, roomKey) {
   return descriptions.join(', ');
 }
 function pickFurnitureImages(storeKey, styleKey, roomKey, maxCount) {
-  maxCount = maxCount || 8;
+  maxCount = maxCount || 6;
   let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) return [];
   items = roomFilteredItems(items, roomKey);
@@ -3530,11 +3530,12 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       if (referenceImageUrls.length) fd.append('referenceNames', JSON.stringify(selectedFurnitureItems.map(p => p.name)));
       res = await fetch(APARTMENT_URL, { method: 'POST', headers: genAuthHeaders(), body: fd });
     } else {
-      const furnitureHint = pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
+      selectedFurnitureItems = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
+      // Если есть товары-образцы, текстовую подсказку про «случайную» мебель не добавляем: мебель только с фото.
+      const furnitureHint = selectedFurnitureItems.length ? '' : pickFurnitureHint(sel.storeKey, sel.styleKey, sel.room);
       const prompt = [sel.style, furnitureHint, sel.room, sel.color, budgetPrompts[sel.budget], comment, 'professional interior photography, high quality, photorealistic'].filter(Boolean).join(', ');
       fd.append('prompt', prompt);
       fd.append('styleLabel', translations.ru['style.' + sel.styleKey] || sel.styleLabel);
-      selectedFurnitureItems = pickFurnitureImages(sel.storeKey, sel.styleKey, sel.room);
       const referenceImageUrls = selectedFurnitureItems.map(p => p.img);
       if (referenceImageUrls.length) fd.append('referenceImageUrls', JSON.stringify(referenceImageUrls));
       if (referenceImageUrls.length) fd.append('referenceNames', JSON.stringify(selectedFurnitureItems.map(p => p.name)));
@@ -3548,14 +3549,14 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       throw limitErr;
     }
     if (!res.ok) throw new Error(res.status);
-    const matchedHeader = res.headers.get('X-Matched-Items');
-    if (matchedHeader !== null) {
-      // Товары, которые ИИ реально нарисовал, идут первыми; если их мало, добираем остальными из подборки, чтобы блок не был пустым.
-      const keepIdx = matchedHeader.split(',').filter(x => x !== '').map(Number);
-      const matchedItems = selectedFurnitureItems.filter((_, i) => keepIdx.includes(i));
-      const otherItems = selectedFurnitureItems.filter((_, i) => !keepIdx.includes(i));
-      const MIN_SHOWN = 4;
-      selectedFurnitureItems = matchedItems.length >= MIN_SHOWN ? matchedItems : matchedItems.concat(otherItems).slice(0, Math.max(MIN_SHOWN, matchedItems.length));
+    // Показываем ВСЕ товары, которые реально отправлены ИИ как образцы (он обязан нарисовать именно их); те, что ИИ точно нарисовал, идут первыми.
+    const usedHeader = res.headers.get('X-Used-Items');
+    if (usedHeader !== null) {
+      const usedIdx = usedHeader.split(',').filter(x => x !== '').map(Number);
+      const matchedHeader = res.headers.get('X-Matched-Items');
+      const keepIdx = matchedHeader ? matchedHeader.split(',').filter(x => x !== '').map(Number) : [];
+      const usedItems = selectedFurnitureItems.map((p, i) => ({ p, i })).filter(x => usedIdx.includes(x.i));
+      selectedFurnitureItems = usedItems.filter(x => keepIdx.includes(x.i)).concat(usedItems.filter(x => !keepIdx.includes(x.i))).map(x => x.p);
     }
     const blob = await res.blob();
     const displayBlob = await applyWatermark(blob);
