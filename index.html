@@ -1095,6 +1095,14 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
 </footer>
 </div>
 
+<div class="popup-overlay" id="designModal">
+  <div class="popup-box wide">
+    <button class="popup-close" onclick="closeModal('designModal')">✕</button>
+    <img id="designModalImg" src="" alt="" style="width:100%;border-radius:8px;display:block;margin-bottom:16px">
+    <div class="hoff-products-grid" id="designModalFurniture"></div>
+  </div>
+</div>
+
 <div id="accountView" style="display:none">
   <div class="account-page">
     <button class="account-back" onclick="showHome()" data-i18n="account.back">← На главную</button>
@@ -2344,7 +2352,7 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.remove('visible');
 }
-['howModal', 'aboutModal', 'quizModal', 'faqModal'].forEach(id => {
+['howModal', 'aboutModal', 'quizModal', 'faqModal', 'designModal'].forEach(id => {
   document.getElementById(id).addEventListener('click', e => {
     if (e.target === document.getElementById(id)) closeModal(id);
   });
@@ -2430,6 +2438,32 @@ function isSafeImageUrl(url) {
   }
 }
 
+// Мебель сохранённых дизайнов храним тут, а не в data-атрибутах карточки:
+// список может быть длинным, а так не раздуваем DOM и не рискуем экранированием кавычек.
+let libraryFurnitureById = {};
+
+function buildFurnitureCardsHtml(items) {
+  if (!items || !items.length) return '';
+  return items.map(p =>
+    '<a class="hoff-product-card" href="' + p.url + '" target="_blank" rel="noopener">' +
+      '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" onerror="this.closest(\'a\').remove()">' +
+      '<div class="hoff-product-info">' +
+        '<div class="hoff-product-name">' + p.name + '</div>' +
+        '<div class="hoff-product-price">' + p.price + '</div>' +
+      '</div>' +
+    '</a>'
+  ).join('');
+}
+
+function openSavedDesign(id) {
+  const items = libraryFurnitureById[id] || [];
+  const card = document.querySelector('.library-card[data-id="' + id + '"]');
+  if (!card) return;
+  document.getElementById('designModalImg').src = card.dataset.url;
+  document.getElementById('designModalFurniture').innerHTML = buildFurnitureCardsHtml(items);
+  openModal('designModal');
+}
+
 async function loadLibrary() {
   const grid = document.getElementById('libraryGrid');
   grid.textContent = '';
@@ -2441,6 +2475,7 @@ async function loadLibrary() {
   const { ok, data } = await authFetch('/generations', { method: 'GET' });
   const items = (ok && data && data.generations) || [];
   grid.textContent = '';
+  libraryFurnitureById = {};
   if (!items.length) {
     const emptyDiv = document.createElement('div');
     emptyDiv.className = 'library-empty';
@@ -2450,6 +2485,7 @@ async function loadLibrary() {
   }
 
   items.forEach(g => {
+    libraryFurnitureById[g.id] = Array.isArray(g.furniture) ? g.furniture : [];
     const date = new Date(g.created_at).toLocaleDateString(LANG === 'ru' ? 'ru-RU' : 'en-US');
     const label = [g.store_label, g.style_label, g.room_label].filter(Boolean).join(' · ');
 
@@ -2490,7 +2526,11 @@ async function loadLibrary() {
 
 document.getElementById('libraryGrid').addEventListener('click', async e => {
   const delBtn = e.target.closest('.library-delete');
-  if (!delBtn) return;
+  if (!delBtn) {
+    const card = e.target.closest('.library-card');
+    if (card) openSavedDesign(card.dataset.id);
+    return;
+  }
   const card = delBtn.closest('.library-card');
   const id = card.dataset.id;
   card.style.opacity = '0.4';
@@ -2504,6 +2544,7 @@ document.getElementById('libraryGrid').addEventListener('click', async e => {
     return;
   }
 
+  delete libraryFurnitureById[id];
   card.remove();
   if (!document.getElementById('libraryGrid').children.length) {
     const emptyDiv = document.createElement('div');
@@ -2513,7 +2554,7 @@ document.getElementById('libraryGrid').addEventListener('click', async e => {
   }
 });
 
-async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel) {
+async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel, furnitureItems) {
   if (!currentSession) return;
   try {
     const form = new FormData();
@@ -2522,6 +2563,11 @@ async function saveGeneration(blob, styleKey, styleLabel, roomLabel, storeLabel)
     if (styleLabel) form.append('styleLabel', styleLabel);
     if (roomLabel) form.append('roomLabel', roomLabel);
     if (storeLabel) form.append('storeLabel', storeLabel);
+    if (furnitureItems && furnitureItems.length) {
+      // Сохраняем только нужные для отображения поля, без лишних данных из каталога.
+      const trimmed = furnitureItems.map(p => ({ name: p.name, img: p.img, price: p.price, url: p.url }));
+      form.append('furniture', JSON.stringify(trimmed));
+    }
     const { ok } = await authFetch('/generations', { method: 'POST', body: form });
     if (!ok) throw new Error('save failed');
   } catch (e) {
@@ -3570,7 +3616,7 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     const similarBlock = document.getElementById('similarFurnitureBlock');
     similarBlock.style.display = renderKnownFurniture(selectedFurnitureItems) ? '' : 'none';
     trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey, budget: sel.budget, apartmentMode });
-    if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel);
+    if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel, selectedFurnitureItems);
   } catch(e) {
     err.textContent = t(e.limitKey || 'genError');
     err.classList.add('visible');
