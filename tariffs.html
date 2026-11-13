@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тарифы — Room Factory</title>
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://room-factory.ru/tariffs.html">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<style>
+@font-face { font-family: 'Inter'; src: url('fonts/inter-cyrillic.woff2') format('woff2'); unicode-range: U+0400-04FF; font-weight: 100 900; }
+@font-face { font-family: 'Inter'; src: url('fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF; font-weight: 100 900; }
+@font-face { font-family: 'Unbounded'; src: url('fonts/unbounded-cyrillic.woff2') format('woff2'); unicode-range: U+0400-04FF; font-weight: 200 900; }
+@font-face { font-family: 'Unbounded'; src: url('fonts/unbounded-latin.woff2') format('woff2'); unicode-range: U+0000-00FF; font-weight: 200 900; }
+:root { --bg:#f5f2ed; --card:#fffdf9; --ink:#1a1208; --muted:#6b5d4a; --gold:#b48c5a; --dark:#2d2318; --line:#e6ded2; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', Arial, sans-serif; line-height: 1.55; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 32px 20px 64px; }
+.back { display: inline-block; color: var(--gold); text-decoration: none; font-size: 14px; margin-bottom: 28px; }
+.brand { font-family: 'Unbounded', Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 3px; color: var(--ink); margin-bottom: 14px; text-transform: uppercase; }
+.brand span { color: var(--gold); }
+h1 { font-family: 'Unbounded', Arial, sans-serif; font-size: clamp(28px, 5vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 14px; }
+.lead { color: var(--muted); font-size: 17px; max-width: 640px; margin-bottom: 40px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 10px 30px rgba(45,35,24,.07); }
+.card.featured { background: var(--dark); color: #f5f2ed; border-color: var(--dark); }
+.tag { font-size: 11px; letter-spacing: 3px; font-weight: 700; color: var(--gold); text-transform: uppercase; }
+.name { font-family: 'Unbounded', Arial, sans-serif; font-size: 20px; font-weight: 700; }
+.price { display: flex; align-items: baseline; gap: 8px; }
+.price b { font-family: 'Unbounded', Arial, sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -1px; }
+.price span { color: var(--muted); font-size: 14px; }
+.featured .price span, .featured li { color: rgba(245,242,237,.82); }
+ul { list-style: none; display: flex; flex-direction: column; gap: 9px; font-size: 14px; color: var(--muted); flex: 1; }
+li { padding-left: 22px; position: relative; }
+li::before { content: ""; position: absolute; left: 0; top: 7px; width: 11px; height: 6px; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg) scale(.9); }
+.btn { display: block; text-align: center; text-decoration: none; padding: 13px 18px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: var(--gold); color: #fff; margin-top: 6px; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.terms { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 26px; }
+.terms h2 { font-size: 18px; margin-bottom: 14px; }
+.terms ul { gap: 10px; }
+.terms a, footer a { color: var(--gold); }
+footer { margin-top: 36px; color: var(--muted); font-size: 13px; display: flex; flex-direction: column; gap: 8px; }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+@media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .wrap { padding: 20px 16px 48px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← На главную</a>
+  <div class="brand">Room<span>-</span>Factory</div>
+  <h1>Тарифы</h1>
+  <p class="lead">Загрузите фото комнаты, выберите стиль и получите готовый дизайн-проект с подбором мебели и сметой покупки. Начните бесплатно, подписка нужна, если генераций не хватает.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="tag">Для знакомства</div>
+      <div class="name">Free</div>
+      <div class="price"><b>0 ₽</b></div>
+      <ul>
+        <li>2 генерации на аккаунт, один раз</li>
+        <li>Все стили и комнаты</li>
+        <li>Подбор мебели из каталога</li>
+      </ul>
+      <a class="btn ghost" href="/">Попробовать</a>
+    </div>
+
+    <div class="card">
+      <div class="tag">Подписка</div>
+      <div class="name">Start</div>
+      <div class="price"><b>299 ₽</b><span>в месяц</span></div>
+      <ul>
+        <li>10 генераций в месяц</li>
+        <li style="color:var(--gold);font-weight:600">~30 ₽ за генерацию</li>
+        <li>Все стили и комнаты</li>
+        <li>Подбор мебели и смета покупки</li>
+      </ul>
+      <button type="button" class="btn" style="width:100%;border:none;cursor:pointer" onclick="startCheckout('start', this)">Оформить подписку</button>
+    </div>
+
+    <div class="card">
+      <div class="tag">Подписка</div>
+      <div class="name">Plus</div>
+      <div class="price"><b>499 ₽</b><span>в месяц</span></div>
+      <ul>
+        <li>20 генераций в месяц</li>
+        <li style="color:var(--gold);font-weight:600">~25 ₽ за генерацию</li>
+        <li>Все стили и комнаты</li>
+        <li>Подбор мебели и смета покупки</li>
+      </ul>
+      <button type="button" class="btn" style="width:100%;border:none;cursor:pointer" onclick="startCheckout('plus', this)">Оформить подписку</button>
+    </div>
+
+    <div class="card featured">
+      <div class="tag">Самый выгодный</div>
+      <div class="name">Pro</div>
+      <div class="price"><b>999 ₽</b><span>в месяц</span></div>
+      <ul>
+        <li>50 генераций в месяц</li>
+        <li style="color:var(--gold);font-weight:700">~20 ₽ за генерацию</li>
+        <li>Все стили и комнаты</li>
+        <li>Подбор мебели и смета покупки</li>
+      </ul>
+      <button type="button" class="btn" style="width:100%;border:none;cursor:pointer" onclick="startCheckout('pro', this)">Оформить подписку</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;flex-direction:row;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <div class="tag">Разовая докупка</div>
+      <div class="name" style="margin-top:4px">+10 генераций</div>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px">Если не хватило до конца месяца — докупите пакет, он добавится к текущему лимиту.</p>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:14px">
+      <div class="price"><b>349 ₽</b></div>
+      <span style="color:var(--gold);font-weight:600;font-size:14px">~35 ₽ за генерацию</span>
+      <button type="button" class="btn" style="margin-top:0;white-space:nowrap;border:none;cursor:pointer" onclick="startCheckout('topup', this)">Докупить</button>
+    </div>
+  </div>
+  <p id="checkoutMsg" style="color:#b23b3b;font-size:13px;margin-top:10px"></p>
+
+  <div class="terms">
+    <h2>Условия подписки</h2>
+    <ul>
+      <li>Оплата списывается автоматически раз в месяц с карты или через СБП, пока вы не отмените подписку.</li>
+      <li>Отменить подписку можно в любой момент в личном кабинете. Доступ сохраняется до конца оплаченного месяца.</li>
+      <li>Неиспользованные за месяц генерации на следующий месяц не переносятся.</li>
+      <li>Цены указаны в рублях. Оплату принимает ООО НКО «ЮМани» (сервис ЮKassa), ИНН 7750005725, ОГРН 1127711000031, данные банковской карты Room-Factory не получает и не хранит.</li>
+      <li>На каждую успешную оплату формируется электронный кассовый чек (54-ФЗ), который направляется на указанный при оплате email.</li>
+      <li>Порядок возврата средств описан в <a href="/offer.html">оферте</a>. Вопросы: <a href="mailto:help@room-factory.ru">help@room-factory.ru</a>.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <nav>
+      <a href="/privacy.html">Политика конфиденциальности</a>
+      <a href="/offer.html">Оферта</a>
+      <a href="/consent.html">Согласие на обработку данных</a>
+      <a href="/privacy-appendix.html">Приложение №1</a>
+    </nav>
+    <span>ИП Вавилов Всеволод Кириллович · ИНН 502983414059 · ОГРНИП 326774600676259 · г. Москва, ул. Мельникова, д. 3 · help@room-factory.ru</span>
+  </footer>
+</div>
+<script>
+const AUTH_BASE = 'https://gwirglemly-beep-roomfactory-gigachat-1591.twc1.net';
+function getAuthToken() {
+  try { return localStorage.getItem('rf_token') || null; } catch (e) { return null; }
+}
+async function startCheckout(plan, btn) {
+  const msg = document.getElementById('checkoutMsg');
+  msg.textContent = '';
+  const token = getAuthToken();
+  if (!token) {
+    msg.textContent = 'Сначала войдите в аккаунт на главной странице — затем вернитесь сюда и оформите тариф.';
+    return;
+  }
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = 'Секунду…';
+  try {
+    const resp = await fetch(AUTH_BASE + '/payments/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ plan })
+    });
+    const data = await resp.json();
+    if (!resp.ok || !data.confirmationUrl) throw new Error('no confirmation url');
+    window.location.href = data.confirmationUrl;
+  } catch (e) {
+    msg.textContent = 'Не удалось начать оплату, попробуйте ещё раз чуть позже.';
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+</script>
+</body>
+</html>
