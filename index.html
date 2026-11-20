@@ -602,7 +602,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
       </label>
       <label class="auth-consent" id="authConsentWrap2" style="display:none">
         <input type="checkbox" id="authConsent2">
-        <span data-i18n-html="auth.consentText2">Хочу получать <a href="/marketing-consent.html" onclick="showMarketingConsent(); return false;">рекламные и информационные рассылки</a> от Room Factory (необязательно)</span>
+        <span data-i18n-html="auth.consentText2">Хочу получать <a href="/marketing-consent.html" onclick="showMarketingConsent(); return false;">рекламные и информационные рассылки</a> от Room Factory на электронную почту (необязательно)</span>
       </label>
       <button type="submit" class="auth-submit" id="authSubmitBtn" data-i18n="authSubmitLogin">Войти</button>
     </form>
@@ -1359,7 +1359,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
     <h2 class="account-title" data-i18n="marketingConsent.title">Согласие на получение рекламных и информационных рассылок</h2>
     <p class="legal-meta" data-i18n="offer.meta">Оператор: ИП Вавилов Всеволод Кириллович, ИНН 502983414059, ОГРНИП 326774600676259, г. Москва, ул. Мельникова, д. 3 · Редакция от 16.11.2026</p>
 
-    <p class="legal-text" data-i18n="marketingConsent.text1">Отмечая отдельную галочку «Хочу получать рекламные и информационные рассылки от Room Factory» при регистрации на сайте room-factory.ru, Пользователь в соответствии с ч. 1 ст. 15 Федерального закона № 152-ФЗ «О персональных данных» и ст. 18 Федерального закона № 38-ФЗ «О рекламе» даёт Оператору согласие на получение рекламных и информационных сообщений (новости сервиса, акции, предложения) на указанный адрес электронной почты.</p>
+    <p class="legal-text" data-i18n="marketingConsent.text1">Отмечая отдельную галочку «Хочу получать рекламные и информационные рассылки от Room Factory на электронную почту» при регистрации на сайте room-factory.ru, Пользователь в соответствии с ч. 1 ст. 15 Федерального закона № 152-ФЗ «О персональных данных» и ст. 18 Федерального закона № 38-ФЗ «О рекламе» даёт Оператору согласие на получение рекламных и информационных сообщений (новости сервиса, акции, предложения) на указанный адрес электронной почты.</p>
     <ol class="legal-text" data-i18n-html="marketingConsent.list">
       <li style="margin-bottom:8px">Обрабатываемые данные: адрес электронной почты, имя и фамилия.</li>
       <li style="margin-bottom:8px">Цель обработки: направление рекламных и информационных рассылок о сервисе Room Factory.</li>
@@ -1668,7 +1668,7 @@ const translations = {
     'offer.s8Label': `Реквизиты Оператора`,
     'offer.s8Text': `ИП Вавилов Всеволод Кириллович · ИНН 502983414059 · ОГРНИП 326774600676259 · г. Москва, ул. Мельникова, д. 3 · center@room-factory.ru`,
     'marketingConsent.title': `Согласие на получение рекламных и информационных рассылок`,
-    'marketingConsent.text1': `Отмечая отдельную галочку «Хочу получать рекламные и информационные рассылки от Room Factory» при регистрации на сайте room-factory.ru, Пользователь в соответствии с ч. 1 ст. 15 Федерального закона № 152-ФЗ «О персональных данных» и ст. 18 Федерального закона № 38-ФЗ «О рекламе» даёт Оператору согласие на получение рекламных и информационных сообщений (новости сервиса, акции, предложения) на указанный адрес электронной почты.`,
+    'marketingConsent.text1': `Отмечая отдельную галочку «Хочу получать рекламные и информационные рассылки от Room Factory на электронную почту» при регистрации на сайте room-factory.ru, Пользователь в соответствии с ч. 1 ст. 15 Федерального закона № 152-ФЗ «О персональных данных» и ст. 18 Федерального закона № 38-ФЗ «О рекламе» даёт Оператору согласие на получение рекламных и информационных сообщений (новости сервиса, акции, предложения) на указанный адрес электронной почты.`,
     'marketingConsent.list': `<li style="margin-bottom:8px">Обрабатываемые данные: адрес электронной почты, имя и фамилия.</li><li style="margin-bottom:8px">Цель обработки: направление рекламных и информационных рассылок о сервисе Room Factory.</li><li style="margin-bottom:8px">Действия с данными: сбор, запись, хранение, использование для отправки рассылок, удаление.</li><li style="margin-bottom:8px">Согласие необязательно. Оно даётся отдельно от согласия на обработку персональных данных для работы сайта, отметкой, снятой по умолчанию, и не влияет на возможность пользоваться сайтом.</li><li style="margin-bottom:8px">Частота: не чаще нескольких сообщений в месяц.</li><li style="margin-bottom:8px">Срок действия и отзыв: согласие действует до его отзыва. Отозвать его можно в любой момент по ссылке «Отписаться» в письме или написав на center@room-factory.ru с пометкой «Отказ от рассылки». После отзыва рассылка прекращается, а данные для этой цели больше не обрабатываются.</li>`,
     'auth.tabLogin': `Вход`,
     'auth.tabSignup': `Регистрация`,
@@ -1679,7 +1679,7 @@ const translations = {
     'authErrorFallback': `Что-то пошло не так. Попробуйте ещё раз.`,
     'auth.forgotPassword': `Забыли пароль?`,
     'auth.consentText1': `Принимаю условия <a href="/offer.html" onclick="showOffer(); return false;">Публичной оферты</a> и ознакомлен(а) с <a href="/privacy.html" onclick="showPrivacy(); return false;">Политикой конфиденциальности</a>`,
-    'auth.consentText2': `Хочу получать <a href="/marketing-consent.html" onclick="showMarketingConsent(); return false;">рекламные и информационные рассылки</a> от Room Factory (необязательно)`,
+    'auth.consentText2': `Хочу получать <a href="/marketing-consent.html" onclick="showMarketingConsent(); return false;">рекламные и информационные рассылки</a> от Room Factory на электронную почту (необязательно)`,
     'auth.consentRequired': `Нужно принять условия Публичной оферты и ознакомиться с Политикой конфиденциальности`,
     'auth.backToLogin': `← Назад ко входу`,
     'auth.recoveryHint': `Введите код из письма и новый пароль.`,
@@ -1922,7 +1922,7 @@ const translations = {
     'offer.s8Label': `Operator details`,
     'offer.s8Text': `Sole proprietor Vavilov Vsevolod Kirillovich · INN 502983414059 · OGRNIP 326774600676259 · Moscow, 3 Melnikova St. · center@room-factory.ru`,
     'marketingConsent.title': `Consent to receive marketing and informational messages`,
-    'marketingConsent.text1': `By checking the separate box "I want to receive marketing and informational messages from Room Factory" during registration on room-factory.ru, the User, in accordance with Part 1 Art. 15 of Federal Law No. 152-FZ "On Personal Data" and Art. 18 of Federal Law No. 38-FZ "On Advertising", gives the Operator consent to receive marketing and informational messages (service news, promotions, offers) to the specified email address.`,
+    'marketingConsent.text1': `By checking the separate box "I want to receive marketing and informational messages from Room Factory by email" during registration on room-factory.ru, the User, in accordance with Part 1 Art. 15 of Federal Law No. 152-FZ "On Personal Data" and Art. 18 of Federal Law No. 38-FZ "On Advertising", gives the Operator consent to receive marketing and informational messages (service news, promotions, offers) to the specified email address.`,
     'marketingConsent.list': `<li style="margin-bottom:8px">Data processed: email address, first and last name.</li><li style="margin-bottom:8px">Purpose: sending marketing and informational messages about the Room Factory service.</li><li style="margin-bottom:8px">Actions with the data: collection, recording, storage, use for sending messages, deletion.</li><li style="margin-bottom:8px">Consent is optional. It is given separately from consent to personal data processing for the Site's operation, by a checkbox unchecked by default, and does not affect the ability to use the Site.</li><li style="margin-bottom:8px">Frequency: no more than a few messages per month.</li><li style="margin-bottom:8px">Duration and withdrawal: consent is valid until withdrawn. It can be withdrawn at any time via the "Unsubscribe" link in an email or by writing to center@room-factory.ru with the subject "Unsubscribe from mailing". After withdrawal, messages stop and the data is no longer processed for this purpose.</li>`,
     'auth.tabLogin': `Log in`,
     'auth.tabSignup': `Sign up`,
@@ -1933,7 +1933,7 @@ const translations = {
     'authErrorFallback': `Something went wrong. Please try again.`,
     'auth.forgotPassword': `Forgot password?`,
     'auth.consentText1': `I accept the terms of the <a href="/offer.html" onclick="showOffer(); return false;">Public Offer</a> and have read the <a href="/privacy.html" onclick="showPrivacy(); return false;">Privacy Policy</a>`,
-    'auth.consentText2': `I want to receive <a href="/marketing-consent.html" onclick="showMarketingConsent(); return false;">marketing and informational messages</a> from Room Factory (optional)`,
+    'auth.consentText2': `I want to receive <a href="/marketing-consent.html" onclick="showMarketingConsent(); return false;">marketing and informational messages</a> from Room Factory by email (optional)`,
     'auth.consentRequired': `You need to accept the Public Offer and read the Privacy Policy`,
     'auth.backToLogin': `← Back to login`,
     'auth.recoveryHint': `Enter the code from the email and a new password.`,
