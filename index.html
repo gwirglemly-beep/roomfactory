@@ -1557,7 +1557,8 @@ const translations = {
     'genBtnLoading': `Создаём...`,
     'loadingText': `Создаём ваш дизайн...`,
     'genError': `Не удалось создать дизайн. Попробуйте ещё раз.`,
-    'genLimit': `Вы использовали все 3 бесплатные генерации.`,
+    'genLimit': `Вы использовали все 2 бесплатные генерации.`,
+    'genRequiresAccount': `Чтобы сгенерировать дизайн, зарегистрируйтесь — это бесплатно и займёт меньше минуты.`,
     'genBusy': `Сегодня сервис перегружен. Попробуйте, пожалуйста, завтра.`,
     'genPhotoRejected': `Загрузите, пожалуйста, фото комнаты без людей.`,
     'genCommentRejected': `Похоже, в комментарии есть личные данные (телефон, email или похожий номер) — уберите их, пожалуйста, и попробуйте снова.`,
@@ -1849,7 +1850,8 @@ const translations = {
     'genBtnLoading': `Creating...`,
     'loadingText': `Creating your design...`,
     'genError': `Failed to create the design. Please try again.`,
-    'genLimit': `You've used all 3 of your free generations.`,
+    'genLimit': `You've used all 2 of your free generations.`,
+    'genRequiresAccount': `Create a free account to generate a design — it takes less than a minute.`,
     'genBusy': `The service is overloaded today. Please try again tomorrow.`,
     'genPhotoRejected': `Please upload a photo of the room without people in it.`,
     'genCommentRejected': `It looks like your comment contains personal data (a phone number, email, or similar) — please remove it and try again.`,
@@ -3351,16 +3353,6 @@ document.getElementById('shareWhatsapp').addEventListener('click', () => {
   shareDropdownEl.classList.remove('open');
 });
 
-// Всего 3 бесплатные генерации (не в день). Для вошедших счёт ведёт сервер (на аккаунт),
-// здесь — только счётчик гостя в этом браузере.
-const TOTAL_GEN_LIMIT = 3;
-const TOTAL_GEN_KEY = 'rf_gen_total';
-function getTotalGenCount() {
-  try { return parseInt(localStorage.getItem(TOTAL_GEN_KEY) || '0', 10) || 0; } catch (e) { return 0; }
-}
-function bumpTotalGenCount() {
-  try { localStorage.setItem(TOTAL_GEN_KEY, String(getTotalGenCount() + 1)); } catch (e) {}
-}
 function genAuthHeaders() {
   const token = getAuthToken();
   return token ? { 'Authorization': 'Bearer ' + token } : {};
@@ -3374,9 +3366,11 @@ document.getElementById('genBtn').addEventListener('click', async () => {
   const btn = document.getElementById('genBtn');
   const comment = document.getElementById('comment').value.trim();
 
-  if (!currentSession && getTotalGenCount() >= TOTAL_GEN_LIMIT) {
-    err.textContent = t('genLimit');
-    err.classList.add('visible');
+  if (!currentSession) {
+    switchAuthTab('signup');
+    openAuthModal();
+    const authMsg = document.getElementById('authMsg');
+    if (authMsg) { authMsg.textContent = t('genRequiresAccount'); authMsg.className = 'auth-msg'; }
     return;
   }
 
@@ -3446,6 +3440,13 @@ document.getElementById('genBtn').addEventListener('click', async () => {
       if (referenceImageUrls.length) fd.append('referenceNames', JSON.stringify(selectedFurnitureItems.map(p => p.name)));
       res = await fetch(WORKER_URL, { method: 'POST', headers: genAuthHeaders(), body: fd });
     }
+    if (res.status === 401) {
+      switchAuthTab('signup');
+      openAuthModal();
+      const authMsg = document.getElementById('authMsg');
+      if (authMsg) { authMsg.textContent = t('genRequiresAccount'); authMsg.className = 'auth-msg'; }
+      throw new Error('not_authenticated');
+    }
     if (res.status === 429) {
       let code = '';
       try { code = (await res.json()).error; } catch (e) {}
@@ -3484,15 +3485,16 @@ document.getElementById('genBtn').addEventListener('click', async () => {
     document.getElementById('dlBtn').href = url;
     lastResultBlob = displayBlob;
     result.classList.add('visible');
-    if (!currentSession) bumpTotalGenCount();
 
     const similarBlock = document.getElementById('similarFurnitureBlock');
     similarBlock.style.display = renderKnownFurniture(selectedFurnitureItems) ? '' : 'none';
     trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey, budget: sel.budget, apartmentMode });
     if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel, selectedFurnitureItems);
   } catch(e) {
-    err.textContent = e.customMessage || t(e.limitKey || 'genError');
-    err.classList.add('visible');
+    if (e.message !== 'not_authenticated') {
+      err.textContent = e.customMessage || t(e.limitKey || 'genError');
+      err.classList.add('visible');
+    }
   } finally {
     generating = false;
     loading.classList.remove('visible');
