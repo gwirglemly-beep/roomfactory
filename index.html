@@ -269,6 +269,7 @@ a.auth-link:hover, .auth-link a:hover { color: #b48c5a; }
 #fileInput { display: none; }
 
 .form-section { margin-bottom: 32px; }
+.form-label-optional { color: #b9ad9c; letter-spacing: 2px; }
 .form-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #b48c5a; margin-bottom: 16px; display: block; font-family: 'Inter', sans-serif; }
 .form-divider { border: none; border-top: 1px solid rgba(42,34,24,0.1); margin: 32px 0; }
 .opts-grid { display: grid; gap: 6px; }
@@ -956,10 +957,11 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
         </div>
 
         <div class="form-section" id="storeSection">
-          <span class="form-label" data-i18n="form.store">Магазин мебели</span>
+          <span class="form-label"><span data-i18n="form.store">Магазин мебели</span> <span class="form-label-optional" data-i18n="form.storeOptional">· необязательно</span></span>
           <div class="opts-grid opts-3">
-            <button class="opt-btn active" data-group="store" data-key="mebbery" data-val="mebbery">Меббери</button>
+            <button class="opt-btn" data-group="store" data-key="mebbery" data-val="mebbery">Меббери</button>
             <button class="opt-btn" data-group="store" data-key="skandycolor" data-val="skandycolor">SkandyColor</button>
+            <button class="opt-btn" data-group="store" data-key="interioriya" data-val="interioriya">Интериория</button>
           </div>
         </div>
 
@@ -1059,7 +1061,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
             </div>
           </div>
           <div style="margin-top:20px" id="similarFurnitureBlock">
-            <div class="form-label" style="margin-bottom:8px"><span data-i18n="similarFurniturePrefix">Мебель из каталога</span> <span id="storeProductsLabel">Меббери</span></div>
+            <div class="form-label" style="margin-bottom:8px"><span data-i18n="similarFurniturePrefix">Мебель из каталога</span> <span id="storeProductsLabel"></span></div>
             <div class="hoff-products-grid" id="hoffProductsGrid"></div>
           </div>
         </div>
@@ -1508,6 +1510,7 @@ const translations = {
     'apartment.uploadTextTarget': `Загрузите фото комнаты для переделки`,
     'apartment.filesChosen': `Выбрано файлов:`,
     'form.store': `Магазин мебели`,
+    'form.storeOptional': `· необязательно`,
     'form.style': `Стиль интерьера`,
     'form.room': `Тип комнаты`,
     'form.color': `Цветовая гамма`,
@@ -1801,6 +1804,7 @@ const translations = {
     'apartment.uploadTextTarget': `Upload a photo of the room to redesign`,
     'apartment.filesChosen': `Files selected:`,
     'form.store': `Furniture store`,
+    'form.storeOptional': `· optional`,
     'form.style': `Interior style`,
     'form.room': `Room type`,
     'form.color': `Color palette`,
@@ -2781,12 +2785,31 @@ document.getElementById('apartmentFileInput').addEventListener('change', e => {
   }
   list.textContent = t('apartment.filesChosen') + ' ' + apartmentFiles.length;
 });
-let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'warm neutral palette: beige, cream, taupe and soft white tones together', budget:2, storeKey:'mebbery', storeLabel:'Меббери' };
+let sel = { style:'scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures', styleKey:'scandinavian', styleLabel:'Скандинавский', room:'living room', roomLabel:'Гостиная', color:'warm neutral palette: beige, cream, taupe and soft white tones together', budget:2, storeKey:'', storeLabel:'' };
 
 function resolveCatalogItems(storeKey, styleKey) {
+  if (!storeKey) return Object.keys(storeCatalogs).reduce((all, k) => all.concat(storeCatalogs[k][styleKey] || []), []);
   const store = storeCatalogs[storeKey];
   if (!store) return [];
   return store[styleKey] || [];
+}
+// Из какого магазина товар (для подписи «Мебель из каталога …»).
+let catalogItemStore = null;
+function storeOfItem(p) {
+  if (!catalogItemStore) {
+    catalogItemStore = new Map();
+    Object.keys(storeCatalogs).forEach(k => Object.values(storeCatalogs[k]).forEach(list => list.forEach(it => catalogItemStore.set(it, k))));
+  }
+  return catalogItemStore.get(p) || '';
+}
+function storeLabelOf(key) {
+  const btn = document.querySelector('.opt-btn[data-group="store"][data-key="' + key + '"]');
+  return btn ? btn.textContent.trim() : key;
+}
+function furnitureStoresLabel(items) {
+  const keys = [];
+  (items || []).forEach(p => { const k = storeOfItem(p); if (k && !keys.includes(k)) keys.push(k); });
+  return keys.map(storeLabelOf).join(', ');
 }
 const storeCatalogs = {
 mebbery: {
@@ -2868,6 +2891,87 @@ skandycolor: {
   ],
   classic: [],
   minimalism: [],
+  japandi: [],
+  boho: []
+},
+interioriya: {
+  scandinavian: [
+    { name: "Тумба под телевизор подвесная с консолью Интериория, с подсветкой, 200х30х30 см Белый", price: "16 311 ₽", img: "https://avatars.mds.yandex.net/get-mpic/14058800/2a00000198350fce0790fe5a0ab264661c77/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-interioriya-s-podsvetkoy-200kh30kh30-sm-belyy/4523607427" },
+    { name: "Консоль с выдвижными ящиками Интериория, 120х30х15 см Белый", price: "14 308 ₽", img: "https://avatars.mds.yandex.net/get-mpic/21080257/picfa3f88ad0d89886ac2c53777c55a5e3b/600x800_multiply", url: "https://market.yandex.ru/card/konsol-s-vydvizhnymi-yashchikami-interioriya-120kh30kh15-sm-belyy/231973326313246720" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 200х30х30 см Бежевый", price: "18 486 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20419207/2a0000019dd7d0d97a74c0281882533e9719/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-200kh30kh30-sm-bezhevyy/5489052607" },
+    { name: "Кашпо для цветов Интериория", price: "4 098 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16505546/2a00000196f09f790f0dbbc48044e70085e9/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4385807221" },
+    { name: "Журнальный столик Интериория 92*53*45 Дуб Сильверджек Винтажный/Черный JS-001", price: "7 691 ₽", img: "https://avatars.mds.yandex.net/get-mpic/21020745/pic7e39af044cd6df09120e70b434321c7c/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-interioriya-loft-js-001-925345-dub-galifaks-olovochernyy/102859671452" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 220х30х40 см Белый", price: "19 693 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12284361/2a000001961e14e9f4f9929e4d693173e518/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-4420-s-podsvetkoy-220kh30kh40-belyy/103794759666" },
+    { name: "Кашпо для цветов Интериория", price: "5 078 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15249557/2a00000196f5d03dc2360f40f01834296721/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4387859321" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 200х30х30 см Белый", price: "18 486 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16055235/2a0000019e3ab6e72d23161b5b65a7f5e4e3/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-200kh30kh30-sm-belyy/5693808735" },
+    { name: "Тумба под телевизор подвесная с консолью Интериория, с подсветкой, 150х30х30 см Белый", price: "16 425 ₽", img: "https://avatars.mds.yandex.net/get-mpic/14058800/2a00000198350fce0790fe5a0ab264661c77/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-interioriya-s-podsvetkoy-150kh30kh30-sm-belyy/5619133279" },
+    { name: "Журнальный столик Интериория JS-001-5 92*53*45 Черный/Черный", price: "7 680 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20160260/2a0000019d9bf5ee47e88632dcaedddfbc9d/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-interioriya-js-001-5-925345-chernyychernyy/103169420678" },
+    { name: "Кашпо для цветов Интериория", price: "4 069 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12500095/2a000001961e0ea34a5c487352fd52e9cff3/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4312872501" },
+    { name: "Тумба INTERIORA TU-015-5416, белая/черная, ЛДСП, 40x180 см, с доводчиком", price: "17 425 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15300889/2a00000197006059d51f6f0d1020fa1dbe45/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-015-5416/4393577494" },
+    { name: "Кашпо для цветов Интериория", price: "4 396 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16143397/2a00000196f5d03dc29d0eec6f86c986cb89/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4387859324" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 150х30х30 см Бежевый", price: "22 942 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20419207/2a0000019dd7d0d97a74c0281882533e9719/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-150kh30kh30-sm-bezhevyy/5878486442" },
+    { name: "Тумба под телевизор напольная TU-015-1516", price: "17 414 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15259477/2a0000019881a33238c218869da150454767/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-015-1516/102663531436" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 200х30х40 см Белый", price: "18 531 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15389086/2a0000019881cc5799227595fdc3dddcdf84/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-tv-interioriya-tu-004-4418-belaya-podvesnaya-s-podsvetkoy-200kh30kh40/102664414962" },
+    { name: "Кашпо для цветов Интериория", price: "4 751 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15131989/2a00000196f5d03e01696b0f1008c3413856/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4390850863" },
+    { name: "Тумба под телевизор подвесная Интериория TU-019-5416 180*40*40 Черный/Белый", price: "17 425 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16186604/2a00000197006059d16c5fc780ed7c8e7fe5/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-019-5416-1804040-chernyybelyy/4393568124" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 150х30х30 см Белый", price: "22 942 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20396407/2a0000019f0739b03d305e596589e5e7e1d4/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-150kh30kh30-sm-belyy/5884960926" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 160х30х40 см Белый", price: "16 723 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12284361/2a000001961e14e9f4f9929e4d693173e518/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-4414-s-podsvetkoy-160kh30kh40-belaya/103749659673" },
+    { name: "Кашпо для цветов Интериория", price: "4 396 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12018251/2a00000196f5d03dc592f0569e510ce20a44/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4387859322" }
+  ],
+  loft: [
+    { name: "Журнальный столик Интериория Лофт JS-004 90*50*45/65*50*42 Дуб Крафт золотой/Черный", price: "7 970 ₽", img: "https://avatars.mds.yandex.net/get-mpic/5227339/2a0000018e3b8dd83d4fd9d92e275faaf8f6/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-loft-js-004/102859671451" },
+    { name: "Журнальный столик Интериория Лофт JS-001-4 92*53*45 Белый/Черный", price: "7 680 ₽", img: "https://avatars.mds.yandex.net/get-mpic/18123760/2a0000019d9bf5ed6dc52eff28f368b5bb7a/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-interioriya-loft-js-001-4-925345-belyychernyy/4393568120" },
+    { name: "Журнальный столик Интериория Лофт JS-002 92*53*45 Дуб Крафт золотой/Черный", price: "7 691 ₽", img: "https://avatars.mds.yandex.net/get-mpic/4937117/2a0000018e3b8dd8328a7f941a4a067fb63d/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-loft-js-002/102859671453" }
+  ],
+  classic: [
+    { name: "Журнальный столик Интериория Лофт JS-004 90*50*45/65*50*42 Дуб Крафт золотой/Черный", price: "7 970 ₽", img: "https://avatars.mds.yandex.net/get-mpic/5227339/2a0000018e3b8dd83d4fd9d92e275faaf8f6/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-loft-js-004/102859671451" },
+    { name: "Тумба под телевизор напольная Интериория 200х40х51 см Дуб Крафт золотой/Черный", price: "18 113 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15433220/2a0000019881a3329d97cee4d2dbf2bf17ca/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-002-1518/102664396914" },
+    { name: "Журнальный столик Интериория Лофт JS-002 92*53*45 Дуб Крафт золотой/Черный", price: "7 691 ₽", img: "https://avatars.mds.yandex.net/get-mpic/4937117/2a0000018e3b8dd8328a7f941a4a067fb63d/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-loft-js-002/102859671453" },
+    { name: "Тумба под телевизор подвесная Интериория TU-019-1516 180*40*40 Дуб Крафт золотой/Черный", price: "16 729 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16294320/2a0000019881a332356c828fe995c25009f9/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-tu-019-1516/102886671615" },
+    { name: "Тумба под телевизор напольная TU-015-1416 Дуб Крафт Золотой/Белый", price: "17 379 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16488168/2a0000019881a33234ba8a869f0f115510e0/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-015-1416/102663592686" },
+    { name: "Тумба под телевизор подвесная Интериория TU-008-1418 200*45*40 Дуб Крафт золотой/Белый", price: "17 779 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15285180/2a0000019881a33236256ab674bada07e23b/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-008-1418-2004045-dub-kraft-zolotoybelyy/4356051148" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 200х30х40 см Дуб Крафт золотой/Черный", price: "18 531 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16393418/2a0000019881a332b050cb11f1716e32c412/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-tv-interioriya-tu-004-4418-belaya-podvesnaya-s-podsvetkoy-200kh30kh40/102664470040" },
+    { name: "Тумба под телевизор подвесная Интериория TU-019-1416 180*40*40 Дуб Крафт золотой/Белый", price: "16 609 ₽", img: "https://avatars.mds.yandex.net/get-mpic/13671170/2a0000019881b57ebb7b0e133a7b2ca22de0/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-tu-019-1416/102876219784" },
+    { name: "Тумба под телевизор напольная Интериория 200х40х51 см Дуб Крафт золотой/Белый", price: "18 113 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16488168/2a0000019881a33238bd718689d8785921e9/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-002-1418/102664457068" },
+    { name: "Журнальный столик Интериория JS-001-11 92*53*45 Дуб крафт золотой/Черный", price: "7 680 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20396777/2a0000019d9bf5ed6cc08dbd9b5549152e7c/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-interioriya-js-001-11-925345-dub-kraft-zolotoychernyy/103267688131" },
+    { name: "Тумба под телевизор подвесная Интериория TU-008-1513 150*45*40 Дуб Крафт золотой/Черный", price: "19 067 ₽", img: "https://avatars.mds.yandex.net/get-mpic/14688430/2a00000196d7182506f04e6d84b8dec6653d/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-008-1513-1504540-dub-kraft-zolotoychernyy/4378291868" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 200х30х40 см Дуб Крафт золотой/Белый", price: "17 790 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15433220/2a0000019881ac4e593168d38b7b4d815d23/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-1418-s-podsvetkoy-2003040-dub-kraft-zolotoybelyy/4314794822" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 130х30х40 см Дуб Крафт золотой/Черный", price: "15 879 ₽", img: "https://avatars.mds.yandex.net/get-mpic/13230222/2a00000196a887f9844c6484b0fcf2c3d317/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-s-podsvetkoy-130kh30kh40-sm-dub-kraft-zolotoychernyy/4473006230" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 160х30х40 см Дуб Крафт Золотой/Черный", price: "17 420 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15318406/2a00000196a887f98670fb16ed3282a7e905/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-1514-s-podsvetkoy-160kh30kh40-dub-kraft-zolotoychernyy/4358697506" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 160х30х40 см Дуб Крафт золотой/Белый", price: "17 312 ₽", img: "https://avatars.mds.yandex.net/get-mpic/13456581/2a0000019622caf0513507770e226721f793/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-1414-s-podsvetkoy-1603040-dub-kraft-zolotoybelyy/4358697505" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 130х30х40 см Дуб Крафт золотой/Белый", price: "15 879 ₽", img: "https://avatars.mds.yandex.net/get-mpic/5116414/2a0000019622caf04f6908961ad1aa9e86ca/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-s-podsvetkoy-130kh30kh40-sm-dub-kraft-zolotoybelyy/4553162703" }
+  ],
+  minimalism: [
+    { name: "Тумба под телевизор подвесная с консолью Интериория, с подсветкой, 200х30х30 см Белый", price: "16 311 ₽", img: "https://avatars.mds.yandex.net/get-mpic/14058800/2a00000198350fce0790fe5a0ab264661c77/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-interioriya-s-podsvetkoy-200kh30kh30-sm-belyy/4523607427" },
+    { name: "Консоль с выдвижными ящиками Интериория, 120х30х15 см Белый", price: "14 308 ₽", img: "https://avatars.mds.yandex.net/get-mpic/21080257/picfa3f88ad0d89886ac2c53777c55a5e3b/600x800_multiply", url: "https://market.yandex.ru/card/konsol-s-vydvizhnymi-yashchikami-interioriya-120kh30kh15-sm-belyy/231973326313246720" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 200х30х30 см Бежевый", price: "18 486 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20419207/2a0000019dd7d0d97a74c0281882533e9719/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-200kh30kh30-sm-bezhevyy/5489052607" },
+    { name: "Кашпо для цветов Интериория", price: "4 098 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16505546/2a00000196f09f790f0dbbc48044e70085e9/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4385807221" },
+    { name: "Журнальный столик Интериория 92*53*45 Дуб Сильверджек Винтажный/Черный JS-001", price: "7 691 ₽", img: "https://avatars.mds.yandex.net/get-mpic/21020745/pic7e39af044cd6df09120e70b434321c7c/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-interioriya-loft-js-001-925345-dub-galifaks-olovochernyy/102859671452" },
+    { name: "Журнальный столик Интериория Лофт JS-001-4 92*53*45 Белый/Черный", price: "7 680 ₽", img: "https://avatars.mds.yandex.net/get-mpic/18123760/2a0000019d9bf5ed6dc52eff28f368b5bb7a/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-interioriya-loft-js-001-4-925345-belyychernyy/4393568120" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 220х30х40 см Белый", price: "19 693 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12284361/2a000001961e14e9f4f9929e4d693173e518/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-4420-s-podsvetkoy-220kh30kh40-belyy/103794759666" },
+    { name: "Кашпо для цветов Интериория", price: "5 078 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15249557/2a00000196f5d03dc2360f40f01834296721/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4387859321" },
+    { name: "Тумба под телевизор напольная TU-015-1416 Дуб Крафт Золотой/Белый", price: "17 379 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16488168/2a0000019881a33234ba8a869f0f115510e0/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-015-1416/102663592686" },
+    { name: "Тумба под телевизор подвесная Интериория TU-008-1418 200*45*40 Дуб Крафт золотой/Белый", price: "17 779 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15285180/2a0000019881a33236256ab674bada07e23b/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-008-1418-2004045-dub-kraft-zolotoybelyy/4356051148" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 200х30х30 см Белый", price: "18 486 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16055235/2a0000019e3ab6e72d23161b5b65a7f5e4e3/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-200kh30kh30-sm-belyy/5693808735" },
+    { name: "Тумба под телевизор подвесная с консолью Интериория, с подсветкой, 150х30х30 см Белый", price: "16 425 ₽", img: "https://avatars.mds.yandex.net/get-mpic/14058800/2a00000198350fce0790fe5a0ab264661c77/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-interioriya-s-podsvetkoy-150kh30kh30-sm-belyy/5619133279" },
+    { name: "Журнальный столик Интериория JS-001-5 92*53*45 Черный/Черный", price: "7 680 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20160260/2a0000019d9bf5ee47e88632dcaedddfbc9d/600x800_multiply", url: "https://market.yandex.ru/card/zhurnalnyy-stolik-interioriya-js-001-5-925345-chernyychernyy/103169420678" },
+    { name: "Тумба под телевизор подвесная Интериория TU-019-1416 180*40*40 Дуб Крафт золотой/Белый", price: "16 609 ₽", img: "https://avatars.mds.yandex.net/get-mpic/13671170/2a0000019881b57ebb7b0e133a7b2ca22de0/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-tu-019-1416/102876219784" },
+    { name: "Тумба под телевизор напольная Интериория 200х40х51 см Дуб Крафт золотой/Белый", price: "18 113 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16488168/2a0000019881a33238bd718689d8785921e9/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-002-1418/102664457068" },
+    { name: "Кашпо для цветов Интериория", price: "4 069 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12500095/2a000001961e0ea34a5c487352fd52e9cff3/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4312872501" },
+    { name: "Тумба INTERIORA TU-015-5416, белая/черная, ЛДСП, 40x180 см, с доводчиком", price: "17 425 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15300889/2a00000197006059d51f6f0d1020fa1dbe45/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-015-5416/4393577494" },
+    { name: "Кашпо для цветов Интериория", price: "4 396 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16143397/2a00000196f5d03dc29d0eec6f86c986cb89/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4387859324" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 150х30х30 см Бежевый", price: "22 942 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20419207/2a0000019dd7d0d97a74c0281882533e9719/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-150kh30kh30-sm-bezhevyy/5878486442" },
+    { name: "Тумба под телевизор напольная TU-015-1516", price: "17 414 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15259477/2a0000019881a33238c218869da150454767/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-napolnaya-tu-015-1516/102663531436" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 200х30х40 см Белый", price: "18 531 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15389086/2a0000019881cc5799227595fdc3dddcdf84/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-tv-interioriya-tu-004-4418-belaya-podvesnaya-s-podsvetkoy-200kh30kh40/102664414962" },
+    { name: "Кашпо для цветов Интериория", price: "4 751 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15131989/2a00000196f5d03e01696b0f1008c3413856/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4390850863" },
+    { name: "Тумба под телевизор подвесная Интериория TU-019-5416 180*40*40 Черный/Белый", price: "17 425 ₽", img: "https://avatars.mds.yandex.net/get-mpic/16186604/2a00000197006059d16c5fc780ed7c8e7fe5/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-019-5416-1804040-chernyybelyy/4393568124" },
+    { name: "Тумба под телевизор подвесная с консолью и ящиками Интериория, 150х30х30 см Белый", price: "22 942 ₽", img: "https://avatars.mds.yandex.net/get-mpic/20396407/2a0000019f0739b03d305e596589e5e7e1d4/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-s-konsolyu-i-yashchikami-interioriya-150kh30kh30-sm-belyy/5884960926" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 160х30х40 см Белый", price: "16 723 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12284361/2a000001961e14e9f4f9929e4d693173e518/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-4414-s-podsvetkoy-160kh30kh40-belaya/103749659673" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 200х30х40 см Дуб Крафт золотой/Белый", price: "17 790 ₽", img: "https://avatars.mds.yandex.net/get-mpic/15433220/2a0000019881ac4e593168d38b7b4d815d23/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-1418-s-podsvetkoy-2003040-dub-kraft-zolotoybelyy/4314794822" },
+    { name: "Кашпо для цветов Интериория", price: "4 396 ₽", img: "https://avatars.mds.yandex.net/get-mpic/12018251/2a00000196f5d03dc592f0569e510ce20a44/600x800_multiply", url: "https://market.yandex.ru/card/kashpo-dlya-tsvetov/4387859322" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 160х30х40 см Дуб Крафт золотой/Белый", price: "17 312 ₽", img: "https://avatars.mds.yandex.net/get-mpic/13456581/2a0000019622caf0513507770e226721f793/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-tu-004-1414-s-podsvetkoy-1603040-dub-kraft-zolotoybelyy/4358697505" },
+    { name: "Тумба под телевизор подвесная Интериория, с подсветкой, 130х30х40 см Дуб Крафт золотой/Белый", price: "15 879 ₽", img: "https://avatars.mds.yandex.net/get-mpic/5116414/2a0000019622caf04f6908961ad1aa9e86ca/600x800_multiply", url: "https://market.yandex.ru/card/tumba-pod-televizor-podvesnaya-interioriya-s-podsvetkoy-130kh30kh40-sm-dub-kraft-zolotoybelyy/4553162703" }
+  ],
   japandi: [],
   boho: []
 },
@@ -2956,8 +3060,65 @@ function pickFurnitureHint(storeKey, styleKey, roomKey) {
   }
   return descriptions.join(', ');
 }
+// Подбор мебели для генерации.
+// Магазин не выбран — берём из всех магазинов. Магазин выбран — сначала его вещи (по одной каждого типа),
+// недостающие типы (например, диван, если у фирмы только тумбы) добираем из других магазинов того же стиля.
 function pickFurnitureImages(storeKey, styleKey, roomKey, maxCount) {
   maxCount = maxCount || 6;
+  const typeOf = p => { const nm = p.name.toLowerCase(); return Object.keys(furnitureTypeSearch).find(t => furnitureTypeSearch[t].some(k => nm.includes(k))); };
+  // Если в этом стиле у магазина(ов) пусто — подходящие для комнаты вещи из других стилей, по одной каждого типа.
+  const anyStyleItems = (keys, limit) => {
+    let all = [];
+    keys.forEach(sk => { const store = storeCatalogs[sk] || {}; Object.keys(store).forEach(k => { all = all.concat(roomFilteredItems(store[k], roomKey)); }); });
+    all.sort(() => Math.random() - 0.5);
+    const res = [], seenTypes = new Set();
+    for (const p of all) {
+      if (!p.img || res.some(x => x.img === p.img || x.name === p.name)) continue;
+      const tp = typeOf(p);
+      if (tp && seenTypes.has(tp)) continue;
+      if (tp) seenTypes.add(tp);
+      res.push(p);
+      if (res.length >= limit) break;
+    }
+    return res;
+  };
+  if (!storeKey) {
+    const res = pickFurnitureFromStore('', styleKey, roomKey, maxCount);
+    return res.length ? res : anyStyleItems(Object.keys(storeCatalogs), Math.min(4, maxCount));
+  }
+  let own = pickFurnitureFromStore(storeKey, styleKey, roomKey, maxCount, { noFill: true });
+  // В этом стиле у фирмы ничего нет — всё равно берём её вещи из других стилей (до 2 разных типов).
+  if (!own.length) own = anyStyleItems([storeKey], 2);
+  if (own.length >= maxCount) return own;
+  const usedTypes = new Set(own.map(typeOf).filter(Boolean));
+  const others = Object.keys(storeCatalogs).filter(k => k !== storeKey);
+  const pool = [];
+  others.forEach(k => {
+    const same = pickFurnitureFromStore(k, styleKey, roomKey, maxCount);
+    pool.push(...(same.length ? same : anyStyleItems([k], maxCount)));
+  });
+  pool.sort(() => Math.random() - 0.5);
+  // Главный предмет комнаты, если у выбранного магазина его нет, — в первую очередь.
+  const mustHaveByRoom = { 'bedroom': ['кровать'], 'children room': ['кровать'], 'living room': ['диван'], 'kitchen': ['обеденн', 'стол'], 'home office': ['стол'], 'hallway': ['шкаф', 'банкетк', 'вешалк'] };
+  const mustKeys = mustHaveByRoom[roomKey] || [];
+  const hasMust = own.some(p => mustKeys.some(k => p.name.toLowerCase().includes(k)));
+  if (!hasMust && mustKeys.length) {
+    const idx = pool.findIndex(p => mustKeys.some(k => p.name.toLowerCase().includes(k)) && !(mustKeys[0] === 'кровать' && p.name.toLowerCase().includes('диван')));
+    if (idx > 0) pool.unshift(pool.splice(idx, 1)[0]);
+  }
+  const picked = own.slice();
+  for (const p of pool) {
+    if (picked.length >= maxCount) break;
+    if (!p.img || picked.some(x => x.img === p.img || x.name === p.name)) continue;
+    const type = typeOf(p);
+    if (type && usedTypes.has(type)) continue;
+    if (type) usedTypes.add(type);
+    picked.push(p);
+  }
+  return picked;
+}
+function pickFurnitureFromStore(storeKey, styleKey, roomKey, maxCount, opts) {
+  opts = opts || {};
   let items = resolveCatalogItems(storeKey, styleKey);
   if (!items.length) return [];
   items = roomFilteredItems(items, roomKey);
@@ -3002,10 +3163,12 @@ function pickFurnitureImages(storeKey, styleKey, roomKey, maxCount) {
     if (picked.length >= maxCount) break;
   }
   // Если для этого стиля и комнаты товаров мало (например, прихожая в japandi), добираем подходящие из других стилей того же магазина.
-  if (picked.length < 4) {
-    const storeAll = storeCatalogs[storeKey] || {};
+  if (picked.length < 4 && !opts.noFill) {
     let extra = [];
-    Object.keys(storeAll).forEach(k => { if (k !== styleKey) extra = extra.concat(roomFilteredItems(storeAll[k], roomKey)); });
+    (storeKey ? [storeKey] : Object.keys(storeCatalogs)).forEach(sk => {
+      const storeAll = storeCatalogs[sk] || {};
+      Object.keys(storeAll).forEach(k => { if (k !== styleKey) extra = extra.concat(roomFilteredItems(storeAll[k], roomKey)); });
+    });
     if (forbiddenEntry) extra = extra.filter(p => !forbiddenEntry[1].some(k => p.name.toLowerCase().includes(k)));
     extra.sort(() => Math.random() - 0.5);
     for (const p of extra) {
@@ -3176,6 +3339,11 @@ document.getElementById('popup').addEventListener('click', e => { if(e.target===
 document.querySelectorAll('.opt-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const g = btn.dataset.group;
+    if (g === 'store' && btn.classList.contains('active')) {
+      btn.classList.remove('active');
+      sel.store = ''; sel.storeKey = ''; sel.storeLabel = '';
+      return;
+    }
     document.querySelectorAll('.opt-btn[data-group="'+g+'"]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     sel[g] = btn.dataset.val;
@@ -3187,7 +3355,6 @@ document.querySelectorAll('.opt-btn').forEach(btn => {
     if (g === 'store') {
       if (btn.dataset.key) sel.storeKey = btn.dataset.key;
       sel.storeLabel = btn.textContent.trim();
-      document.getElementById('storeProductsLabel').textContent = sel.storeLabel;
     }
   });
 });
@@ -3488,8 +3655,10 @@ document.getElementById('genBtn').addEventListener('click', async () => {
 
     const similarBlock = document.getElementById('similarFurnitureBlock');
     similarBlock.style.display = renderKnownFurniture(selectedFurnitureItems) ? '' : 'none';
-    trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey, budget: sel.budget, apartmentMode });
-    if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, sel.storeLabel, selectedFurnitureItems);
+    const usedStoresLabel = furnitureStoresLabel(selectedFurnitureItems) || sel.storeLabel;
+    document.getElementById('storeProductsLabel').textContent = usedStoresLabel;
+    trackEvent('design_generated', { style: effectiveStyleKey, room: sel.room, store: sel.storeKey || 'any', budget: sel.budget, apartmentMode });
+    if (currentSession) saveGeneration(blob, effectiveStyleKey, effectiveStyleLabel, sel.roomLabel, usedStoresLabel, selectedFurnitureItems);
   } catch(e) {
     if (e.message !== 'not_authenticated') {
       err.textContent = e.customMessage || t(e.limitKey || 'genError');
