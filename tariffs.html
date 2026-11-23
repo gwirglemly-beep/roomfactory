@@ -33,8 +33,11 @@ h1 { font-family: 'Unbounded', Arial, sans-serif; font-size: clamp(28px, 5vw, 44
 .price b { font-family: 'Unbounded', Arial, sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -1px; }
 .price span { color: var(--muted); font-size: 14px; }
 .featured .price span, .featured li { color: rgba(245,242,237,.82); }
+.featured .li-main { color: #f5f2ed; }
 ul { list-style: none; display: flex; flex-direction: column; gap: 9px; font-size: 14px; color: var(--muted); flex: 1; }
 li { padding-left: 22px; position: relative; }
+.li-main { font-weight: 700; font-size: 15px; color: var(--ink); }
+.li-count { font-weight: 400; }
 li::before { content: ""; position: absolute; left: 0; top: 7px; width: 11px; height: 6px; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg) scale(.9); }
 .btn { display: block; text-align: center; text-decoration: none; padding: 13px 18px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: var(--gold); color: #fff; margin-top: 6px; }
 .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
@@ -42,6 +45,12 @@ li::before { content: ""; position: absolute; left: 0; top: 7px; width: 11px; he
 .terms h2 { font-size: 18px; margin-bottom: 14px; }
 .terms ul { gap: 10px; }
 .terms a, footer a { color: var(--gold); }
+.email-copy { display: inline-flex; align-items: center; gap: 6px; position: relative; }
+.email-copy-text { color: var(--gold); user-select: all; }
+.email-copy-btn { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border: none; background: transparent; color: var(--gold); opacity: 0.7; cursor: pointer; padding: 0; font-size: 13px; line-height: 1; }
+.email-copy-btn:hover { opacity: 1; }
+.email-copy-tip { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%) translateY(-6px); background: var(--dark); color: #f5f2ed; font-size: 11px; padding: 4px 9px; border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.email-copy-tip.visible { opacity: 1; }
 footer { margin-top: 36px; color: var(--muted); font-size: 13px; display: flex; flex-direction: column; gap: 8px; }
 footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }
@@ -61,9 +70,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       <div class="name">Free</div>
       <div class="price"><b>0 ₽</b></div>
       <ul>
-        <li>2 генерации на аккаунт, один раз</li>
-        <li>Все стили и комнаты</li>
-        <li>Подбор мебели из каталога</li>
+        <li><span class="li-main">Попробовать сервис</span> <span class="li-count">(2 генерации)</span></li>
       </ul>
       <a class="btn ghost" href="/">Попробовать</a>
     </div>
@@ -73,10 +80,8 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       <div class="name">Start</div>
       <div class="price"><b>299 ₽</b><span>в месяц</span></div>
       <ul>
-        <li>10 генераций в месяц</li>
+        <li><span class="li-main">Оформить одну комнату</span> <span class="li-count">(10 генераций)</span></li>
         <li style="color:var(--gold);font-weight:600">~30 ₽ за генерацию</li>
-        <li>Все стили и комнаты</li>
-        <li>Подбор мебели и смета покупки</li>
       </ul>
       <button type="button" class="btn" style="width:100%;border:none;cursor:pointer" onclick="startCheckout('start', this)">Оформить подписку</button>
     </div>
@@ -86,10 +91,8 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       <div class="name">Plus</div>
       <div class="price"><b>499 ₽</b><span>в месяц</span></div>
       <ul>
-        <li>20 генераций в месяц</li>
+        <li><span class="li-main">Обустроить несколько комнат</span> <span class="li-count">(20 генераций)</span></li>
         <li style="color:var(--gold);font-weight:600">~25 ₽ за генерацию</li>
-        <li>Все стили и комнаты</li>
-        <li>Подбор мебели и смета покупки</li>
       </ul>
       <button type="button" class="btn" style="width:100%;border:none;cursor:pointer" onclick="startCheckout('plus', this)">Оформить подписку</button>
     </div>
@@ -99,12 +102,21 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       <div class="name">Pro</div>
       <div class="price"><b>999 ₽</b><span>в месяц</span></div>
       <ul>
-        <li>50 генераций в месяц</li>
-        <li style="color:var(--gold);font-weight:700">~20 ₽ за генерацию</li>
-        <li>Все стили и комнаты</li>
-        <li>Подбор мебели и смета покупки</li>
+        <li><span class="li-main">Дизайн всей квартиры</span> <span class="li-count">(50 генераций)</span></li>
       </ul>
       <button type="button" class="btn" style="width:100%;border:none;cursor:pointer" onclick="startCheckout('pro', this)">Оформить подписку</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;flex-direction:row;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <div class="tag">Разовая докупка</div>
+      <div class="name" style="margin-top:4px">+1 генерация</div>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px">Нужна всего одна генерация — без подписки и без пакета.</p>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:14px">
+      <div class="price"><b>45 ₽</b></div>
+      <button type="button" class="btn" style="margin-top:0;white-space:nowrap;border:none;cursor:pointer" onclick="startCheckout('topup1', this)">Докупить</button>
     </div>
   </div>
 
@@ -116,7 +128,6 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     </div>
     <div style="display:flex;align-items:baseline;gap:14px">
       <div class="price"><b>349 ₽</b></div>
-      <span style="color:var(--gold);font-weight:600;font-size:14px">~35 ₽ за генерацию</span>
       <button type="button" class="btn" style="margin-top:0;white-space:nowrap;border:none;cursor:pointer" onclick="startCheckout('topup', this)">Докупить</button>
     </div>
   </div>
@@ -130,7 +141,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       <li>Неиспользованные за месяц генерации на следующий месяц не переносятся.</li>
       <li>Цены указаны в рублях. Оплату принимает ООО НКО «ЮМани» (сервис ЮKassa), ИНН 7750005725, ОГРН 1127711000031, данные банковской карты Room-Factory не получает и не хранит.</li>
       <li>На каждую успешную оплату формируется электронный кассовый чек (54-ФЗ), который направляется на указанный при оплате email.</li>
-      <li>Порядок возврата средств описан в <a href="/offer.html">оферте</a>. Вопросы: <a href="mailto:center@room-factory.ru">center@room-factory.ru</a>.</li>
+      <li>Порядок возврата средств описан в <a href="/offer.html">оферте</a>. Вопросы: <span class="email-copy"><span class="email-copy-text">help@room-factory.ru</span><button type="button" class="email-copy-btn" onclick="copyEmailToClipboard(this, 'help@room-factory.ru')" aria-label="Скопировать почту">⧉</button><span class="email-copy-tip">Почта скопирована</span></span>.</li>
     </ul>
   </div>
 
@@ -145,6 +156,28 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   </footer>
 </div>
 <script>
+function copyEmailToClipboard(btn, email) {
+  const showTip = () => {
+    const wrap = btn.closest('.email-copy');
+    const tip = wrap && wrap.querySelector('.email-copy-tip');
+    if (!tip) return;
+    tip.classList.add('visible');
+    setTimeout(() => tip.classList.remove('visible'), 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(showTip).catch(showTip);
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = email;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    showTip();
+  }
+}
 const AUTH_BASE = 'https://gwirglemly-beep-roomfactory-gigachat-1591.twc1.net';
 function getAuthToken() {
   try { return localStorage.getItem('rf_token') || null; } catch (e) { return null; }
