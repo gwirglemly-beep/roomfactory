@@ -281,9 +281,9 @@ a.auth-link:hover, .auth-link a:hover { color: #b48c5a; }
 .opts-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
 .opts-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
 @media (max-width: 480px) { .opts-3, .opts-4 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-.opt-btn { background: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 10px 8px; font-size: 11px; color: #8a7a66; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; text-align: center; letter-spacing: 0.5px; overflow-wrap: break-word; hyphens: none; }
+.opt-btn { background-color: #faf7f2; border: 1px solid rgba(42,34,24,0.12); padding: 10px 8px; font-size: 11px; color: #8a7a66; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; text-align: center; letter-spacing: 0.5px; overflow-wrap: break-word; hyphens: none; }
 .opt-btn:hover { border-color: #b48c5a; color: #1a1208; }
-.opt-btn.active { border-color: #b48c5a; color: #b48c5a; background: rgba(180,140,90,0.08); }
+.opt-btn.active { border-color: #b48c5a; color: #b48c5a; background-color: rgba(180,140,90,0.08); }
 .style-row { display: flex; align-items: center; gap: 6px; }
 .info-btn { background: none; border: none; color: #c4b4a4; font-size: 11px; cursor: pointer; flex-shrink: 0; transition: color 0.2s; }
 .info-btn:hover { color: #b48c5a; }
@@ -1093,7 +1093,7 @@ footer { padding: 48px 48px 32px; border-top: 1px solid rgba(42,34,24,0.1); back
           <div class="form-section" id="styleSection">
             <span class="form-label" data-i18n="form.style">Стиль интерьера</span>
             <div class="style-cards-grid">
-              <button type="button" class="opt-btn style-card" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures" style="background-image:url('images/unsplash-1772797583328-f83bc3f94f80.jpg')">
+              <button type="button" class="opt-btn style-card" data-group="style" data-key="scandinavian" data-val="scandinavian interior design, natural wood furniture, simple minimalist shapes, cozy textures" style="background-image:url('images/scandinavian-card.jpg')">
                 <span class="style-card-overlay"></span>
                 <span class="style-card-label" data-i18n="style.scandinavian">Скандинавский</span>
                 <span class="style-card-info" onclick="event.stopPropagation(); showStyleInfo('scandinavian')">ⓘ</span>
